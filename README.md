@@ -1,6 +1,6 @@
 # Linktree Project
 
-This project is a simple Linktree clone built with HTML and CSS. It is hosted in a Docker container and served to the public through Cloudflared at [stijnvandepol.nl](https://stijnvandepol.nl)
+This project is a simple portfolio website build with HTML, JavaScript and CSS. It is hosted in a Docker container and served to the public through Cloudflared at [stijnvandepol.nl](https://stijnvandepol.nl)
 
 ## Features
 
@@ -17,18 +17,18 @@ This project is a simple Linktree clone built with HTML and CSS. It is hosted in
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/stijnvandepol/Linktree.git
-    cd Linktree
+    git clone https://github.com/stijnvandepol/PortfolioWebsite.git
+    cd PortfolioWebsite
     ```
 
 2. Build the Docker image:
     ```sh
-    docker build -t linktree .
+    docker build -t PortfolioWebsite .
     ```
 
 3. Run the Docker container:
     ```sh
-    docker run -d -p 80:80 linktree
+    docker run -d -p 80:80 PortfolioWebsite
     ```
 
 ## Usage

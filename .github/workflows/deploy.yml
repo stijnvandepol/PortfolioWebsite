@@ -37,5 +37,5 @@ jobs:
 
         docker pull stijn0vp/linktree:latest
 
-        docker run --restart always -d -p 8081:80 --name linktree stijn0vp/linktree:latest
+        docker run --restart always -d -p 888:80 --name linktree stijn0vp/linktree:latest
         docker ps -a

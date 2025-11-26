@@ -9,21 +9,24 @@ Een persoonlijke portfolio-website waar ik mijn projecten, ervaring, skills en c
 - Draait volledig in Docker met Nginx
 - Makkelijk uitbreidbaar en aanpasbaar
 
-## Getting Started
-
-### Prerequisites
+### Vereisten
 
 - Docker geïnstalleerd
 
-### Installation
+### Installatie
 
-1. Clone the repository:
+1. Clone de repository:
     ```sh
     git clone https://github.com/stijnvandepol/PortfolioWebsite
     cd PortfolioWebsite
     ```
 
-2. Run the Docker container:
+2. Bouw de Docker container:
     ```sh
-    docker compose up -d
+    docker build -t portfoliowebsite .
+    ```
+    
+3. Start de Docker container:
+    ```sh
+    docker run -d -p 80:80 portfoliowebsite
     ```

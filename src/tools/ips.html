@@ -136,10 +136,85 @@
         .loading.active {
             display: block;
         }
+        
+        .password-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .password-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .password-button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .password-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .password-error {
+            color: #721c24;
+            background: #f8d7da;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #f5c6cb;
+            display: none;
+            text-align: center;
+        }
+        
+        .password-error.show {
+            display: block;
+        }
+        
+        .main-content {
+            display: none;
+        }
+        
+        .main-content.visible {
+            display: block;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Wachtwoord formulier -->
+        <div id="passwordForm" class="password-container">
+            <h1>Toegang vereist</h1>
+            <input 
+                type="password" 
+                id="passwordInput" 
+                class="password-input"
+                placeholder="Voer wachtwoord in" 
+                required
+            >
+            <button type="button" class="password-button" id="passwordBtn">Toegang</button>
+            <div class="password-error" id="passwordError">✗ Wachtwoord onjuist</div>
+        </div>
+        
+        <!-- Hoofdinhoud (verborgen tot wachtwoord correct is) -->
+        <div id="mainContent" class="main-content">
         <h1>IP Tracker</h1>
         
         <div class="info-box">
@@ -163,8 +238,37 @@
         </form>
         
         <div class="status" id="status"></div>
+        </div>
     </div>
 
+    <script>
+        // Wachtwoord controle
+        const correctPassword = 'StijnvandePol';
+        
+        document.getElementById('passwordBtn').addEventListener('click', () => {
+            const password = document.getElementById('passwordInput').value;
+            const errorEl = document.getElementById('passwordError');
+            
+            if (password === correctPassword) {
+                document.getElementById('passwordForm').style.display = 'none';
+                document.getElementById('mainContent').classList.add('visible');
+                fetchIP();
+            } else {
+                errorEl.classList.add('show');
+                document.getElementById('passwordInput').value = '';
+                setTimeout(() => {
+                    errorEl.classList.remove('show');
+                }, 3000);
+            }
+        });
+        
+        // Enter toets ondersteuning
+        document.getElementById('passwordInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('passwordBtn').click();
+            }
+        });
+    </script>
     <script>
         // IP ophalen bij pagina laden
         function fetchIP() {
@@ -258,7 +362,8 @@
         });
 
         // IP ophalen wanneer pagina laadt
-        window.addEventListener('load', fetchIP);
+        // Niet automatisch meer, wordt aangeroepen na wachtwoord check
+        // window.addEventListener('load', fetchIP);
     </script>
 </body>
 </html>

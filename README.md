@@ -1,6 +1,6 @@
 # Portfolio Website
 
-Een persoonlijke portfolio-website waar ik mijn projecten, ervaring, skills en cv toelicht. Gebouwd met HTML, CSS en JavaScript, en containerized via Docker. De site draait op Nginx en wordt publiek toegankelijk gemaakt via Cloudflared op [stijnvandepol.nl](https://stijnvandepol.nl)
+Een persoonlijke portfolio-website waar ik mijn projecten, ervaring, skills en cv toelicht. Gebouwd met HTML, CSS en JavaScript, en containerized via Docker. De site draait op Nginx en wordt publiek toegankelijk gemaakt via Cloudflared op [stijnvandepol.nl](https://stijnvandepol.nl).
 
 ## Functionaliteiten
 

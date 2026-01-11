@@ -33,9 +33,9 @@ jobs:
 
         docker ps -a -q -f name=portfoliowebsite && docker rm portfoliowebsite || echo "Container portfoliowebsite does not exist"
 
-        docker images -q stijn0vp/linktree:latest && docker image rm stijn0vp/portfoliowebsite:latest || echo "Image stijn0vp/portfoliowebsite:latest does not exist locally"
+        docker images -q stijn0vp/portfoliowebsite:latest && docker image rm stijn0vp/portfoliowebsite:latest || echo "Image stijn0vp/portfoliowebsite:latest does not exist locally"
 
         docker pull stijn0vp/portfoliowebsite:latest
 
-        docker run --restart always -d -p 8081:80 --name linktree stijn0vp/portfoliowebsite:latest
+        docker run --restart always -d -p 8081:80 --name portfoliowebsite stijn0vp/portfoliowebsite:latest
         docker ps -a

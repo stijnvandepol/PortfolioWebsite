@@ -1109,12 +1109,18 @@ main {
   line-height: 1.6;
 }
 
-.blog-banner-box { position: relative; }
+.blog-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.blog-title-row .blog-item-title { margin-bottom: 0; }
 
 .blog-status {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  display: inline-block;
+  flex-shrink: 0;
   padding: 3px 10px;
   border-radius: 20px;
   font-size: var(--fs-7, 11px);
@@ -1122,7 +1128,6 @@ main {
   letter-spacing: 0.5px;
   text-transform: uppercase;
   color: #fff;
-  pointer-events: none;
 }
 
 .blog-status.online { background: hsl(120, 65%, 28%); }

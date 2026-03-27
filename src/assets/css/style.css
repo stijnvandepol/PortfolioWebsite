@@ -179,7 +179,7 @@ main { margin: 15px 12px; margin-bottom: 100px; min-width: 259px; position: rela
 
 /* NAVBAR — iOS DOCK */
 .navbar {
-  position: fixed; bottom: 12px; left: 12px; right: 12px; transform: none;
+  position: fixed; bottom: 10px; left: 6px; right: 6px; transform: none;
   z-index: 50;
   background: rgba(28, 28, 30, 0.55);
   backdrop-filter: blur(40px) saturate(180%);

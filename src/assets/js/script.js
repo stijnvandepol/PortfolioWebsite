@@ -294,23 +294,15 @@ document.addEventListener('keydown', function (e) {
 
 
 // ============================
-// 3D TILT ON CARDS
+// CARD SPOTLIGHT EFFECT
 // ============================
 document.querySelectorAll('.service-item, .project-item > a, .blog-post-item > a').forEach(function (card) {
   card.addEventListener('mousemove', function (e) {
     var rect = this.getBoundingClientRect();
     var x = e.clientX - rect.left;
     var y = e.clientY - rect.top;
-    var centerX = rect.width / 2;
-    var centerY = rect.height / 2;
-    var rotateX = (y - centerY) / centerY * -4;
-    var rotateY = (x - centerX) / centerX * 4;
-
-    this.style.transform = 'perspective(800px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateY(-2px) scale(1.01)';
-  });
-
-  card.addEventListener('mouseleave', function () {
-    this.style.transform = '';
+    this.style.setProperty('--spotlight-x', x + 'px');
+    this.style.setProperty('--spotlight-y', y + 'px');
   });
 });
 

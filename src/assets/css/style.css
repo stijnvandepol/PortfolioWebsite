@@ -179,7 +179,7 @@ main { margin: 15px 12px; margin-bottom: 100px; min-width: 259px; position: rela
 
 /* NAVBAR — iOS DOCK */
 .navbar {
-  position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+  position: fixed; bottom: 12px; left: 12px; right: 12px; transform: none;
   z-index: 50;
   background: rgba(28, 28, 30, 0.55);
   backdrop-filter: blur(40px) saturate(180%);
@@ -189,7 +189,7 @@ main { margin: 15px 12px; margin-bottom: 100px; min-width: 259px; position: rela
   padding: 6px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
-.navbar-list { display: flex; justify-content: center; align-items: flex-end; gap: 2px; padding: 0; }
+.navbar-list { display: flex; justify-content: space-around; align-items: flex-end; gap: 0; padding: 0; }
 .navbar-item { transition: transform 0.2s var(--spring); transform-origin: bottom center; will-change: transform; }
 .navbar-link {
   display: flex; flex-direction: column; align-items: center; gap: 2px;
@@ -651,7 +651,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   .contacts-list { gap: 20px; }
   .contact-info { max-width: calc(100% - 64px); width: calc(100% - 64px); }
 
-  .navbar { bottom: 20px; border-radius: 24px; padding: 6px 10px; }
+  .navbar { bottom: 20px; left: 50%; right: auto; transform: translateX(-50%); border-radius: 24px; padding: 6px 10px; }
   .navbar-link { padding: 8px 16px; font-size: 11px; }
   .navbar-link ion-icon { font-size: 24px; }
 

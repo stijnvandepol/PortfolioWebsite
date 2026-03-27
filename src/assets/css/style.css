@@ -210,6 +210,7 @@ main { margin: 15px 12px; margin-bottom: 100px; min-width: 259px; position: rela
   background: var(--surface-raised); backdrop-filter: blur(10px);
   padding: 20px; border-radius: var(--radius-md);
   border: 1px solid var(--glass-border); transition: all 0.3s var(--ease-out);
+  transform-style: preserve-3d;
 }
 .service-item:hover {
   border-color: var(--glass-border-hover); transform: translateY(-2px) scale(1.01);
@@ -522,6 +523,20 @@ textarea.form-input::-webkit-resizer { display: none; }
   color: var(--text-secondary);
   font-size: var(--fs-6);
   font-weight: var(--fw-500);
+}
+
+
+/* CURSOR GLOW */
+.cursor-glow {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(196, 162, 101, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+  will-change: left, top;
 }
 
 

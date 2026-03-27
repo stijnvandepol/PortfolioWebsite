@@ -167,8 +167,8 @@ if (dock) {
 
       if (dist < maxDist) {
         var ratio = 1 - dist / maxDist;
-        var scale = 1 + 0.25 * ratio;
-        var lift = -8 * ratio;
+        var scale = 1 + 0.12 * ratio;
+        var lift = -3 * ratio;
         item.style.transform = 'scale(' + scale + ') translateY(' + lift + 'px)';
       } else {
         item.style.transform = '';
@@ -290,4 +290,101 @@ document.querySelectorAll('[data-lightbox-close]').forEach(function (el) {
 // Close on Escape key
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape') closeLightbox();
+});
+
+
+// ============================
+// 3D TILT ON CARDS
+// ============================
+document.querySelectorAll('.service-item, .project-item > a, .blog-post-item > a').forEach(function (card) {
+  card.addEventListener('mousemove', function (e) {
+    var rect = this.getBoundingClientRect();
+    var x = e.clientX - rect.left;
+    var y = e.clientY - rect.top;
+    var centerX = rect.width / 2;
+    var centerY = rect.height / 2;
+    var rotateX = (y - centerY) / centerY * -4;
+    var rotateY = (x - centerX) / centerX * 4;
+
+    this.style.transform = 'perspective(800px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateY(-2px) scale(1.01)';
+  });
+
+  card.addEventListener('mouseleave', function () {
+    this.style.transform = '';
+  });
+});
+
+
+// ============================
+// CURSOR GLOW (desktop only)
+// ============================
+if (window.matchMedia('(pointer: fine)').matches) {
+  var glow = document.createElement('div');
+  glow.className = 'cursor-glow';
+  document.body.appendChild(glow);
+
+  var mouseX = 0, mouseY = 0, glowX = 0, glowY = 0;
+
+  document.addEventListener('mousemove', function (e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  function updateGlow() {
+    glowX += (mouseX - glowX) * 0.15;
+    glowY += (mouseY - glowY) * 0.15;
+    glow.style.left = glowX + 'px';
+    glow.style.top = glowY + 'px';
+    requestAnimationFrame(updateGlow);
+  }
+  updateGlow();
+}
+
+
+// ============================
+// ANIMATED COUNTERS FOR SKILLS
+// ============================
+function animateCounters() {
+  document.querySelectorAll('.skill .title-wrapper data').forEach(function (el) {
+    var target = parseInt(el.getAttribute('value'));
+    var current = 0;
+    var duration = 1200;
+    var step = target / (duration / 16);
+
+    function tick() {
+      current += step;
+      if (current >= target) {
+        el.textContent = target + '%';
+        return;
+      }
+      el.textContent = Math.round(current) + '%';
+      requestAnimationFrame(tick);
+    }
+    el.textContent = '0%';
+    setTimeout(tick, 100);
+  });
+}
+
+// Hook into skill animation
+var skillSectionForCounter = document.querySelector('.skill');
+if (skillSectionForCounter) {
+  var counterObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        animateCounters();
+        counterObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  counterObserver.observe(skillSectionForCounter);
+}
+
+
+// ============================
+// SMOOTH PAGE LOAD
+// ============================
+document.body.style.opacity = '0';
+window.addEventListener('load', function () {
+  document.body.style.transition = 'opacity 0.6s ease';
+  document.body.style.opacity = '1';
 });

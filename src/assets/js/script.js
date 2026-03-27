@@ -3,6 +3,9 @@
 // ============================
 // SMOOTH PAGE LOAD (set immediately)
 // ============================
+// Mark that JS is loaded — enables reveal animations via CSS
+document.documentElement.classList.add('js-loaded');
+
 document.body.style.opacity = '0';
 document.body.style.transition = 'opacity 0.6s ease';
 requestAnimationFrame(function () {
@@ -123,39 +126,51 @@ for (var i = 0; i < formInputs.length; i++) {
 // ============================
 // PAGE NAVIGATION (data-target based)
 // ============================
-var navigationLinks = document.querySelectorAll("[data-nav-link]");
-var pages = document.querySelectorAll("[data-page]");
+function initNavigation() {
+  var navLinks = document.querySelectorAll("[data-nav-link]");
+  var allPages = document.querySelectorAll("[data-page]");
 
-navigationLinks.forEach(function (link) {
-  link.addEventListener("click", function () {
-    var target = this.dataset.target;
+  console.log('[NAV] Found', navLinks.length, 'nav links and', allPages.length, 'pages');
 
-    // Deactivate all pages & links
-    pages.forEach(function (page) { page.classList.remove("active"); });
-    navigationLinks.forEach(function (nav) { nav.classList.remove("active"); });
+  navLinks.forEach(function (link) {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
 
-    // Activate the clicked link
-    this.classList.add("active");
+      var target = this.getAttribute('data-target');
+      console.log('[NAV] Clicked:', target);
 
-    // Activate matching page
-    pages.forEach(function (page) {
-      if (page.dataset.page === target) {
-        page.removeAttribute("hidden");
-        page.classList.add("active");
+      // Deactivate all
+      allPages.forEach(function (p) { p.classList.remove("active"); });
+      navLinks.forEach(function (n) { n.classList.remove("active"); });
+
+      // Activate clicked link
+      this.classList.add("active");
+
+      // Find and activate target page
+      for (var i = 0; i < allPages.length; i++) {
+        if (allPages[i].getAttribute('data-page') === target) {
+          allPages[i].removeAttribute("hidden");
+          allPages[i].classList.add("active");
+          console.log('[NAV] Activated page:', target);
+          break;
+        }
+      }
+
+      window.scrollTo(0, 0);
+
+      // Re-trigger animations
+      var activePage = document.querySelector('article.active');
+      if (activePage) {
+        resetReveals(activePage);
+        setTimeout(triggerReveals, 100);
+        setTimeout(animateSkillBars, 300);
       }
     });
-
-    window.scrollTo(0, 0);
-
-    // Re-trigger animations
-    var activePage = document.querySelector('article.active');
-    if (activePage) {
-      resetReveals(activePage);
-      setTimeout(triggerReveals, 100);
-      setTimeout(animateSkillBars, 300);
-    }
   });
-});
+}
+
+initNavigation();
 
 
 // ============================

@@ -662,8 +662,33 @@
     </div>
   </div>
 
-  <!-- custom js link -->
-  <script src="./assets/js/script.js"></script>
+  <!-- Inline navigation fallback — always works even if script.js fails -->
+  <script>
+  (function(){
+    var links = document.querySelectorAll('[data-nav-link]');
+    var pages = document.querySelectorAll('[data-page]');
+    links.forEach(function(link){
+      link.addEventListener('click', function(e){
+        e.preventDefault();
+        var target = this.getAttribute('data-target');
+        pages.forEach(function(p){ p.classList.remove('active'); });
+        links.forEach(function(n){ n.classList.remove('active'); });
+        this.classList.add('active');
+        for(var i=0;i<pages.length;i++){
+          if(pages[i].getAttribute('data-page')===target){
+            pages[i].removeAttribute('hidden');
+            pages[i].classList.add('active');
+            break;
+          }
+        }
+        window.scrollTo(0,0);
+      });
+    });
+  })();
+  </script>
+
+  <!-- custom js link (cache bust) -->
+  <script src="./assets/js/script.js?v=2"></script>
 
   <!-- ionicons -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

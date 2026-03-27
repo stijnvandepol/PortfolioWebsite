@@ -1,61 +1,75 @@
 'use strict';
 
 // ============================
+// SMOOTH PAGE LOAD (set immediately)
+// ============================
+document.body.style.opacity = '0';
+document.body.style.transition = 'opacity 0.6s ease';
+requestAnimationFrame(function () {
+  document.body.style.opacity = '1';
+});
+
+
+// ============================
 // SIDEBAR TOGGLE
 // ============================
-const sidebar = document.querySelector("[data-sidebar]");
-const sidebarBtn = document.querySelector("[data-sidebar-btn]");
-sidebarBtn.addEventListener("click", function () {
-  sidebar.classList.toggle("active");
-});
+var sidebar = document.querySelector("[data-sidebar]");
+var sidebarBtn = document.querySelector("[data-sidebar-btn]");
+if (sidebarBtn && sidebar) {
+  sidebarBtn.addEventListener("click", function () {
+    sidebar.classList.toggle("active");
+  });
+}
 
 
 // ============================
 // TESTIMONIALS MODAL
 // ============================
-const testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
-const modalContainer = document.querySelector("[data-modal-container]");
-const modalCloseBtn = document.querySelector("[data-modal-close-btn]");
-const overlay = document.querySelector("[data-overlay]");
-const modalImg = document.querySelector("[data-modal-img]");
-const modalTitle = document.querySelector("[data-modal-title]");
-const modalText = document.querySelector("[data-modal-text]");
+var testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
+var modalContainer = document.querySelector("[data-modal-container]");
+var modalCloseBtn = document.querySelector("[data-modal-close-btn]");
+var overlay = document.querySelector("[data-overlay]");
+var modalImg = document.querySelector("[data-modal-img]");
+var modalTitle = document.querySelector("[data-modal-title]");
+var modalText = document.querySelector("[data-modal-text]");
 
-const testimonialsModalFunc = function () {
-  modalContainer.classList.toggle("active");
-  overlay.classList.toggle("active");
+var testimonialsModalFunc = function () {
+  if (modalContainer) modalContainer.classList.toggle("active");
+  if (overlay) overlay.classList.toggle("active");
 };
 
-for (let i = 0; i < testimonialsItem.length; i++) {
+for (var i = 0; i < testimonialsItem.length; i++) {
   testimonialsItem[i].addEventListener("click", function () {
-    modalImg.src = this.querySelector("[data-testimonials-avatar]").src;
-    modalImg.alt = this.querySelector("[data-testimonials-avatar]").alt;
-    modalTitle.innerHTML = this.querySelector("[data-testimonials-title]").innerHTML;
-    modalText.innerHTML = this.querySelector("[data-testimonials-text]").innerHTML;
+    if (modalImg) modalImg.src = this.querySelector("[data-testimonials-avatar]").src;
+    if (modalImg) modalImg.alt = this.querySelector("[data-testimonials-avatar]").alt;
+    if (modalTitle) modalTitle.innerHTML = this.querySelector("[data-testimonials-title]").innerHTML;
+    if (modalText) modalText.innerHTML = this.querySelector("[data-testimonials-text]").innerHTML;
     testimonialsModalFunc();
   });
 }
 
-modalCloseBtn.addEventListener("click", testimonialsModalFunc);
-overlay.addEventListener("click", testimonialsModalFunc);
+if (modalCloseBtn) modalCloseBtn.addEventListener("click", testimonialsModalFunc);
+if (overlay) overlay.addEventListener("click", testimonialsModalFunc);
 
 
 // ============================
 // PORTFOLIO FILTER
 // ============================
-const select = document.querySelector("[data-select]");
-const selectItems = document.querySelectorAll("[data-select-item]");
-const selectValue = document.querySelector("[data-select-value]");
-const filterBtn = document.querySelectorAll("[data-filter-btn]");
-const filterItems = document.querySelectorAll("[data-filter-item]");
+var select = document.querySelector("[data-select]");
+var selectItems = document.querySelectorAll("[data-select-item]");
+var selectValue = document.querySelector("[data-select-value]");
+var filterBtn = document.querySelectorAll("[data-filter-btn]");
+var filterItems = document.querySelectorAll("[data-filter-item]");
 
-select.addEventListener("click", function () { this.classList.toggle("active"); });
+if (select) {
+  select.addEventListener("click", function () { this.classList.toggle("active"); });
+}
 
-for (let i = 0; i < selectItems.length; i++) {
+for (var i = 0; i < selectItems.length; i++) {
   selectItems[i].addEventListener("click", function () {
     var selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
-    select.classList.remove("active");
+    if (selectValue) selectValue.innerText = this.innerText;
+    if (select) select.classList.remove("active");
     filterFunc(selectedValue);
   });
 }
@@ -74,12 +88,12 @@ var filterFunc = function (selectedValue) {
 
 var lastClickedBtn = filterBtn[0];
 
-for (let i = 0; i < filterBtn.length; i++) {
+for (var i = 0; i < filterBtn.length; i++) {
   filterBtn[i].addEventListener("click", function () {
     var selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
+    if (selectValue) selectValue.innerText = this.innerText;
     filterFunc(selectedValue);
-    lastClickedBtn.classList.remove("active");
+    if (lastClickedBtn) lastClickedBtn.classList.remove("active");
     this.classList.add("active");
     lastClickedBtn = this;
   });
@@ -89,16 +103,18 @@ for (let i = 0; i < filterBtn.length; i++) {
 // ============================
 // CONTACT FORM VALIDATION
 // ============================
-const form = document.querySelector("[data-form]");
-const formInputs = document.querySelectorAll("[data-form-input]");
-const formBtn = document.querySelector("[data-form-btn]");
+var form = document.querySelector("[data-form]");
+var formInputs = document.querySelectorAll("[data-form-input]");
+var formBtn = document.querySelector("[data-form-btn]");
 
-for (let i = 0; i < formInputs.length; i++) {
+for (var i = 0; i < formInputs.length; i++) {
   formInputs[i].addEventListener("input", function () {
-    if (form.checkValidity()) {
-      formBtn.removeAttribute("disabled");
-    } else {
-      formBtn.setAttribute("disabled", "");
+    if (form && formBtn) {
+      if (form.checkValidity()) {
+        formBtn.removeAttribute("disabled");
+      } else {
+        formBtn.setAttribute("disabled", "");
+      }
     }
   });
 }
@@ -107,8 +123,8 @@ for (let i = 0; i < formInputs.length; i++) {
 // ============================
 // PAGE NAVIGATION (data-target based)
 // ============================
-const navigationLinks = document.querySelectorAll("[data-nav-link]");
-const pages = document.querySelectorAll("[data-page]");
+var navigationLinks = document.querySelectorAll("[data-nav-link]");
+var pages = document.querySelectorAll("[data-page]");
 
 navigationLinks.forEach(function (link) {
   link.addEventListener("click", function () {
@@ -124,7 +140,6 @@ navigationLinks.forEach(function (link) {
     // Activate matching page
     pages.forEach(function (page) {
       if (page.dataset.page === target) {
-        // Remove hidden attribute if present (for portfolio/contact)
         page.removeAttribute("hidden");
         page.classList.add("active");
       }
@@ -152,7 +167,6 @@ if (dock) {
   var dockItems = dock.querySelectorAll('.navbar-item:not([hidden])');
   var isTouch = false;
 
-  // Detect touch to disable magnification
   dock.addEventListener('touchstart', function () { isTouch = true; }, { passive: true });
 
   dock.addEventListener('mousemove', function (e) {
@@ -205,7 +219,6 @@ function triggerReveals() {
   });
 }
 
-// Intersection Observer for scroll reveals
 var revealObserver = new IntersectionObserver(function (entries) {
   entries.forEach(function (entry) {
     if (entry.isIntersecting) {
@@ -257,25 +270,22 @@ var lightbox = document.getElementById('lightbox');
 var lightboxImg = document.getElementById('lightbox-img');
 var lightboxTitle = document.getElementById('lightbox-title');
 
-// Open lightbox when clicking a project item
 document.querySelectorAll('.project-item > a').forEach(function (link) {
   link.addEventListener('click', function (e) {
     e.preventDefault();
-
     var img = this.querySelector('.project-img img');
     var title = this.querySelector('.project-title');
 
-    if (img && lightbox) {
+    if (img && lightbox && lightboxImg) {
       lightboxImg.src = img.src;
       lightboxImg.alt = img.alt;
-      lightboxTitle.textContent = title ? title.textContent : '';
+      if (lightboxTitle) lightboxTitle.textContent = title ? title.textContent : '';
       lightbox.classList.add('active');
       document.body.style.overflow = 'hidden';
     }
   });
 });
 
-// Close lightbox
 function closeLightbox() {
   if (lightbox) {
     lightbox.classList.remove('active');
@@ -287,7 +297,6 @@ document.querySelectorAll('[data-lightbox-close]').forEach(function (el) {
   el.addEventListener('click', closeLightbox);
 });
 
-// Close on Escape key
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape') closeLightbox();
 });
@@ -357,7 +366,6 @@ function animateCounters() {
   });
 }
 
-// Hook into skill animation
 var skillSectionForCounter = document.querySelector('.skill');
 if (skillSectionForCounter) {
   var counterObserver = new IntersectionObserver(function (entries) {
@@ -370,13 +378,3 @@ if (skillSectionForCounter) {
   }, { threshold: 0.3 });
   counterObserver.observe(skillSectionForCounter);
 }
-
-
-// ============================
-// SMOOTH PAGE LOAD
-// ============================
-document.body.style.opacity = '0';
-window.addEventListener('load', function () {
-  document.body.style.transition = 'opacity 0.6s ease';
-  document.body.style.opacity = '1';
-});

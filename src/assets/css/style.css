@@ -127,6 +127,9 @@ article.active { display: block; animation: pageIn 0.5s var(--ease-out) backward
 /* REVEAL ANIMATION */
 .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out); }
 .reveal.visible { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
 
 
 /* MAIN */

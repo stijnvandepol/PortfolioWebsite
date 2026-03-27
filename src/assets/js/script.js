@@ -219,20 +219,36 @@ function triggerReveals() {
   });
 }
 
-var revealObserver = new IntersectionObserver(function (entries) {
-  entries.forEach(function (entry) {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      revealObserver.unobserve(entry.target);
-    }
+// Use IntersectionObserver if available, otherwise show all immediately
+if ('IntersectionObserver' in window) {
+  var revealObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(function (el) {
+    revealObserver.observe(el);
   });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+} else {
+  // Fallback: show everything
+  document.querySelectorAll('.reveal').forEach(function (el) {
+    el.classList.add('visible');
+  });
+}
 
-document.querySelectorAll('.reveal').forEach(function (el) {
-  revealObserver.observe(el);
-});
+// Always trigger reveals for the active page after a short delay
+setTimeout(triggerReveals, 400);
 
-setTimeout(triggerReveals, 300);
+// Safety fallback: if reveals still not visible after 2s, force show them
+setTimeout(function () {
+  document.querySelectorAll('article.active .reveal:not(.visible)').forEach(function (el) {
+    el.classList.add('visible');
+  });
+}, 2000);
 
 
 // ============================

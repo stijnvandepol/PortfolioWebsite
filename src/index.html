@@ -15,10 +15,13 @@
   <!-- google font link -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
+
+  <!-- Background glow effects -->
+  <div class="bg-glow" aria-hidden="true"></div>
 
   <!-- #MAIN -->
   <main>
@@ -59,18 +62,6 @@
               <a href="mailto:Stijnvdpol@outlook.com" class="contact-link">Stijnvdpol@outlook.com</a>
             </div>
           </li>
-
-          <!-- Telefoon uit sjabloon niet gebruikt
-          <li class="contact-item">
-            <div class="icon-box">
-              <ion-icon name="phone-portrait-outline"></ion-icon>
-            </div>
-            <div class="contact-info">
-              <p class="contact-title">Phone</p>
-              <a href="tel:" class="contact-link">—</a>
-            </div>
-          </li>
-          -->
 
           <li class="contact-item">
             <div class="icon-box">
@@ -125,28 +116,42 @@
     <!-- #main-content -->
     <div class="main-content">
 
-      <!-- #NAVBAR  -->
-      <nav class="navbar">
+      <!-- #NAVBAR — iOS Dock -->
+      <nav class="navbar" id="dock">
         <ul class="navbar-list">
           <li class="navbar-item">
-            <button class="navbar-link active" data-nav-link>Over Mij</button>
+            <button class="navbar-link active" data-nav-link data-target="over mij">
+              <ion-icon name="person-outline"></ion-icon>
+              <span>Over Mij</span>
+            </button>
           </li>
 
           <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Ontwikkeling</button>
-          </li>
-
-          <!-- zichtbaar later maken door 'hidden' te verwijderen -->
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Portfolio</button>
+            <button class="navbar-link" data-nav-link data-target="ontwikkeling">
+              <ion-icon name="briefcase-outline"></ion-icon>
+              <span>Ontwikkeling</span>
+            </button>
           </li>
 
           <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Blog</button>
+            <button class="navbar-link" data-nav-link data-target="portfolio">
+              <ion-icon name="folder-outline"></ion-icon>
+              <span>Portfolio</span>
+            </button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link data-target="blog">
+              <ion-icon name="newspaper-outline"></ion-icon>
+              <span>Blog</span>
+            </button>
           </li>
 
           <li class="navbar-item" hidden>
-            <button class="navbar-link" data-nav-link>Contact</button>
+            <button class="navbar-link" data-nav-link data-target="contact">
+              <ion-icon name="chatbubble-outline"></ion-icon>
+              <span>Contact</span>
+            </button>
           </li>
         </ul>
       </nav>
@@ -177,7 +182,7 @@
 
           <ul class="service-list">
 
-            <li class="service-item">
+            <li class="service-item reveal">
               <div class="service-icon-box">
                 <img src="./assets/images/icon-dev.svg" alt="Netwerk &amp; Infra" width="40">
               </div>
@@ -190,7 +195,7 @@
               </div>
             </li>
 
-            <li class="service-item">
+            <li class="service-item reveal">
               <div class="service-icon-box">
                 <img src="./assets/images/icon-app.svg" alt="Automation" width="40">
               </div>
@@ -203,7 +208,7 @@
               </div>
             </li>
 
-            <li class="service-item">
+            <li class="service-item reveal">
               <div class="service-icon-box">
                 <img src="./assets/images/icon-photo.svg" alt="Security" width="40">
               </div>
@@ -215,14 +220,14 @@
               </div>
             </li>
 
-            <li class="service-item">
+            <li class="service-item reveal">
               <div class="service-icon-box">
                 <img src="./assets/images/icon-design.svg" alt="Cloud &amp; Development" width="40">
               </div>
               <div class="service-content-box">
                 <h4 class="h4 service-item-title">Cloud &amp; Development</h4>
                 <p class="service-item-text">
-                  Ontwikkelen van applicaties en oplossingen. Ervaring met Azure &amp; Cloudflare 
+                  Ontwikkelen van applicaties en oplossingen. Ervaring met Azure &amp; Cloudflare
                   gecombineerd met programmeerkennis voor het bouwen systemen.
                 </p>
               </div>
@@ -231,7 +236,7 @@
           </ul>
         </section>
 
-        <!-- Testimonials/Clients uit het origineel laten staan (vereist door script.js); desgewenst kun je deze visueel verbergen met CSS -->
+        <!-- Testimonials (hidden, kept for JS) -->
         <section class="testimonials" hidden>
           <h3 class="h3 testimonials-title">Testimonials</h3>
           <ul class="testimonials-list has-scrollbar">
@@ -249,7 +254,7 @@
           </ul>
         </section>
 
-        <!-- Testimonials modal + overlay (NIET verwijderen, script verwacht deze) -->
+        <!-- Modal (kept for JS) -->
         <div class="modal-container" data-modal-container>
           <div class="overlay" data-overlay></div>
           <section class="testimonials-modal">
@@ -258,7 +263,7 @@
             </button>
             <div class="modal-img-wrapper">
               <figure class="modal-avatar-box">
-                <img src="./assets/images/avatar-1.png" alt="Stijn van de Pols" width="80" data-modal-img>
+                <img src="./assets/images/avatar-1.png" alt="Stijn van de Pol" width="80" data-modal-img>
               </figure>
               <img src="./assets/images/icon-quote.svg" alt="quote icon">
             </div>
@@ -296,13 +301,13 @@
 
           <ol class="timeline-list">
 
-            <li class="timeline-item">
+            <li class="timeline-item reveal">
               <h4 class="h4 timeline-item-title">Fontys Hogeschool – HBO-ICT</h4>
               <span>2023 — 2027</span>
               <p class="timeline-text">Profiel Infrastructure → specialisatie Cybersecurity.</p>
             </li>
 
-            <li class="timeline-item">
+            <li class="timeline-item reveal">
               <h4 class="h4 timeline-item-title">Koning Willem I College – MBO4 ICT-beheer</h4>
               <span>2020 — 2023</span>
               <p class="timeline-text">IT-beheer, netwerk en support.</p>
@@ -319,27 +324,27 @@
 
           <ol class="timeline-list">
 
-            <li class="timeline-item">
+            <li class="timeline-item reveal">
               <h4 class="h4 timeline-item-title">Projectstage – Verweijen ICT</h4>
               <span>sep. 2025 — jan. 2026 · 5 mnd · Mill</span>
               <p class="timeline-text">Onderzoek naar de inzet van AI en low-code door middel van het Microsoft Power Platform voor het ontwikkelen van automatiseringsoplossingen.</p>
             </li>
 
-            <li class="timeline-item">
+            <li class="timeline-item reveal">
               <h4 class="h4 timeline-item-title">Teamleider – Jumbo</h4>
               <span>feb. 2025 — heden · Mill</span>
               <p class="timeline-text">
-                Sinds 2020 werkzaam binnen deze vestiging. Doorgegroeid naar de rol van teamleider, 
+                Sinds 2020 werkzaam binnen deze vestiging. Doorgegroeid naar de rol van teamleider,
                 met focus op aansturing, opleiding van medewerkers en procesverbetering.</p>
             </li>
 
-            <li class="timeline-item">
+            <li class="timeline-item reveal">
               <h4 class="h4 timeline-item-title">IT Engineer (stage) – Vanboxtel</h4>
               <span>feb. 2023 — jun. 2023 · 5 mnd · Boekel</span>
               <p class="timeline-text">Firewalls, updates, MFA, werkplek-inrichting en on-site support.</p>
             </li>
 
-            <li class="timeline-item">
+            <li class="timeline-item reveal">
               <h4 class="h4 timeline-item-title">IT Engineer (stage) – Verweijen ICT</h4>
               <span>sep. 2021 — jan. 2022 · 5 mnd · Mill</span>
               <p class="timeline-text">Hardware registreren/installeren, MFA instellen en on-site support.</p>
@@ -351,9 +356,9 @@
         <section class="skill">
           <h3 class="h3 skills-title">Vaardigheden</h3>
 
-          <ul class="skills-list content-card">
+          <ul class="skills-list">
 
-            <li class="skills-item">
+            <li class="skills-item reveal">
               <div class="title-wrapper">
                 <h5 class="h5">Netwerkengineering</h5>
                 <data value="60">60%</data>
@@ -363,7 +368,7 @@
               </div>
             </li>
 
-            <li class="skills-item">
+            <li class="skills-item reveal">
               <div class="title-wrapper">
                 <h5 class="h5">Scripting</h5>
                 <data value="75">75%</data>
@@ -373,7 +378,7 @@
               </div>
             </li>
 
-            <li class="skills-item">
+            <li class="skills-item reveal">
               <div class="title-wrapper">
                 <h5 class="h5">Security</h5>
                 <data value="50">50%</data>
@@ -383,7 +388,7 @@
               </div>
             </li>
 
-            <li class="skills-item">
+            <li class="skills-item reveal">
               <div class="title-wrapper">
                 <h5 class="h5">Cloud engineering</h5>
                 <data value="50">50%</data>
@@ -398,10 +403,8 @@
 
       </article>
 
-      <!-- BELANGRIJK: onderstaande articles laten staan (script.js verwacht ze), maar verberg ze voorlopig met 'hidden' -->
-
-      <!-- #PORTFOLIO (verborgen, maar volledig aanwezig voor de JS) -->
-      <article class="portfolio" data-page="portfolio" hidden>
+      <!-- #PORTFOLIO -->
+      <article class="portfolio" data-page="portfolio">
 
         <header>
           <h2 class="h2 article-title">Portfolio</h2>
@@ -471,7 +474,7 @@
                   <div class="project-item-icon-box">
                     <ion-icon name="eye-outline"></ion-icon>
                   </div>
-                  <img src="./assets/images/project-1.png" alt="finance" loading="lazy">
+                  <img src="./assets/images/project-1.png" alt="OTAP Omgeving" loading="lazy">
                 </figure>
                 <h3 class="project-title">OTAP Omgeving</h3>
                 <p class="project-category">GitHub Workflows · Cloudflared · Databases · Containerisatie</p>
@@ -484,7 +487,7 @@
                   <div class="project-item-icon-box">
                     <ion-icon name="eye-outline"></ion-icon>
                   </div>
-                  <img src="./assets/images/project-2.png" alt="orizon" loading="lazy">
+                  <img src="./assets/images/project-2.png" alt="Hybride IT-Infrastructuur" loading="lazy">
                 </figure>
                 <h3 class="project-title">Hybride IT-Infrastructuur</h3>
                 <p class="project-category">Azure · Intune · On-Prem Services · Windows · Linux</p>
@@ -497,7 +500,7 @@
                   <div class="project-item-icon-box">
                     <ion-icon name="eye-outline"></ion-icon>
                   </div>
-                  <img src="./assets/images/project-3.png" alt="fundo" loading="lazy">
+                  <img src="./assets/images/project-3.png" alt="Full-Stack App" loading="lazy">
                 </figure>
                 <h3 class="project-title">Containerized Full-Stack Applicatie</h3>
                 <p class="project-category">Backend · Frontend · API · Database · Containerisatie</p>
@@ -510,7 +513,7 @@
                   <div class="project-item-icon-box">
                     <ion-icon name="eye-outline"></ion-icon>
                   </div>
-                  <img src="./assets/images/project-4.png" alt="brawlhalla" loading="lazy">
+                  <img src="./assets/images/project-4.png" alt="Monitoring" loading="lazy">
                 </figure>
                 <h3 class="project-title">Monitoring & Inzicht</h3>
                 <p class="project-category">Beszel · Checkmk · Dashboards · Alerts</p>
@@ -523,7 +526,7 @@
                   <div class="project-item-icon-box">
                     <ion-icon name="eye-outline"></ion-icon>
                   </div>
-                  <img src="./assets/images/project-5.png" alt="dsm." loading="lazy">
+                  <img src="./assets/images/project-5.png" alt="Virtualisatie" loading="lazy">
                 </figure>
                 <h3 class="project-title">Virtualisatie & Containerisatie</h3>
                 <p class="project-category">Proxmox · VMs · LXC Containers · Docker · Scripting · Backups</p>
@@ -536,38 +539,25 @@
                   <div class="project-item-icon-box">
                     <ion-icon name="eye-outline"></ion-icon>
                   </div>
-                  <img src="./assets/images/project-7.png" alt="summary" loading="lazy">
+                  <img src="./assets/images/project-7.png" alt="Power Platform" loading="lazy">
                 </figure>
                 <h3 class="project-title">Microsoft Power Platform</h3>
                 <p class="project-category">Power Automate · Power Apps · Copilot Studio · AI Agents</p>
               </a>
             </li>
 
-            <li class="project-item active" data-filter-item data-category="applications">
+            <li class="project-item active" data-filter-item data-category="applicaties">
               <a href="./assets/images/project-8.png">
                 <figure class="project-img">
                   <div class="project-item-icon-box">
                     <ion-icon name="eye-outline"></ion-icon>
                   </div>
-                  <img src="./assets/images/project-8.png" alt="task manager" loading="lazy">
+                  <img src="./assets/images/project-8.png" alt="Procesautomatisering" loading="lazy">
                 </figure>
                 <h3 class="project-title">Procesautomatisering & AI</h3>
                 <p class="project-category">Low-Code / No-Code Automation · n8n · AI Agents · MCP · API Integraties</p>
               </a>
             </li>
-
-            <!-- <li class="project-item active" data-filter-item data-category="web development">
-              <a href="#">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="./assets/images/project-9.png" alt="arrival" loading="lazy">
-                </figure>
-                <h3 class="project-title">Arrival</h3>
-                <p class="project-category">Web development</p>
-              </a>
-            </li> -->
 
           </ul>
 
@@ -623,7 +613,7 @@
 
       </article>
 
-      <!-- #CONTACT (verborgen, maar aanwezig; form-elementen blijven bestaan voor de JS) -->
+      <!-- #CONTACT -->
       <article class="contact" data-page="contact" hidden>
 
         <header>
@@ -666,7 +656,17 @@
 
   </main>
 
-  <!-- custom js link (ongewijzigd) -->
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-backdrop" data-lightbox-close></div>
+    <div class="lightbox-content">
+      <button class="lightbox-close" data-lightbox-close>&times;</button>
+      <img id="lightbox-img" src="" alt="">
+      <p class="lightbox-title" id="lightbox-title"></p>
+    </div>
+  </div>
+
+  <!-- custom js link -->
   <script src="./assets/js/script.js"></script>
 
   <!-- ionicons -->

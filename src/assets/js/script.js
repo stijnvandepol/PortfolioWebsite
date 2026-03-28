@@ -228,7 +228,7 @@ function initTabs() {
     // Click to navigate
     tab.addEventListener('click', function(e) {
       if (e.target.classList.contains('tab-close')) return;
-      if (tabDragging) return;
+      if (this.classList.contains('dragging')) return;
       navigateToPage(this.getAttribute('data-tab'));
     });
 

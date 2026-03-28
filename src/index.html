@@ -9,690 +9,604 @@
   <!-- favicon -->
   <link rel="shortcut icon" href="./assets/images/logo.ico" type="image/x-icon">
 
-  <!-- custom css link -->
+  <!-- custom css -->
   <link rel="stylesheet" href="./assets/css/style.css">
 
-  <!-- google font link -->
+  <!-- google font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-  <!-- Background glow effects -->
-  <div class="bg-glow" aria-hidden="true"></div>
-
-  <!-- #MAIN -->
-  <main>
-
-    <!-- #SIDEBAR -->
-    <aside class="sidebar" data-sidebar>
-
-      <div class="sidebar-info">
-
-        <figure class="avatar-box">
-          <img src="./assets/images/portret.png" alt="Portret van Stijn van de Pol" width="80">
-        </figure>
-
-        <div class="info-content">
-          <h1 class="name" title="Stijn van de Pol">Stijn van de Pol</h1>
-          <p class="title">Student IT Infrastructure</p>
-        </div>
-
-        <button class="info_more-btn" data-sidebar-btn>
-          <span>Show Contacts</span>
-          <ion-icon name="chevron-down"></ion-icon>
-        </button>
-
-      </div>
-
-      <div class="sidebar-info_more">
-
-        <div class="separator"></div>
-
-        <ul class="contacts-list">
-
-          <li class="contact-item">
-            <div class="icon-box">
-              <ion-icon name="mail-outline"></ion-icon>
-            </div>
-            <div class="contact-info">
-              <p class="contact-title">E-mail</p>
-              <a href="mailto:Stijnvdpol@outlook.com" class="contact-link">Stijnvdpol@outlook.com</a>
-            </div>
-          </li>
-
-          <li class="contact-item">
-            <div class="icon-box">
-              <ion-icon name="calendar-outline"></ion-icon>
-            </div>
-            <div class="contact-info">
-              <p class="contact-title">Geboortedatum</p>
-              <time datetime="2004-12-01">1 december 2004</time>
-            </div>
-          </li>
-
-          <li class="contact-item">
-            <div class="icon-box">
-              <ion-icon name="location-outline"></ion-icon>
-            </div>
-            <div class="contact-info">
-              <p class="contact-title">Locatie</p>
-              <address>Landhorst, Noord-Brabant, Nederland</address>
-            </div>
-          </li>
-
-        </ul>
-
-        <div class="separator"></div>
-
-        <ul class="social-list">
-
-          <li class="social-item">
-            <a href="https://www.linkedin.com/in/stijnvandepol/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
-              <ion-icon name="logo-linkedin"></ion-icon>
-            </a>
-          </li>
-
-          <li class="social-item">
-            <a href="https://github.com/stijnvandepol" target="_blank" rel="noopener" class="social-link" aria-label="GitHub">
-              <ion-icon name="logo-github"></ion-icon>
-            </a>
-          </li>
-
-          <li class="social-item">
-            <a href="https://www.instagram.com/stijnvdpol/" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
-              <ion-icon name="logo-instagram"></ion-icon>
-            </a>
-          </li>
-
-        </ul>
-
-      </div>
-
-    </aside>
-
-    <!-- #main-content -->
-    <div class="main-content">
-
-      <!-- #ABOUT -->
-      <article class="about active" data-page="over mij">
-
-        <header>
-          <h2 class="h2 article-title">Over mij</h2>
-        </header>
-
-        <section class="about-text">
-          <p>
-            Ik ben Stijn van de Pol, student HBO-ICT aan Fontys met de specialisatie Infrastructuur & Cybersecurity.
-            Mijn interesse gaat verder dan alleen techniek: ik wil begrijpen hoe systemen werken, hoe ik ze kan verbeteren en waarom een oplossing werkt.
-          </p>
-
-          <p>
-            In mijn homelab experimenteer ik regelmatig met nieuwe tools en configuraties.
-            Wat mij motiveert is dat IT nooit af is, er valt altijd iets te verbeteren, te beveiligen of slimmer te maken.
-            Nieuwe technologieën onderzoek ik graag zelf, vaak puur uit nieuwsgierigheid, en zo blijf ik groeien door mijn interessegebied steeds verder uit te breiden.
-          </p>
-        </section>
-
-        <!-- service -->
-        <section class="service">
-          <h3 class="h3 service-title">Wat ik doe</h3>
-
-          <ul class="service-list">
-
-            <li class="service-item reveal">
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-dev.svg" alt="Netwerk &amp; Infra" width="40">
-              </div>
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Netwerk &amp; Infrastructuur</h4>
-                <p class="service-item-text">
-                  Netwerken ontwerpen, segmenteren en beheren. Ervaring met firewalls, monitoring en logging voor
-                  een veilige en stabiele omgeving.
-                </p>
-              </div>
-            </li>
-
-            <li class="service-item reveal">
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-app.svg" alt="Automation" width="40">
-              </div>
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Automation</h4>
-                <p class="service-item-text">
-                  PowerShell &amp; Python scripting, Infrastructure as Code en CI/CD-pijplijnen voor efficiënte implementaties.
-                  Aangevuld met low-code automatisering en AI om processen te optimaliseren.
-                </p>
-              </div>
-            </li>
-
-            <li class="service-item reveal">
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-photo.svg" alt="Security" width="40">
-              </div>
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Security</h4>
-                <p class="service-item-text">
-                  Hardening-best practices toepassen, pentests/kwetsbaarheidsscans uitvoeren en loganalyse.
-                </p>
-              </div>
-            </li>
-
-            <li class="service-item reveal">
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-design.svg" alt="Cloud &amp; Development" width="40">
-              </div>
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Cloud &amp; Development</h4>
-                <p class="service-item-text">
-                  Ontwikkelen van applicaties en oplossingen. Ervaring met Azure &amp; Cloudflare
-                  gecombineerd met programmeerkennis voor het bouwen van systemen.
-                </p>
-              </div>
-            </li>
-
-          </ul>
-        </section>
-
-        <!-- Testimonials (hidden, kept for JS) -->
-        <section class="testimonials" hidden>
-          <h3 class="h3 testimonials-title">Testimonials</h3>
-          <ul class="testimonials-list has-scrollbar">
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-1.png" alt="Stijn van de Pol" width="60" data-testimonials-avatar>
-                </figure>
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Stijn van de Pol</h4>
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>Voorbeeldtekst uit het sjabloon.</p>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </section>
-
-        <!-- Modal (kept for JS) -->
-        <div class="modal-container" data-modal-container>
-          <div class="overlay" data-overlay></div>
-          <section class="testimonials-modal">
-            <button class="modal-close-btn" data-modal-close-btn>
-              <ion-icon name="close-outline"></ion-icon>
-            </button>
-            <div class="modal-img-wrapper">
-              <figure class="modal-avatar-box">
-                <img src="./assets/images/avatar-1.png" alt="Stijn van de Pol" width="80" data-modal-img>
-              </figure>
-              <img src="./assets/images/icon-quote.svg" alt="quote icon">
-            </div>
-            <div class="modal-content">
-              <h4 class="h3 modal-title" data-modal-title>Stijn van de Pol</h4>
-              <time datetime="2021-06-14">14 June, 2021</time>
-              <div data-modal-text>
-                <p>Voorbeeldtekst uit het sjabloon.</p>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <section class="clients" hidden>
-          <h3 class="h3 clients-title">Clients</h3>
-          <ul class="clients-list has-scrollbar">
-            <li class="clients-item"><a href="#"><img src="./assets/images/logo-1-color.png" alt="client logo"></a></li>
-          </ul>
-        </section>
-
-      </article>
-
-      <!-- #RESUME -->
-      <article class="resume" data-page="ontwikkeling">
-
-        <header>
-          <h2 class="h2 article-title">Opleiding & Ervaring</h2>
-        </header>
-
-        <section class="timeline">
-          <div class="title-wrapper">
-            <div class="icon-box"><ion-icon name="book-outline"></ion-icon></div>
-            <h3 class="h3">Opleiding</h3>
-          </div>
-
-          <ol class="timeline-list">
-
-            <li class="timeline-item reveal">
-              <h4 class="h4 timeline-item-title">Fontys Hogeschool – HBO-ICT</h4>
-              <span>2023 — 2027</span>
-              <p class="timeline-text">Profiel Infrastructure → specialisatie Cybersecurity.</p>
-            </li>
-
-            <li class="timeline-item reveal">
-              <h4 class="h4 timeline-item-title">Koning Willem I College – MBO4 ICT-beheer</h4>
-              <span>2020 — 2023</span>
-              <p class="timeline-text">IT-beheer, netwerk en support.</p>
-            </li>
-
-          </ol>
-        </section>
-
-        <section class="timeline">
-          <div class="title-wrapper">
-            <div class="icon-box"><ion-icon name="book-outline"></ion-icon></div>
-            <h3 class="h3">Ervaring</h3>
-          </div>
-
-          <ol class="timeline-list">
-
-            <li class="timeline-item reveal">
-              <h4 class="h4 timeline-item-title">Projectstage – Verweijen ICT</h4>
-              <span>sep. 2025 — jan. 2026 · 5 mnd · Mill</span>
-              <p class="timeline-text">Onderzoek naar de inzet van AI en low-code door middel van het Microsoft Power Platform voor het ontwikkelen van automatiseringsoplossingen.</p>
-            </li>
-
-            <li class="timeline-item reveal">
-              <h4 class="h4 timeline-item-title">Teamleider – Jumbo</h4>
-              <span>feb. 2025 — heden · Mill</span>
-              <p class="timeline-text">
-                Sinds 2020 werkzaam binnen deze vestiging. Doorgegroeid naar de rol van teamleider,
-                met focus op aansturing, opleiding van medewerkers en procesverbetering.</p>
-            </li>
-
-            <li class="timeline-item reveal">
-              <h4 class="h4 timeline-item-title">IT Engineer (stage) – Vanboxtel</h4>
-              <span>feb. 2023 — jun. 2023 · 5 mnd · Boekel</span>
-              <p class="timeline-text">Firewalls, updates, MFA, werkplek-inrichting en on-site support.</p>
-            </li>
-
-            <li class="timeline-item reveal">
-              <h4 class="h4 timeline-item-title">IT Engineer (stage) – Verweijen ICT</h4>
-              <span>sep. 2021 — jan. 2022 · 5 mnd · Mill</span>
-              <p class="timeline-text">Hardware registreren/installeren, MFA instellen en on-site support.</p>
-            </li>
-
-          </ol>
-        </section>
-
-        <section class="skill">
-          <h3 class="h3 skills-title">Vaardigheden</h3>
-
-          <ul class="skills-list">
-
-            <li class="skills-item reveal">
-              <div class="title-wrapper">
-                <h5 class="h5">Netwerkengineering</h5>
-                <data value="60">60%</data>
-              </div>
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 60%;"></div>
-              </div>
-            </li>
-
-            <li class="skills-item reveal">
-              <div class="title-wrapper">
-                <h5 class="h5">Scripting</h5>
-                <data value="75">75%</data>
-              </div>
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 75%;"></div>
-              </div>
-            </li>
-
-            <li class="skills-item reveal">
-              <div class="title-wrapper">
-                <h5 class="h5">Security</h5>
-                <data value="50">50%</data>
-              </div>
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 50%;"></div>
-              </div>
-            </li>
-
-            <li class="skills-item reveal">
-              <div class="title-wrapper">
-                <h5 class="h5">Cloud engineering</h5>
-                <data value="50">50%</data>
-              </div>
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 50%;"></div>
-              </div>
-            </li>
-
-          </ul>
-        </section>
-
-      </article>
-
-      <!-- #PORTFOLIO -->
-      <article class="portfolio" data-page="portfolio">
-
-        <header>
-          <h2 class="h2 article-title">Portfolio</h2>
-        </header>
-
-        <section class="projects">
-
-          <ul class="filter-list">
-
-            <li class="filter-item">
-              <button class="active" data-filter-btn>All</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Infrastructuur</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Applicaties</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Cybersecurity</button>
-            </li>
-
-          </ul>
-
-          <div class="filter-select-box">
-
-            <button class="filter-select" data-select>
-
-              <div class="select-value" data-select-value>Select category</div>
-
-              <div class="select-icon">
-                <ion-icon name="chevron-down"></ion-icon>
-              </div>
-
-            </button>
-
-            <ul class="select-list">
-
-              <li class="select-item">
-                <button data-select-item>All</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Infrastructuur</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Applicaties</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Cybersecurity</button>
-              </li>
-
-            </ul>
-
-          </div>
-
-          <ul class="project-list">
-
-            <li class="project-item active" data-filter-item data-category="infrastructuur">
-              <a href="./assets/images/project-1.png">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="./assets/images/project-1.png" alt="OTAP Omgeving" loading="lazy">
-                </figure>
-                <h3 class="project-title">OTAP Omgeving</h3>
-                <p class="project-category">GitHub Workflows · Cloudflared · Databases · Containerisatie</p>
-              </a>
-            </li>
-
-            <li class="project-item active" data-filter-item data-category="infrastructuur">
-              <a href="./assets/images/project-2.png">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="./assets/images/project-2.png" alt="Hybride IT-Infrastructuur" loading="lazy">
-                </figure>
-                <h3 class="project-title">Hybride IT-Infrastructuur</h3>
-                <p class="project-category">Azure · Intune · On-Prem Services · Windows · Linux</p>
-              </a>
-            </li>
-
-            <li class="project-item active" data-filter-item data-category="applicaties">
-              <a href="./assets/images/project-3.png">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="./assets/images/project-3.png" alt="Full-Stack App" loading="lazy">
-                </figure>
-                <h3 class="project-title">Containerized Full-Stack Applicatie</h3>
-                <p class="project-category">Backend · Frontend · API · Database · Containerisatie</p>
-              </a>
-            </li>
-
-            <li class="project-item active" data-filter-item data-category="applicaties">
-              <a href="./assets/images/project-4.png">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="./assets/images/project-4.png" alt="Monitoring" loading="lazy">
-                </figure>
-                <h3 class="project-title">Monitoring & Inzicht</h3>
-                <p class="project-category">Beszel · Checkmk · Dashboards · Alerts</p>
-              </a>
-            </li>
-
-            <li class="project-item active" data-filter-item data-category="infrastructuur">
-              <a href="./assets/images/project-5.png">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="./assets/images/project-5.png" alt="Virtualisatie" loading="lazy">
-                </figure>
-                <h3 class="project-title">Virtualisatie & Containerisatie</h3>
-                <p class="project-category">Proxmox · VMs · LXC Containers · Docker · Scripting · Backups</p>
-              </a>
-            </li>
-
-            <li class="project-item active" data-filter-item data-category="applicaties">
-              <a href="./assets/images/project-7.png">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="./assets/images/project-7.png" alt="Power Platform" loading="lazy">
-                </figure>
-                <h3 class="project-title">Microsoft Power Platform</h3>
-                <p class="project-category">Power Automate · Power Apps · Copilot Studio · AI Agents</p>
-              </a>
-            </li>
-
-            <li class="project-item active" data-filter-item data-category="applicaties">
-              <a href="./assets/images/project-8.png">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="./assets/images/project-8.png" alt="Procesautomatisering" loading="lazy">
-                </figure>
-                <h3 class="project-title">Procesautomatisering & AI</h3>
-                <p class="project-category">Low-Code / No-Code Automation · n8n · AI Agents · MCP · API Integraties</p>
-              </a>
-            </li>
-
-          </ul>
-
-        </section>
-
-      </article>
-
-      <!-- #BLOG -->
-      <article class="blog" data-page="blog">
-
-        <header>
-          <h2 class="h2 article-title">Blog</h2>
-        </header>
-
-        <section class="blog-posts">
-
-          <ul class="blog-posts-list">
-
-            <li class="blog-post-item">
-              <a href="https://snackspot.online" target="_blank" rel="noopener">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-1.jpg" alt="SnackSpot" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Project</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="01-03-2026">2026</time>
-                  </div>
-
-                  <div class="blog-title-row">
-                    <h3 class="h3 blog-item-title">SnackSpot</h3>
-                    <span class="blog-status online">Online</span>
-                  </div>
-
-                  <p class="blog-text">
-                    Een mobile-first webapp voor het ontdekken en reviewen van lokale verborgen eetplekken. Gebouwd met een community feed, foto-uploads, structured ratings, nearby discovery en een apart admin panel voor moderatie.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-          </ul>
-
-        </section>
-
-      </article>
-
-      <!-- #CONTACT -->
-      <article class="contact" data-page="contact" hidden>
-
-        <header>
-          <h2 class="h2 article-title">Contact</h2>
-        </header>
-
-        <section class="mapbox" data-mapbox>
-          <figure>
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9829.471436148936!2d5.261158!3d51.657890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c6a6c6e6e6e6e7%3A0x0!2sLandhorst%2C%20Noord-Brabant%2C%20Nederland!5e0!3m2!1snl!2snl!4v1672531200000"
-              width="400" height="300" loading="lazy"></iframe>
-          </figure>
-        </section>
-
-        <section class="contact-form">
-
-          <h3 class="h3 form-title">Contactformulier</h3>
-
-          <form action="#" class="form" data-form>
-
-            <div class="input-wrapper">
-              <input type="text" name="fullname" class="form-input" placeholder="Volledige naam" required data-form-input>
-              <input type="email" name="email" class="form-input" placeholder="E-mailadres" required data-form-input>
-            </div>
-
-            <textarea name="message" class="form-input" placeholder="Je bericht" required data-form-input></textarea>
-
-            <button class="form-btn" type="submit" disabled data-form-btn>
-              <ion-icon name="paper-plane"></ion-icon>
-              <span>Versturen</span>
-            </button>
-
-          </form>
-
-        </section>
-
-      </article>
-
+  <!-- ======================== BOOT SCREEN ======================== -->
+  <div class="boot-screen" id="boot">
+    <div class="boot-name" aria-label="Stijn van de Pol">
+      <span>S</span><span>t</span><span>i</span><span>j</span><span>n</span><span class="space">&nbsp;</span><span>v</span><span>a</span><span>n</span><span class="space">&nbsp;</span><span>d</span><span>e</span><span class="space">&nbsp;</span><span>P</span><span>o</span><span>l</span>
     </div>
-
-  </main>
-
-  <!-- #NAVBAR — iOS Dock -->
-  <nav class="navbar" id="dock">
-    <ul class="navbar-list">
-      <li class="navbar-item">
-        <button class="navbar-link active" data-nav-link data-target="over mij">
-          <ion-icon name="person-outline"></ion-icon>
-          <span>Over Mij</span>
-        </button>
-      </li>
-      <li class="navbar-item">
-        <button class="navbar-link" data-nav-link data-target="ontwikkeling">
-          <ion-icon name="briefcase-outline"></ion-icon>
-          <span>Ontwikkeling</span>
-        </button>
-      </li>
-      <li class="navbar-item">
-        <button class="navbar-link" data-nav-link data-target="portfolio">
-          <ion-icon name="folder-outline"></ion-icon>
-          <span>Portfolio</span>
-        </button>
-      </li>
-      <li class="navbar-item">
-        <button class="navbar-link" data-nav-link data-target="blog">
-          <ion-icon name="newspaper-outline"></ion-icon>
-          <span>Blog</span>
-        </button>
-      </li>
-      <li class="navbar-item" hidden>
-        <button class="navbar-link" data-nav-link data-target="contact">
-          <ion-icon name="chatbubble-outline"></ion-icon>
-          <span>Contact</span>
-        </button>
-      </li>
-    </ul>
-  </nav>
-
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox">
-    <div class="lightbox-backdrop" data-lightbox-close></div>
-    <div class="lightbox-content">
-      <button class="lightbox-close" data-lightbox-close>&times;</button>
-      <img id="lightbox-img" src="" alt="">
-      <p class="lightbox-title" id="lightbox-title"></p>
+    <div class="boot-bar-wrap">
+      <div class="boot-bar"></div>
     </div>
   </div>
 
-  <!-- Inline navigation fallback — always works even if script.js fails -->
-  <script>
-  (function(){
-    var links = document.querySelectorAll('[data-nav-link]');
-    var pages = document.querySelectorAll('[data-page]');
-    links.forEach(function(link){
-      link.addEventListener('click', function(e){
-        e.preventDefault();
-        var target = this.getAttribute('data-target');
-        pages.forEach(function(p){ p.classList.remove('active'); });
-        links.forEach(function(n){ n.classList.remove('active'); });
-        this.classList.add('active');
-        for(var i=0;i<pages.length;i++){
-          if(pages[i].getAttribute('data-page')===target){
-            pages[i].removeAttribute('hidden');
-            pages[i].classList.add('active');
-            break;
-          }
-        }
-        window.scrollTo(0,0);
-      });
-    });
-  })();
-  </script>
+  <!-- ======================== DESKTOP ======================== -->
+  <div class="desktop" id="desktop">
+    <div class="wallpaper" aria-hidden="true"></div>
 
-  <!-- custom js link (cache bust) -->
-  <script src="./assets/js/script.js?v=2"></script>
+    <!-- ===== MENU BAR ===== -->
+    <header class="menubar">
+      <div class="mb-left">
+        <span class="mb-logo">SvdP</span>
+        <div class="mb-menu" data-menu>
+          <span class="mb-item mb-bold">Finder</span>
+          <div class="mb-dropdown">
+            <div class="dd-item" data-nav="over-mij">Over dit Portfolio</div>
+            <div class="dd-divider"></div>
+            <div class="dd-item disabled">Voorkeuren… <span class="dd-key">&#8984;,</span></div>
+            <div class="dd-divider"></div>
+            <div class="dd-item disabled">Leeg prullenmand</div>
+            <div class="dd-divider"></div>
+            <div class="dd-item disabled">Verberg Finder <span class="dd-key">&#8984;H</span></div>
+          </div>
+        </div>
+        <div class="mb-menu" data-menu>
+          <span class="mb-item">File</span>
+          <div class="mb-dropdown">
+            <div class="dd-item" data-nav="over-mij">Nieuw venster <span class="dd-key">&#8984;N</span></div>
+            <div class="dd-item" data-nav="portfolio">Open Portfolio <span class="dd-key">&#8984;O</span></div>
+            <div class="dd-divider"></div>
+            <div class="dd-item disabled">Sluit venster <span class="dd-key">&#8984;W</span></div>
+            <div class="dd-item disabled">Toon info <span class="dd-key">&#8984;I</span></div>
+          </div>
+        </div>
+        <div class="mb-menu" data-menu>
+          <span class="mb-item">Edit</span>
+          <div class="mb-dropdown">
+            <div class="dd-item disabled">Herstel <span class="dd-key">&#8984;Z</span></div>
+            <div class="dd-item disabled">Opnieuw <span class="dd-key">&#8679;&#8984;Z</span></div>
+            <div class="dd-divider"></div>
+            <div class="dd-item disabled">Knip <span class="dd-key">&#8984;X</span></div>
+            <div class="dd-item disabled">Kopieer <span class="dd-key">&#8984;C</span></div>
+            <div class="dd-item disabled">Plak <span class="dd-key">&#8984;V</span></div>
+            <div class="dd-item disabled">Selecteer alles <span class="dd-key">&#8984;A</span></div>
+          </div>
+        </div>
+        <div class="mb-menu" data-menu>
+          <span class="mb-item">View</span>
+          <div class="mb-dropdown">
+            <div class="dd-item" data-nav="over-mij">Over Mij</div>
+            <div class="dd-item" data-nav="ontwikkeling">Ontwikkeling</div>
+            <div class="dd-item" data-nav="portfolio">Portfolio</div>
+            <div class="dd-item" data-nav="blog">Blog</div>
+            <div class="dd-divider"></div>
+            <div class="dd-item disabled">Toon tabbladbalk <span class="dd-key">&#8679;&#8984;T</span></div>
+          </div>
+        </div>
+        <div class="mb-menu" data-menu>
+          <span class="mb-item">Go</span>
+          <div class="mb-dropdown">
+            <div class="dd-item" data-href="https://github.com/stijnvandepol">GitHub <span class="dd-key">&#8679;&#8984;G</span></div>
+            <div class="dd-item" data-href="https://www.linkedin.com/in/stijnvandepol/">LinkedIn <span class="dd-key">&#8679;&#8984;L</span></div>
+            <div class="dd-item" data-href="https://www.instagram.com/stijnvdpol/">Instagram</div>
+            <div class="dd-divider"></div>
+            <div class="dd-item" data-href="mailto:Stijnvdpol@outlook.com">Stuur e-mail</div>
+          </div>
+        </div>
+        <div class="mb-menu" data-menu>
+          <span class="mb-item">Window</span>
+          <div class="mb-dropdown">
+            <div class="dd-item" data-action="minimize">Minimaliseer <span class="dd-key">&#8984;M</span></div>
+            <div class="dd-item" data-action="maximize">Schermvullend <span class="dd-key">&#8963;&#8984;F</span></div>
+            <div class="dd-divider"></div>
+            <div class="dd-item" data-action="restore">Breng alles naar voren</div>
+          </div>
+        </div>
+        <div class="mb-menu" data-menu>
+          <span class="mb-item">Help</span>
+          <div class="mb-dropdown">
+            <div class="dd-item disabled">Zoek</div>
+            <div class="dd-divider"></div>
+            <div class="dd-item" data-href="https://github.com/stijnvandepol">Broncode op GitHub</div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-right">
+        <div class="mb-right-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>
+        </div>
+        <div class="mb-right-item">
+          <svg width="22" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="2.5" stroke="currentColor" stroke-opacity="0.85"/><rect x="2" y="2" width="18" height="8" rx="1.5" fill="currentColor" fill-opacity="0.85"/><path d="M23 4v4a2 2 0 000-4z" fill="currentColor" fill-opacity="0.5"/></svg>
+        </div>
+        <div class="mb-right-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </div>
+        <div class="mb-right-item" id="menubar-clock"></div>
+      </div>
+    </header>
 
-  <!-- ionicons -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <!-- ===== MAIN WINDOW ===== -->
+    <div class="window" id="main-window">
+      <div class="win-border"></div>
+      <div class="win-shine"></div>
+
+      <!-- Titlebar -->
+      <div class="titlebar">
+        <div class="traffic-lights">
+          <div class="tl tl-close" data-action="close">
+            <svg viewBox="0 0 12 12"><path d="M3.5 3.5l5 5M8.5 3.5l-5 5" stroke="rgba(0,0,0,0.4)" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
+          </div>
+          <div class="tl tl-minimize" data-action="minimize">
+            <svg viewBox="0 0 12 12"><path d="M2.5 6h7" stroke="rgba(0,0,0,0.4)" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
+          </div>
+          <div class="tl tl-maximize" data-action="maximize">
+            <svg viewBox="0 0 12 12"><path d="M3 9l3-3m0 0l3-3M6 6l3 3M6 6L3 3" stroke="rgba(0,0,0,0.4)" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+
+        <div class="tb-nav">
+          <button class="tb-btn" aria-label="Terug">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+          </button>
+          <button class="tb-btn" aria-label="Vooruit">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+          </button>
+        </div>
+
+        <div class="tb-url">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+          <span id="url-text">stijnvandepol.nl — Over Mij</span>
+        </div>
+
+        <div class="tb-actions">
+          <button class="tb-btn" aria-label="Deel">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+          </button>
+          <button class="tb-btn" aria-label="Nieuw tabblad">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab Bar (Safari separate-tabs style) -->
+      <div class="tabbar">
+        <button class="tab active" data-tab="over-mij">
+          <img src="https://raw.githubusercontent.com/PuruVJ/macos-web/main/public/app-icons/safari/256.webp" alt="" class="tab-favicon">
+          <span class="tab-label">Over Mij</span>
+          <span class="tab-close">&times;</span>
+        </button>
+        <button class="tab" data-tab="ontwikkeling">
+          <img src="https://raw.githubusercontent.com/PuruVJ/macos-web/main/public/app-icons/safari/256.webp" alt="" class="tab-favicon">
+          <span class="tab-label">Ontwikkeling</span>
+          <span class="tab-close">&times;</span>
+        </button>
+        <button class="tab" data-tab="portfolio">
+          <img src="https://raw.githubusercontent.com/PuruVJ/macos-web/main/public/app-icons/safari/256.webp" alt="" class="tab-favicon">
+          <span class="tab-label">Portfolio</span>
+          <span class="tab-close">&times;</span>
+        </button>
+        <button class="tab" data-tab="blog">
+          <img src="https://raw.githubusercontent.com/PuruVJ/macos-web/main/public/app-icons/safari/256.webp" alt="" class="tab-favicon">
+          <span class="tab-label">Blog</span>
+          <span class="tab-close">&times;</span>
+        </button>
+        <button class="tab-add" aria-label="Nieuw tabblad">+</button>
+      </div>
+
+      <!-- ===== WINDOW BODY (all pages) ===== -->
+      <div class="win-body" id="win-body">
+
+        <!-- PAGE: Over Mij -->
+        <article class="page active" data-page="over-mij">
+
+          <!-- Profile header -->
+          <div class="profile-header">
+            <div class="avatar-wrap">
+              <div class="avatar-glow"></div>
+              <figure class="avatar-box">
+                <img src="./assets/images/portret.png" alt="Stijn van de Pol" width="110">
+              </figure>
+            </div>
+            <div class="profile-info">
+              <h1 class="profile-name">Stijn van de Pol</h1>
+              <p class="profile-role">Student IT Infrastructure & Cybersecurity</p>
+              <div class="profile-meta">
+                <span class="meta-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                  <a href="mailto:Stijnvdpol@outlook.com">Stijnvdpol@outlook.com</a>
+                </span>
+                <span class="meta-item">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  Landhorst, Noord-Brabant
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- About text -->
+          <section class="about-text">
+            <p>Ik ben Stijn van de Pol, student HBO-ICT aan Fontys met de specialisatie Infrastructuur & Cybersecurity. Mijn interesse gaat verder dan alleen techniek: ik wil begrijpen hoe systemen werken, hoe ik ze kan verbeteren en waarom een oplossing werkt.</p>
+            <p>In mijn homelab experimenteer ik regelmatig met nieuwe tools en configuraties. Wat mij motiveert is dat IT nooit af is, er valt altijd iets te verbeteren, te beveiligen of slimmer te maken. Nieuwe technologieën onderzoek ik graag zelf, vaak puur uit nieuwsgierigheid, en zo blijf ik groeien door mijn interessegebied steeds verder uit te breiden.</p>
+          </section>
+
+          <!-- Wat ik doe -->
+          <section class="service-section">
+            <h2 class="section-heading">Wat ik doe</h2>
+            <div class="bento-grid">
+              <div class="bento-card reveal">
+                <div class="bento-icon icon-net">
+                  <img src="./assets/images/icon-dev.svg" alt="" width="24">
+                </div>
+                <h3>Netwerk & Infrastructuur</h3>
+                <p>Netwerken ontwerpen, segmenteren en beheren. Ervaring met firewalls, monitoring en logging voor een veilige en stabiele omgeving.</p>
+              </div>
+              <div class="bento-card reveal">
+                <div class="bento-icon icon-auto">
+                  <img src="./assets/images/icon-app.svg" alt="" width="24">
+                </div>
+                <h3>Automation</h3>
+                <p>PowerShell & Python scripting, Infrastructure as Code en CI/CD-pijplijnen. Aangevuld met low-code automatisering en AI om processen te optimaliseren.</p>
+              </div>
+              <div class="bento-card reveal">
+                <div class="bento-icon icon-sec">
+                  <img src="./assets/images/icon-photo.svg" alt="" width="24">
+                </div>
+                <h3>Security</h3>
+                <p>Hardening-best practices toepassen, pentests/kwetsbaarheidsscans uitvoeren en loganalyse.</p>
+              </div>
+              <div class="bento-card reveal">
+                <div class="bento-icon icon-cloud">
+                  <img src="./assets/images/icon-design.svg" alt="" width="24">
+                </div>
+                <h3>Cloud & Development</h3>
+                <p>Ontwikkelen van applicaties en oplossingen. Ervaring met Azure & Cloudflare gecombineerd met programmeerkennis voor het bouwen van systemen.</p>
+              </div>
+            </div>
+          </section>
+        </article>
+
+        <!-- PAGE: Ontwikkeling -->
+        <article class="page" data-page="ontwikkeling">
+          <h2 class="section-heading">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gold)"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>
+            Opleiding
+          </h2>
+
+          <div class="timeline">
+            <div class="timeline-item reveal">
+              <h4 class="tl-title">Fontys Hogeschool – HBO-ICT</h4>
+              <span class="tl-date">2023 — 2027</span>
+              <p class="tl-text">Profiel Infrastructure → specialisatie Cybersecurity.</p>
+            </div>
+            <div class="timeline-item reveal">
+              <h4 class="tl-title">Koning Willem I College – MBO4 ICT-beheer</h4>
+              <span class="tl-date">2020 — 2023</span>
+              <p class="tl-text">IT-beheer, netwerk en support.</p>
+            </div>
+          </div>
+
+          <h2 class="section-heading">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gold)"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+            Ervaring
+          </h2>
+
+          <div class="timeline">
+            <div class="timeline-item reveal">
+              <h4 class="tl-title">Projectstage – Verweijen ICT</h4>
+              <span class="tl-date">sep. 2025 — jan. 2026 · 5 mnd · Mill</span>
+              <p class="tl-text">Onderzoek naar de inzet van AI en low-code door middel van het Microsoft Power Platform voor het ontwikkelen van automatiseringsoplossingen.</p>
+            </div>
+            <div class="timeline-item reveal">
+              <h4 class="tl-title">Teamleider – Jumbo</h4>
+              <span class="tl-date">feb. 2025 — heden · Mill</span>
+              <p class="tl-text">Sinds 2020 werkzaam binnen deze vestiging. Doorgegroeid naar de rol van teamleider, met focus op aansturing, opleiding van medewerkers en procesverbetering.</p>
+            </div>
+            <div class="timeline-item reveal">
+              <h4 class="tl-title">IT Engineer (stage) – Vanboxtel</h4>
+              <span class="tl-date">feb. 2023 — jun. 2023 · 5 mnd · Boekel</span>
+              <p class="tl-text">Firewalls, updates, MFA, werkplek-inrichting en on-site support.</p>
+            </div>
+            <div class="timeline-item reveal">
+              <h4 class="tl-title">IT Engineer (stage) – Verweijen ICT</h4>
+              <span class="tl-date">sep. 2021 — jan. 2022 · 5 mnd · Mill</span>
+              <p class="tl-text">Hardware registreren/installeren, MFA instellen en on-site support.</p>
+            </div>
+          </div>
+
+          <h2 class="section-heading">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gold)"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM10 17l-3.5-3.5 1.41-1.41L10 14.17l4.59-4.58L16 11l-6 6z"/></svg>
+            Vaardigheden
+          </h2>
+
+          <div class="skills-card">
+            <div class="skill-item reveal">
+              <div class="skill-header">
+                <span class="skill-name">Netwerkengineering</span>
+                <span class="skill-val" data-val="60">0%</span>
+              </div>
+              <div class="skill-track"><div class="skill-fill" style="--target:60%"></div></div>
+            </div>
+            <div class="skill-item reveal">
+              <div class="skill-header">
+                <span class="skill-name">Scripting</span>
+                <span class="skill-val" data-val="75">0%</span>
+              </div>
+              <div class="skill-track"><div class="skill-fill" style="--target:75%"></div></div>
+            </div>
+            <div class="skill-item reveal">
+              <div class="skill-header">
+                <span class="skill-name">Security</span>
+                <span class="skill-val" data-val="50">0%</span>
+              </div>
+              <div class="skill-track"><div class="skill-fill" style="--target:50%"></div></div>
+            </div>
+            <div class="skill-item reveal">
+              <div class="skill-header">
+                <span class="skill-name">Cloud engineering</span>
+                <span class="skill-val" data-val="50">0%</span>
+              </div>
+              <div class="skill-track"><div class="skill-fill" style="--target:50%"></div></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- PAGE: Portfolio -->
+        <article class="page" data-page="portfolio">
+          <h2 class="section-heading">Portfolio</h2>
+
+          <div class="filter-bar">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="infrastructuur">Infrastructuur</button>
+            <button class="filter-btn" data-filter="applicaties">Applicaties</button>
+            <button class="filter-btn" data-filter="cybersecurity">Cybersecurity</button>
+          </div>
+
+          <div class="project-grid">
+            <div class="project-card active reveal" data-category="infrastructuur">
+              <a href="./assets/images/project-1.png" data-lightbox>
+                <figure class="project-img">
+                  <img src="./assets/images/project-1.png" alt="OTAP Omgeving" loading="lazy">
+                  <div class="project-overlay"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+                </figure>
+                <h3 class="project-title">OTAP Omgeving</h3>
+                <p class="project-cat">GitHub Workflows · Cloudflared · Databases · Containerisatie</p>
+              </a>
+            </div>
+
+            <div class="project-card active reveal" data-category="infrastructuur">
+              <a href="./assets/images/project-2.png" data-lightbox>
+                <figure class="project-img">
+                  <img src="./assets/images/project-2.png" alt="Hybride IT-Infrastructuur" loading="lazy">
+                  <div class="project-overlay"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+                </figure>
+                <h3 class="project-title">Hybride IT-Infrastructuur</h3>
+                <p class="project-cat">Azure · Intune · On-Prem Services · Windows · Linux</p>
+              </a>
+            </div>
+
+            <div class="project-card active reveal" data-category="applicaties">
+              <a href="./assets/images/project-3.png" data-lightbox>
+                <figure class="project-img">
+                  <img src="./assets/images/project-3.png" alt="Full-Stack App" loading="lazy">
+                  <div class="project-overlay"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+                </figure>
+                <h3 class="project-title">Containerized Full-Stack Applicatie</h3>
+                <p class="project-cat">Backend · Frontend · API · Database · Containerisatie</p>
+              </a>
+            </div>
+
+            <div class="project-card active reveal" data-category="applicaties">
+              <a href="./assets/images/project-4.png" data-lightbox>
+                <figure class="project-img">
+                  <img src="./assets/images/project-4.png" alt="Monitoring" loading="lazy">
+                  <div class="project-overlay"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+                </figure>
+                <h3 class="project-title">Monitoring & Inzicht</h3>
+                <p class="project-cat">Beszel · Checkmk · Dashboards · Alerts</p>
+              </a>
+            </div>
+
+            <div class="project-card active reveal" data-category="infrastructuur">
+              <a href="./assets/images/project-5.png" data-lightbox>
+                <figure class="project-img">
+                  <img src="./assets/images/project-5.png" alt="Virtualisatie" loading="lazy">
+                  <div class="project-overlay"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+                </figure>
+                <h3 class="project-title">Virtualisatie & Containerisatie</h3>
+                <p class="project-cat">Proxmox · VMs · LXC Containers · Docker · Scripting · Backups</p>
+              </a>
+            </div>
+
+            <div class="project-card active reveal" data-category="applicaties">
+              <a href="./assets/images/project-7.png" data-lightbox>
+                <figure class="project-img">
+                  <img src="./assets/images/project-7.png" alt="Power Platform" loading="lazy">
+                  <div class="project-overlay"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+                </figure>
+                <h3 class="project-title">Microsoft Power Platform</h3>
+                <p class="project-cat">Power Automate · Power Apps · Copilot Studio · AI Agents</p>
+              </a>
+            </div>
+
+            <div class="project-card active reveal" data-category="applicaties">
+              <a href="./assets/images/project-8.png" data-lightbox>
+                <figure class="project-img">
+                  <img src="./assets/images/project-8.png" alt="Procesautomatisering" loading="lazy">
+                  <div class="project-overlay"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+                </figure>
+                <h3 class="project-title">Procesautomatisering & AI</h3>
+                <p class="project-cat">Low-Code / No-Code · n8n · AI Agents · MCP · API Integraties</p>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- PAGE: Blog -->
+        <article class="page" data-page="blog">
+          <h2 class="section-heading">Blog</h2>
+
+          <div class="blog-grid">
+            <div class="blog-card reveal">
+              <a href="https://snackspot.online" target="_blank" rel="noopener">
+                <figure class="blog-img">
+                  <img src="./assets/images/blog-1.jpg" alt="SnackSpot" loading="lazy">
+                </figure>
+                <div class="blog-content">
+                  <div class="blog-meta">
+                    <span class="blog-category">Project</span>
+                    <span class="blog-dot"></span>
+                    <time datetime="01-03-2026">2026</time>
+                  </div>
+                  <div class="blog-title-row">
+                    <h3>SnackSpot</h3>
+                    <span class="blog-status online">Online</span>
+                  </div>
+                  <p class="blog-text">Een mobile-first webapp voor het ontdekken en reviewen van lokale verborgen eetplekken. Gebouwd met een community feed, foto-uploads, structured ratings, nearby discovery en een apart admin panel voor moderatie.</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <!-- ===== LIGHTBOX ===== -->
+    <div class="lightbox" id="lightbox">
+      <div class="lightbox-backdrop" data-lightbox-close></div>
+      <div class="lightbox-content">
+        <button class="lightbox-close" data-lightbox-close>&times;</button>
+        <img id="lightbox-img" src="" alt="">
+        <p class="lightbox-title" id="lightbox-title"></p>
+      </div>
+    </div>
+
+    <!-- ===== DOCK ===== -->
+    <nav class="dock" id="dock">
+      <div class="dock-el">
+      <div class="dock-items">
+        <!-- Finder -->
+        <div class="di" data-dock="finder">
+          <div class="di-tip">Finder</div>
+          <div class="di-icon">
+            <img src="https://raw.githubusercontent.com/PuruVJ/macos-web/main/public/app-icons/finder/256.webp" alt="Finder" draggable="false">
+          </div>
+          <div class="di-dot active"></div>
+        </div>
+        <!-- Safari (Over Mij) -->
+        <div class="di" data-dock="over-mij" data-page-link="over-mij">
+          <div class="di-tip">Over Mij</div>
+          <div class="di-icon">
+            <img src="https://raw.githubusercontent.com/PuruVJ/macos-web/main/public/app-icons/safari/256.webp" alt="Safari" draggable="false">
+          </div>
+          <div class="di-dot active"></div>
+        </div>
+        <!-- Mail -->
+        <div class="di" data-dock="mail" data-href="mailto:Stijnvdpol@outlook.com">
+          <div class="di-tip">Mail</div>
+          <div class="di-icon">
+            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/cf/a0/8c/cfa08c8a-5789-d605-a3cb-760ab70d52e1/mail-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg" alt="Mail" draggable="false">
+          </div>
+          <div class="di-dot"></div>
+        </div>
+        <!-- Calendar -->
+        <div class="di" data-dock="calendar">
+          <div class="di-tip">Agenda</div>
+          <div class="di-icon">
+            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/58/79/e0/5879e09e-20ac-a4c1-80e1-5669247cad4c/calendar-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg" alt="Calendar" draggable="false">
+          </div>
+          <div class="di-dot"></div>
+        </div>
+        <!-- Notes (Ontwikkeling) -->
+        <div class="di" data-dock="notes" data-page-link="ontwikkeling">
+          <div class="di-tip">Ontwikkeling</div>
+          <div class="di-icon">
+            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/96/85/52/96855209-27d3-bfb0-0516-105a2223ef50/notes-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg" alt="Notes" draggable="false">
+          </div>
+          <div class="di-dot"></div>
+        </div>
+        <!-- Photos (Portfolio) -->
+        <div class="di" data-dock="photos" data-page-link="portfolio">
+          <div class="di-tip">Portfolio</div>
+          <div class="di-icon">
+            <img src="https://raw.githubusercontent.com/PuruVJ/macos-web/main/public/app-icons/photos/256.webp" alt="Portfolio" draggable="false">
+          </div>
+          <div class="di-dot"></div>
+        </div>
+        <!-- Terminal -->
+        <div class="di" data-dock="terminal">
+          <div class="di-tip">Terminal</div>
+          <div class="di-icon">
+            <img src="https://raw.githubusercontent.com/PuruVJ/macos-web/main/public/app-icons/terminal/256.png" alt="Terminal" draggable="false">
+          </div>
+          <div class="di-dot"></div>
+        </div>
+        <!-- Settings -->
+        <div class="di" data-dock="settings">
+          <div class="di-tip">Instellingen</div>
+          <div class="di-icon">
+            <img src="https://raw.githubusercontent.com/PuruVJ/macos-web/main/public/app-icons/system-preferences/256.webp" alt="Instellingen" draggable="false">
+          </div>
+          <div class="di-dot"></div>
+        </div>
+
+        <!-- Divider -->
+        <div class="dock-sep"></div>
+
+        <!-- GitHub -->
+        <div class="di" data-dock="github" data-href="https://github.com/stijnvandepol">
+          <div class="di-tip">GitHub</div>
+          <div class="di-icon di-icon-custom" style="background:#161b22;">
+            <svg width="30" height="30" viewBox="0 0 16 16" fill="#fff"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          </div>
+          <div class="di-dot"></div>
+        </div>
+        <!-- LinkedIn -->
+        <div class="di" data-dock="linkedin" data-href="https://www.linkedin.com/in/stijnvandepol/">
+          <div class="di-tip">LinkedIn</div>
+          <div class="di-icon di-icon-custom" style="background:#0A66C2;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </div>
+          <div class="di-dot"></div>
+        </div>
+        <!-- Instagram -->
+        <div class="di" data-dock="instagram" data-href="https://www.instagram.com/stijnvdpol/">
+          <div class="di-tip">Instagram</div>
+          <div class="di-icon di-icon-custom" style="background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </div>
+          <div class="di-dot"></div>
+        </div>
+      </div>
+      </div>
+    </nav>
+
+  </div>
+
+  <!-- SVG squircle clip-path for macOS icon shape -->
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <clipPath id="squircle" clipPathUnits="objectBoundingBox">
+        <path d="M 0.5,0 C 0.93,0 1,0.07 1,0.5 C 1,0.93 0.93,1 0.5,1 C 0.07,1 0,0.93 0,0.5 C 0,0.07 0.07,0 0.5,0 Z"/>
+      </clipPath>
+    </defs>
+  </svg>
+
+  <!-- Desktop right-click context menu -->
+  <div class="ctx-menu" id="ctx-menu">
+    <div class="ctx-item" data-ctx-nav="over-mij">Over dit Portfolio</div>
+    <div class="ctx-divider"></div>
+    <div class="ctx-item disabled">Nieuwe map</div>
+    <div class="ctx-item disabled">Toon info</div>
+    <div class="ctx-divider"></div>
+    <div class="ctx-item" data-ctx-nav="portfolio">Bekijk Portfolio</div>
+    <div class="ctx-item" data-ctx-nav="ontwikkeling">Bekijk Ontwikkeling</div>
+    <div class="ctx-divider"></div>
+    <div class="ctx-item" data-ctx-href="https://github.com/stijnvandepol">Broncode op GitHub</div>
+  </div>
+
+  <!-- custom js -->
+  <script src="./assets/js/script.js"></script>
 
 </body>
 </html>

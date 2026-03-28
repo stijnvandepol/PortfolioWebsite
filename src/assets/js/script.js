@@ -105,56 +105,13 @@ document.querySelectorAll('[data-ctx-href]').forEach(function(item) {
 // WINDOW MANAGEMENT
 // ============================
 var mainWindow = document.getElementById('main-window');
-var isMaximized = false;
-var savedTransform = '';
 
 function showWindow() {
-  if (!mainWindow) return;
-  mainWindow.style.display = '';
-  mainWindow.style.opacity = '1';
-  mainWindow.style.transform = savedTransform || 'translateX(-50%)';
-  mainWindow.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
-  setTimeout(function() { mainWindow.style.transition = ''; }, 350);
+  if (mainWindow) mainWindow.style.display = '';
 }
 
-function handleWindowAction(action) {
-  if (!mainWindow) return;
-  if (action === 'close' || action === 'minimize') {
-    savedTransform = mainWindow.style.transform || 'translateX(-50%)';
-    mainWindow.style.transition = 'transform 0.4s ease, opacity 0.3s ease';
-    mainWindow.style.opacity = '0';
-    mainWindow.style.transform = savedTransform + ' scale(0.4) translateY(50vh)';
-    setTimeout(function() {
-      mainWindow.style.display = 'none';
-      mainWindow.style.transition = '';
-    }, 400);
-  } else if (action === 'maximize') {
-    toggleMaximize();
-  } else if (action === 'restore') {
-    showWindow();
-  }
-}
-
-function toggleMaximize() {
-  if (!mainWindow) return;
-  mainWindow.style.transition = 'width 0.3s ease, height 0.3s ease, transform 0.3s ease, top 0.3s ease, left 0.3s ease, border-radius 0.3s ease, max-width 0.3s ease';
-
-  if (!isMaximized) {
-    savedTransform = mainWindow.style.transform || 'translateX(-50%)';
-    isMaximized = true;
-    mainWindow.classList.add('maximized');
-    mainWindow.style.transform = 'none';
-    mainWindow.style.left = '0';
-    winOffsetX = 0; winOffsetY = 0;
-  } else {
-    isMaximized = false;
-    mainWindow.classList.remove('maximized');
-    mainWindow.style.left = '50%';
-    mainWindow.style.transform = 'translateX(-50%)';
-    winOffsetX = 0; winOffsetY = 0;
-  }
-
-  setTimeout(function() { mainWindow.style.transition = ''; }, 350);
+function handleWindowAction() {
+  // Traffic lights are decorative only — no action
 }
 
 
@@ -171,7 +128,6 @@ if (titlebar && mainWindow) {
   titlebar.addEventListener('pointerdown', function(e) {
     if (e.target.closest('.traffic-lights') || e.target.closest('.tb-btn') ||
         e.target.closest('.tb-url') || e.target.closest('.tb-actions')) return;
-    if (isMaximized) return;
     if (e.button !== 0) return; // left mouse only
 
     winDragging = true;
@@ -205,28 +161,9 @@ if (titlebar && mainWindow) {
 
   titlebar.addEventListener('lostpointercapture', function() { winDragging = false; });
 
-  titlebar.addEventListener('dblclick', function(e) {
-    if (e.target.closest('.traffic-lights') || e.target.closest('.tb-btn') || e.target.closest('.tb-url')) return;
-    toggleMaximize();
-  });
 }
 
-// ============================
-// TRAFFIC LIGHTS
-// ============================
-document.querySelectorAll('.tl').forEach(function(btn) {
-  btn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    handleWindowAction(this.getAttribute('data-action'));
-  });
-});
-
-// Restore from dock
-document.querySelectorAll('.di[data-page-link]').forEach(function(item) {
-  item.addEventListener('click', function() {
-    if (mainWindow && mainWindow.style.display === 'none') showWindow();
-  });
-});
+// Traffic lights are decorative — no click handlers needed
 
 
 // ============================

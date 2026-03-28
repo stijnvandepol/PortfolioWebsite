@@ -8,11 +8,8 @@
   --menubar-h: 25px;
 
   --bg: #000;
-  --desktop-bg: #0e0e10;
   --glass: rgba(28, 28, 30, 0.82);
-  --glass-light: rgba(50, 50, 56, 0.42);
   --glass-border: rgba(255,255,255,0.12);
-  --glass-border-hover: rgba(255,255,255,0.22);
   --glass-shine: rgba(255,255,255,0.035);
 
   /* Green accent (original site) */
@@ -247,18 +244,6 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
   0%   { opacity: 0; transform: translateX(-50%) scale(0.92); filter: blur(4px); }
   100% { opacity: 1; transform: translateX(-50%) scale(1); filter: blur(0); }
 }
-
-/* Window maximized — JS handles transform + transition */
-.window.maximized {
-  top: var(--menubar-h);
-  left: 0; right: 0;
-  width: 100%; max-width: 100%;
-  height: calc(100vh - 1.7rem);
-  border-radius: 0;
-}
-.window.maximized .win-border { border-radius: 0; }
-.window.maximized .win-shine { border-radius: 0; }
-.window.maximized::before { border-radius: 0; }
 
 /* --- Titlebar --- */
 .titlebar {

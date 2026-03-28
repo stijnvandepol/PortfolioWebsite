@@ -53,10 +53,8 @@ document.querySelectorAll('.dd-item').forEach(function(item) {
     e.stopPropagation(); closeAllMenus();
     var nav = this.getAttribute('data-nav');
     var href = this.getAttribute('data-href');
-    var action = this.getAttribute('data-action');
-    if (nav) { navigateToPage(nav); showWindow(); }
+    if (nav) { navigateToPage(nav); }
     else if (href) { window.open(href, '_blank'); }
-    else if (action) { handleWindowAction(action); }
   });
 });
 
@@ -88,7 +86,6 @@ document.querySelectorAll('[data-ctx-nav]').forEach(function(item) {
   item.addEventListener('click', function(e) {
     e.stopPropagation();
     navigateToPage(this.getAttribute('data-ctx-nav'));
-    showWindow();
     if (ctxMenu) ctxMenu.classList.remove('visible');
   });
 });
@@ -102,17 +99,9 @@ document.querySelectorAll('[data-ctx-href]').forEach(function(item) {
 
 
 // ============================
-// WINDOW MANAGEMENT
+// WINDOW REF
 // ============================
 var mainWindow = document.getElementById('main-window');
-
-function showWindow() {
-  if (mainWindow) mainWindow.style.display = '';
-}
-
-function handleWindowAction() {
-  // Traffic lights are decorative only — no action
-}
 
 
 // ============================
@@ -163,7 +152,6 @@ if (titlebar && mainWindow) {
 
 }
 
-// Traffic lights are decorative — no click handlers needed
 
 
 // ============================
@@ -193,11 +181,6 @@ function navigateToPage(pageId) {
 // TAB MANAGEMENT (pointer-based drag reorder + close)
 // ============================
 var tabbar = document.querySelector('.tabbar');
-var tabDragging = null;
-var tabDragStartX = 0;
-var tabOrigLeft = 0;
-var tabPlaceholder = null;
-
 function initTabs() {
   var allTabs = tabbar ? tabbar.querySelectorAll('.tab[data-tab]') : [];
 
@@ -382,8 +365,6 @@ dockItemsAll.forEach(function(item) {
     var href = this.getAttribute('data-href');
     if (pageLink) {
       navigateToPage(pageLink);
-      if (mainWindow && mainWindow.style.display === 'none') showWindow();
-      else showWindow();
       // Bounce (macos-web: -40px, 400ms)
       var icon = this.querySelector('.di-icon');
       if (icon) {

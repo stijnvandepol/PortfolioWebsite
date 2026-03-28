@@ -155,12 +155,14 @@ if (titlebar && mainWindow) {
 
 
 // ============================
-// PAGE NAVIGATION
+// PAGE NAVIGATION (with history for back/forward)
 // ============================
 var urlText = document.getElementById('url-text');
 var pageNames = { 'over-mij':'Over Mij', 'ontwikkeling':'Ontwikkeling', 'portfolio':'Portfolio', 'blog':'Blog' };
+var navHistory = ['over-mij'];
+var navIndex = 0;
 
-function navigateToPage(pageId) {
+function navigateToPage(pageId, fromHistory) {
   document.querySelectorAll('.page[data-page]').forEach(function(p) { p.classList.remove('active'); });
   var target = document.querySelector('.page[data-page="' + pageId + '"]');
   if (target) {
@@ -174,7 +176,45 @@ function navigateToPage(pageId) {
   if (urlText) urlText.textContent = 'stijnvandepol.nl — ' + (pageNames[pageId] || pageId);
   var wb = document.getElementById('win-body');
   if (wb) wb.scrollTop = 0;
+
+  // Track history (skip if navigating via back/forward)
+  if (!fromHistory) {
+    navHistory = navHistory.slice(0, navIndex + 1);
+    navHistory.push(pageId);
+    navIndex = navHistory.length - 1;
+  }
+  updateNavButtons();
 }
+
+var backBtn = document.querySelector('.tb-nav .tb-btn:first-child');
+var fwdBtn = document.querySelector('.tb-nav .tb-btn:last-child');
+
+function updateNavButtons() {
+  if (backBtn) backBtn.style.opacity = navIndex > 0 ? '1' : '0.3';
+  if (fwdBtn) fwdBtn.style.opacity = navIndex < navHistory.length - 1 ? '1' : '0.3';
+}
+
+if (backBtn) {
+  backBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (navIndex > 0) {
+      navIndex--;
+      navigateToPage(navHistory[navIndex], true);
+    }
+  });
+}
+
+if (fwdBtn) {
+  fwdBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (navIndex < navHistory.length - 1) {
+      navIndex++;
+      navigateToPage(navHistory[navIndex], true);
+    }
+  });
+}
+
+updateNavButtons();
 
 
 // ============================

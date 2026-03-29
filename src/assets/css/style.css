@@ -670,7 +670,7 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
 
 .dock-items {
   display: flex; align-items: flex-end;
-  gap: 0; padding: 0;
+  gap: 0.25rem; padding: 0;
   position: relative; z-index: 1;
 }
 

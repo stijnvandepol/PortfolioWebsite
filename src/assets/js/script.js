@@ -23,6 +23,83 @@ updateClock();
 setInterval(updateClock, 10000);
 
 // ============================
+// BATTERY
+// ============================
+var batteryFill = document.getElementById('battery-fill');
+var batteryPct = document.getElementById('battery-pct');
+var batteryPctText = document.getElementById('battery-pct-text');
+var batterySource = document.getElementById('battery-source');
+var batteryEnergyApp = document.getElementById('battery-energy-app');
+var batteryStatusText = document.getElementById('battery-status-text');
+var batteryToggle = document.getElementById('battery-toggle');
+
+var energyApps = [
+  'Mensen', 'Eten', 'Skills leren', 'Netflix kijken',
+  'Koffie zetten', 'Meetings overleven', 'Bugs fixen',
+  'Deadlines', 'Social media', 'Nadenken over het leven',
+  'Emails beantwoorden', 'Plannen maken', 'Procrastineren',
+  'Code reviewen', 'Spotify luisteren'
+];
+
+var powerSources = [
+  'Motivatie', 'Koffie', 'Ambitie', 'Paniek',
+  'Deadlines', 'Snacks', 'Goede muziek', 'Frisse lucht'
+];
+
+function getBatteryLevel() {
+  var now = new Date();
+  var h = now.getHours();
+  var m = now.getMinutes();
+  var minutesInDay = h * 60 + m;
+  // 7:00 = 100%, 23:59 = 5%
+  var start = 7 * 60;
+  var end = 24 * 60 - 1;
+  if (minutesInDay < start) return 100;
+  var pct = 100 - ((minutesInDay - start) / (end - start)) * 95;
+  return Math.max(5, Math.round(pct));
+}
+
+function pickRandom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function updateBattery() {
+  var level = getBatteryLevel();
+  var fillWidth = Math.round((level / 100) * 18);
+  if (batteryFill) batteryFill.setAttribute('width', fillWidth);
+  if (batteryPct) batteryPct.textContent = level + '%';
+  if (batteryPctText) batteryPctText.textContent = level + '%';
+  if (batteryStatusText) {
+    if (level > 60) batteryStatusText.textContent = 'Batterij: Goed';
+    else if (level > 30) batteryStatusText.textContent = 'Batterij: Matig';
+    else batteryStatusText.textContent = 'Batterij: Bijna leeg';
+  }
+  if (batterySource) batterySource.textContent = 'Stroom: ' + pickRandom(powerSources);
+  if (batteryEnergyApp) batteryEnergyApp.textContent = pickRandom(energyApps);
+}
+
+updateBattery();
+setInterval(updateBattery, 60000);
+
+if (batteryToggle) {
+  batteryToggle.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var wrap = this;
+    var wasOpen = wrap.classList.contains('open');
+    closeAllMenus();
+    closeBattery();
+    if (!wasOpen) {
+      updateBattery();
+      wrap.classList.add('open');
+    }
+  });
+}
+
+function closeBattery() {
+  if (batteryToggle) batteryToggle.classList.remove('open');
+}
+
+// ============================
 // MENU BAR DROPDOWNS
 // ============================
 var menus = document.querySelectorAll('[data-menu]');
@@ -38,6 +115,7 @@ menus.forEach(function(menu) {
   if (!trigger) return;
   trigger.addEventListener('click', function(e) {
     e.stopPropagation();
+    closeBattery();
     if (menu.classList.contains('open')) { closeAllMenus(); }
     else { closeAllMenus(); menu.classList.add('open'); openMenu = menu; }
   });
@@ -46,7 +124,7 @@ menus.forEach(function(menu) {
   });
 });
 
-document.addEventListener('click', closeAllMenus);
+document.addEventListener('click', function() { closeAllMenus(); closeBattery(); });
 
 document.querySelectorAll('.dd-item').forEach(function(item) {
   item.addEventListener('click', function(e) {

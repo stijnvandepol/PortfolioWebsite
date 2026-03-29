@@ -205,6 +205,14 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
 .dd-key { color: rgba(255,255,255,0.35); font-size: 12px; margin-left: 24px; }
 .dd-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 3px 12px; }
 
+/* --- Battery Dropdown --- */
+.mb-battery-wrap { position: relative; cursor: default; }
+.mb-battery-wrap #battery-pct { font-size: 11px; margin-left: 2px; }
+.battery-dropdown {
+  right: 0; left: auto; min-width: 220px;
+}
+.mb-battery-wrap.open .battery-dropdown { display: block; }
+
 
 /* ============================== WINDOW ============================== */
 .window {

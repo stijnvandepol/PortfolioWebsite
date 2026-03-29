@@ -86,6 +86,96 @@ function closeBattery() {
   if (batteryToggle) batteryToggle.classList.remove('open');
 }
 
+
+// ============================
+// RENDER CONFIG DATA
+// ============================
+var eyeSvg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>';
+
+function renderTimeline(containerId, items) {
+  var el = document.getElementById(containerId);
+  if (!el || !items) return;
+  el.innerHTML = items.map(function(item) {
+    return '<div class="timeline-item reveal">' +
+      '<h4 class="tl-title">' + item.title + '</h4>' +
+      '<span class="tl-date">' + item.date + '</span>' +
+      '<p class="tl-text">' + item.text + '</p>' +
+    '</div>';
+  }).join('');
+}
+
+function renderSkills(containerId, items) {
+  var el = document.getElementById(containerId);
+  if (!el || !items) return;
+  el.innerHTML = items.map(function(s) {
+    return '<div class="skill-item reveal">' +
+      '<div class="skill-header">' +
+        '<span class="skill-name">' + s.name + '</span>' +
+        '<span class="skill-val" data-val="' + s.value + '">0%</span>' +
+      '</div>' +
+      '<div class="skill-track"><div class="skill-fill" style="--target:' + s.value + '%"></div></div>' +
+    '</div>';
+  }).join('');
+}
+
+function renderPortfolio(filterBarId, gridId, categories, projects) {
+  var bar = document.getElementById(filterBarId);
+  var grid = document.getElementById(gridId);
+  if (!bar || !grid) return;
+
+  bar.innerHTML = categories.map(function(cat, i) {
+    return '<button class="filter-btn' + (i === 0 ? ' active' : '') + '" data-filter="' + cat.id + '">' + cat.label + '</button>';
+  }).join('');
+
+  grid.innerHTML = projects.map(function(p) {
+    return '<div class="project-card active reveal" data-category="' + p.category + '">' +
+      '<a href="' + p.image + '" data-lightbox>' +
+        '<figure class="project-img">' +
+          '<img src="' + p.image + '" alt="' + p.title + '" loading="lazy">' +
+          '<div class="project-overlay">' + eyeSvg + '</div>' +
+        '</figure>' +
+        '<h3 class="project-title">' + p.title + '</h3>' +
+        '<p class="project-cat">' + p.tags + '</p>' +
+      '</a>' +
+    '</div>';
+  }).join('');
+}
+
+function renderBlog(containerId, items) {
+  var el = document.getElementById(containerId);
+  if (!el || !items) return;
+  el.innerHTML = items.map(function(b) {
+    return '<div class="blog-card reveal">' +
+      '<a href="' + b.url + '" target="_blank" rel="noopener">' +
+        '<figure class="blog-img">' +
+          '<img src="' + b.image + '" alt="' + b.title + '" loading="lazy">' +
+        '</figure>' +
+        '<div class="blog-content">' +
+          '<div class="blog-meta">' +
+            '<span class="blog-category">' + b.category + '</span>' +
+            '<span class="blog-dot"></span>' +
+            '<time datetime="' + b.datetime + '">' + b.date + '</time>' +
+          '</div>' +
+          '<div class="blog-title-row">' +
+            '<h3>' + b.title + '</h3>' +
+            '<span class="blog-status ' + b.status + '">' + b.status.charAt(0).toUpperCase() + b.status.slice(1) + '</span>' +
+          '</div>' +
+          '<p class="blog-text">' + b.text + '</p>' +
+        '</div>' +
+      '</a>' +
+    '</div>';
+  }).join('');
+}
+
+if (typeof CONFIG !== 'undefined') {
+  renderTimeline('opleiding-timeline', CONFIG.opleiding);
+  renderTimeline('ervaring-timeline', CONFIG.ervaring);
+  renderSkills('skills-container', CONFIG.vaardigheden);
+  renderPortfolio('filter-bar', 'project-grid', CONFIG.portfolioCategories, CONFIG.projects);
+  renderBlog('blog-grid', CONFIG.blog);
+}
+
+
 // ============================
 // MENU BAR DROPDOWNS
 // ============================
@@ -489,39 +579,45 @@ dockItemsAll.forEach(function(item) {
 
 
 // ============================
-// PORTFOLIO FILTER
+// PORTFOLIO FILTER (delegated)
 // ============================
-document.querySelectorAll('.filter-btn').forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    var f = this.getAttribute('data-filter');
-    document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
-    this.classList.add('active');
+var filterBar = document.getElementById('filter-bar');
+if (filterBar) {
+  filterBar.addEventListener('click', function(e) {
+    var btn = e.target.closest('.filter-btn');
+    if (!btn) return;
+    var f = btn.getAttribute('data-filter');
+    filterBar.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
     document.querySelectorAll('.project-card').forEach(function(c) {
       c.classList.toggle('active', f === 'all' || c.getAttribute('data-category') === f);
     });
   });
-});
+}
 
 
 // ============================
-// LIGHTBOX
+// LIGHTBOX (delegated)
 // ============================
 var lightbox = document.getElementById('lightbox');
 var lightboxImg = document.getElementById('lightbox-img');
 var lightboxTitle = document.getElementById('lightbox-title');
 
-document.querySelectorAll('[data-lightbox]').forEach(function(link) {
-  link.addEventListener('click', function(e) {
+var projectGrid = document.getElementById('project-grid');
+if (projectGrid) {
+  projectGrid.addEventListener('click', function(e) {
+    var link = e.target.closest('[data-lightbox]');
+    if (!link) return;
     e.preventDefault();
-    var img = this.querySelector('.project-img img');
-    var title = this.querySelector('.project-title');
+    var img = link.querySelector('.project-img img');
+    var title = link.querySelector('.project-title');
     if (img && lightbox && lightboxImg) {
       lightboxImg.src = img.src; lightboxImg.alt = img.alt;
       if (lightboxTitle) lightboxTitle.textContent = title ? title.textContent : '';
       lightbox.classList.add('active');
     }
   });
-});
+}
 
 function closeLightbox() { if (lightbox) lightbox.classList.remove('active'); }
 document.querySelectorAll('[data-lightbox-close]').forEach(function(el) { el.addEventListener('click', closeLightbox); });
@@ -536,11 +632,12 @@ function triggerReveals(container) {
   els.forEach(function(el) { setTimeout(function() { el.classList.add('visible'); }, d); d += 60; });
 }
 
+var revealObserver = null;
 if ('IntersectionObserver' in window) {
-  var ro = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+  revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
   }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
-  document.querySelectorAll('.reveal').forEach(function(el) { ro.observe(el); });
+  document.querySelectorAll('.reveal').forEach(function(el) { revealObserver.observe(el); });
 }
 
 setTimeout(function() { var p = document.querySelector('.page.active'); if (p) triggerReveals(p); }, 3200);
@@ -559,7 +656,7 @@ function animateSkillBars() {
     el.textContent = '0%'; setTimeout(tick, 150);
   });
 }
-var sc = document.querySelector('.skills-card');
+var sc = document.getElementById('skills-container');
 if (sc && 'IntersectionObserver' in window) {
   var so = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) { if (e.isIntersecting) { animateSkillBars(); so.unobserve(e.target); } });

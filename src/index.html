@@ -285,200 +285,36 @@
             Opleiding
           </h2>
 
-          <div class="timeline">
-            <div class="timeline-item reveal">
-              <h4 class="tl-title">Fontys Hogeschool – HBO-ICT</h4>
-              <span class="tl-date">2023 — 2027</span>
-              <p class="tl-text">Profiel Infrastructure → specialisatie Cybersecurity.</p>
-            </div>
-            <div class="timeline-item reveal">
-              <h4 class="tl-title">Koning Willem I College – MBO4 ICT-beheer</h4>
-              <span class="tl-date">2020 — 2023</span>
-              <p class="tl-text">IT-beheer, netwerk en support.</p>
-            </div>
-          </div>
+          <div class="timeline" id="opleiding-timeline"></div>
 
           <h2 class="section-heading">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gold)"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
             Ervaring
           </h2>
 
-          <div class="timeline">
-            <div class="timeline-item reveal">
-              <h4 class="tl-title">Projectstage – Verweijen ICT</h4>
-              <span class="tl-date">sep. 2025 — jan. 2026 · 5 mnd · Mill</span>
-              <p class="tl-text">Onderzoek naar de inzet van AI en low-code door middel van het Microsoft Power Platform voor het ontwikkelen van automatiseringsoplossingen.</p>
-            </div>
-            <div class="timeline-item reveal">
-              <h4 class="tl-title">Teamleider – Jumbo</h4>
-              <span class="tl-date">feb. 2025 — heden · Mill</span>
-              <p class="tl-text">Sinds 2020 werkzaam binnen deze vestiging. Doorgegroeid naar de rol van teamleider, met focus op aansturing, opleiding van medewerkers en procesverbetering.</p>
-            </div>
-            <div class="timeline-item reveal">
-              <h4 class="tl-title">IT Engineer (stage) – Vanboxtel</h4>
-              <span class="tl-date">feb. 2023 — jun. 2023 · 5 mnd · Boekel</span>
-              <p class="tl-text">Firewalls, updates, MFA, werkplek-inrichting en on-site support.</p>
-            </div>
-            <div class="timeline-item reveal">
-              <h4 class="tl-title">IT Engineer (stage) – Verweijen ICT</h4>
-              <span class="tl-date">sep. 2021 — jan. 2022 · 5 mnd · Mill</span>
-              <p class="tl-text">Hardware registreren/installeren, MFA instellen en on-site support.</p>
-            </div>
-          </div>
+          <div class="timeline" id="ervaring-timeline"></div>
 
           <h2 class="section-heading">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="var(--gold)"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM10 17l-3.5-3.5 1.41-1.41L10 14.17l4.59-4.58L16 11l-6 6z"/></svg>
             Vaardigheden
           </h2>
 
-          <div class="skills-card">
-            <div class="skill-item reveal">
-              <div class="skill-header">
-                <span class="skill-name">Netwerkengineering</span>
-                <span class="skill-val" data-val="60">0%</span>
-              </div>
-              <div class="skill-track"><div class="skill-fill" style="--target:60%"></div></div>
-            </div>
-            <div class="skill-item reveal">
-              <div class="skill-header">
-                <span class="skill-name">Scripting</span>
-                <span class="skill-val" data-val="75">0%</span>
-              </div>
-              <div class="skill-track"><div class="skill-fill" style="--target:75%"></div></div>
-            </div>
-            <div class="skill-item reveal">
-              <div class="skill-header">
-                <span class="skill-name">Security</span>
-                <span class="skill-val" data-val="50">0%</span>
-              </div>
-              <div class="skill-track"><div class="skill-fill" style="--target:50%"></div></div>
-            </div>
-            <div class="skill-item reveal">
-              <div class="skill-header">
-                <span class="skill-name">Cloud engineering</span>
-                <span class="skill-val" data-val="50">0%</span>
-              </div>
-              <div class="skill-track"><div class="skill-fill" style="--target:50%"></div></div>
-            </div>
-          </div>
+          <div class="skills-card" id="skills-container"></div>
         </article>
 
         <!-- PAGE: Portfolio -->
         <article class="page" data-page="portfolio">
           <h2 class="section-heading">Portfolio</h2>
 
-          <div class="filter-bar">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="infrastructuur">Infrastructuur</button>
-            <button class="filter-btn" data-filter="applicaties">Applicaties</button>
-            <button class="filter-btn" data-filter="cybersecurity">Cybersecurity</button>
-          </div>
-
-          <div class="project-grid">
-            <div class="project-card active reveal" data-category="infrastructuur">
-              <a href="./assets/images/project-1.png" data-lightbox>
-                <figure class="project-img">
-                  <img src="./assets/images/project-1.png" alt="OTAP Omgeving" loading="lazy">
-                  <div class="project-overlay"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
-                </figure>
-                <h3 class="project-title">OTAP Omgeving</h3>
-                <p class="project-cat">GitHub Workflows · Cloudflared · Databases · Containerisatie</p>
-              </a>
-            </div>
-
-            <div class="project-card active reveal" data-category="infrastructuur">
-              <a href="./assets/images/project-2.png" data-lightbox>
-                <figure class="project-img">
-                  <img src="./assets/images/project-2.png" alt="Hybride IT-Infrastructuur" loading="lazy">
-                  <div class="project-overlay"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
-                </figure>
-                <h3 class="project-title">Hybride IT-Infrastructuur</h3>
-                <p class="project-cat">Azure · Intune · On-Prem Services · Windows · Linux</p>
-              </a>
-            </div>
-
-            <div class="project-card active reveal" data-category="applicaties">
-              <a href="./assets/images/project-3.png" data-lightbox>
-                <figure class="project-img">
-                  <img src="./assets/images/project-3.png" alt="Full-Stack App" loading="lazy">
-                  <div class="project-overlay"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
-                </figure>
-                <h3 class="project-title">Containerized Full-Stack Applicatie</h3>
-                <p class="project-cat">Backend · Frontend · API · Database · Containerisatie</p>
-              </a>
-            </div>
-
-            <div class="project-card active reveal" data-category="applicaties">
-              <a href="./assets/images/project-4.png" data-lightbox>
-                <figure class="project-img">
-                  <img src="./assets/images/project-4.png" alt="Monitoring" loading="lazy">
-                  <div class="project-overlay"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
-                </figure>
-                <h3 class="project-title">Monitoring & Inzicht</h3>
-                <p class="project-cat">Beszel · Checkmk · Dashboards · Alerts</p>
-              </a>
-            </div>
-
-            <div class="project-card active reveal" data-category="infrastructuur">
-              <a href="./assets/images/project-5.png" data-lightbox>
-                <figure class="project-img">
-                  <img src="./assets/images/project-5.png" alt="Virtualisatie" loading="lazy">
-                  <div class="project-overlay"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
-                </figure>
-                <h3 class="project-title">Virtualisatie & Containerisatie</h3>
-                <p class="project-cat">Proxmox · VMs · LXC Containers · Docker · Scripting · Backups</p>
-              </a>
-            </div>
-
-            <div class="project-card active reveal" data-category="applicaties">
-              <a href="./assets/images/project-7.png" data-lightbox>
-                <figure class="project-img">
-                  <img src="./assets/images/project-7.png" alt="Power Platform" loading="lazy">
-                  <div class="project-overlay"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
-                </figure>
-                <h3 class="project-title">Microsoft Power Platform</h3>
-                <p class="project-cat">Power Automate · Power Apps · Copilot Studio · AI Agents</p>
-              </a>
-            </div>
-
-            <div class="project-card active reveal" data-category="applicaties">
-              <a href="./assets/images/project-8.png" data-lightbox>
-                <figure class="project-img">
-                  <img src="./assets/images/project-8.png" alt="Procesautomatisering" loading="lazy">
-                  <div class="project-overlay"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
-                </figure>
-                <h3 class="project-title">Procesautomatisering & AI</h3>
-                <p class="project-cat">Low-Code / No-Code · n8n · AI Agents · MCP · API Integraties</p>
-              </a>
-            </div>
-          </div>
+          <div class="filter-bar" id="filter-bar"></div>
+          <div class="project-grid" id="project-grid"></div>
         </article>
 
         <!-- PAGE: Blog -->
         <article class="page" data-page="blog">
           <h2 class="section-heading">Blog</h2>
 
-          <div class="blog-grid">
-            <div class="blog-card reveal">
-              <a href="https://snackspot.online" target="_blank" rel="noopener">
-                <figure class="blog-img">
-                  <img src="./assets/images/blog-1.jpg" alt="SnackSpot" loading="lazy">
-                </figure>
-                <div class="blog-content">
-                  <div class="blog-meta">
-                    <span class="blog-category">Project</span>
-                    <span class="blog-dot"></span>
-                    <time datetime="01-03-2026">2026</time>
-                  </div>
-                  <div class="blog-title-row">
-                    <h3>SnackSpot</h3>
-                    <span class="blog-status online">Online</span>
-                  </div>
-                  <p class="blog-text">Een mobile-first webapp voor het ontdekken en reviewen van lokale verborgen eetplekken. Gebouwd met een community feed, foto-uploads, structured ratings, nearby discovery en een apart admin panel voor moderatie.</p>
-                </div>
-              </a>
-            </div>
-          </div>
+          <div class="blog-grid" id="blog-grid"></div>
         </article>
 
       </div>
@@ -619,7 +455,8 @@
   </div>
 
   <!-- custom js -->
-  <script src="./assets/js/script.js?v=3"></script>
+  <script src="./assets/js/config.js?v=1"></script>
+  <script src="./assets/js/script.js?v=4"></script>
 
 </body>
 </html>

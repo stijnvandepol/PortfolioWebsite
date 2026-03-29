@@ -28,9 +28,7 @@ setInterval(updateClock, 10000);
 var batteryFill = document.getElementById('battery-fill');
 var batteryPct = document.getElementById('battery-pct');
 var batteryPctText = document.getElementById('battery-pct-text');
-var batterySource = document.getElementById('battery-source');
 var batteryEnergyApp = document.getElementById('battery-energy-app');
-var batteryStatusText = document.getElementById('battery-status-text');
 var batteryToggle = document.getElementById('battery-toggle');
 
 var energyApps = [
@@ -39,11 +37,6 @@ var energyApps = [
   'Deadlines', 'Social media', 'Nadenken over het leven',
   'Emails beantwoorden', 'Plannen maken', 'Procrastineren',
   'Code reviewen', 'Spotify luisteren'
-];
-
-var powerSources = [
-  'Motivatie', 'Koffie', 'Ambitie', 'Paniek',
-  'Deadlines', 'Snacks', 'Goede muziek', 'Frisse lucht'
 ];
 
 function getBatteryLevel() {
@@ -69,12 +62,6 @@ function updateBattery() {
   if (batteryFill) batteryFill.setAttribute('width', fillWidth);
   if (batteryPct) batteryPct.textContent = level + '%';
   if (batteryPctText) batteryPctText.textContent = level + '%';
-  if (batteryStatusText) {
-    if (level > 60) batteryStatusText.textContent = 'Batterij: Goed';
-    else if (level > 30) batteryStatusText.textContent = 'Batterij: Matig';
-    else batteryStatusText.textContent = 'Batterij: Bijna leeg';
-  }
-  if (batterySource) batterySource.textContent = 'Stroom: ' + pickRandom(powerSources);
   if (batteryEnergyApp) batteryEnergyApp.textContent = pickRandom(energyApps);
 }
 

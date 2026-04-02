@@ -646,7 +646,7 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
   position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
   z-index: 100;
   padding-bottom: 0.15rem;
-  height: 4.4rem;
+  height: 3.65rem;
   display: flex; justify-content: center;
   animation: dockUp 0.4s var(--ease-out) 3.3s both;
 }

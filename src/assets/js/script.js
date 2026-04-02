@@ -490,7 +490,7 @@ var dockItemsAll = dock ? dock.querySelectorAll('.di') : [];
 var dockIcons = [];
 
 var BASE = 48;
-var MAX_W = 96;
+var MAX_W = 72;
 var DIST_LIMIT = 288;
 
 var distIn  = [-DIST_LIMIT, -DIST_LIMIT/1.25, -DIST_LIMIT/2, 0, DIST_LIMIT/2, DIST_LIMIT/1.25, DIST_LIMIT];

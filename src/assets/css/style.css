@@ -646,7 +646,7 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
   position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
   z-index: 100;
   padding-bottom: 0.1rem;
-  height: 2.25rem;
+  height: 3.15rem;
   display: flex; justify-content: center;
   animation: dockUp 0.4s var(--ease-out) 3.3s both;
 }
@@ -662,15 +662,15 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
     0 0 0 0.2px rgba(0, 0, 0, 0.5),
     rgba(0, 0, 0, 0.3) 2px 5px 19px 7px;
   position: relative;
-  padding: 0.15rem;
-  border-radius: 0.7rem;
+  padding: 0.2rem;
+  border-radius: 1rem;
   height: 100%;
   display: flex;
   align-items: flex-end;
 }
 .dock-el::before {
   content: ''; position: absolute; inset: 0;
-  border-radius: 0.7rem;
+  border-radius: 1rem;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   z-index: -1;
@@ -706,7 +706,7 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
 .di:hover .di-tip { opacity: 1; }
 
 .di-icon {
-  width: 1.7rem; height: 1.7rem; /* 27px = BASE */
+  width: 2.4rem; height: 2.4rem; /* 38px = BASE */
   overflow: visible; cursor: default;
   transform-origin: bottom center;
   will-change: width, height, transform;
@@ -721,7 +721,7 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
 .di-icon-custom {
   display: flex; align-items: center; justify-content: center;
   clip-path: url(#squircle);
-  width: 1.7rem; height: 1.7rem;
+  width: 2.4rem; height: 2.4rem;
 }
 
 .di-dot {

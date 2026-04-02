@@ -489,9 +489,9 @@ var dock = document.getElementById('dock');
 var dockItemsAll = dock ? dock.querySelectorAll('.di') : [];
 var dockIcons = [];
 
-var BASE = 36;
-var MAX_W = 54;
-var DIST_LIMIT = 216;
+var BASE = 27;
+var MAX_W = 40;
+var DIST_LIMIT = 162;
 
 var distIn  = [-DIST_LIMIT, -DIST_LIMIT/1.25, -DIST_LIMIT/2, 0, DIST_LIMIT/2, DIST_LIMIT/1.25, DIST_LIMIT];
 var widthOut = [BASE, BASE*1.1, BASE*1.414, BASE*2, BASE*1.414, BASE*1.1, BASE];

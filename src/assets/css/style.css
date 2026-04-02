@@ -645,8 +645,8 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
 .dock {
   position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
   z-index: 100;
-  padding-bottom: 0.45rem;
-  height: 5.2rem;
+  padding-bottom: 0.15rem;
+  height: 4.4rem;
   display: flex; justify-content: center;
   animation: dockUp 0.4s var(--ease-out) 3.3s both;
 }
@@ -662,7 +662,7 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
     0 0 0 0.2px rgba(0, 0, 0, 0.5),
     rgba(0, 0, 0, 0.3) 2px 5px 19px 7px;
   position: relative;
-  padding: 0.3rem;
+  padding: 0.25rem;
   border-radius: 1.2rem;
   height: 100%;
   display: flex;
@@ -706,7 +706,7 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
 .di:hover .di-tip { opacity: 1; }
 
 .di-icon {
-  width: 3.6rem; height: 3.6rem; /* 57.6px = BASE */
+  width: 3rem; height: 3rem; /* 48px = BASE */
   overflow: visible; cursor: default;
   transform-origin: bottom center;
   will-change: width, height, transform;
@@ -721,7 +721,7 @@ button { font: inherit; background: none; border: none; cursor: pointer; color: 
 .di-icon-custom {
   display: flex; align-items: center; justify-content: center;
   clip-path: url(#squircle);
-  width: 3.6rem; height: 3.6rem;
+  width: 3rem; height: 3rem;
 }
 
 .di-dot {

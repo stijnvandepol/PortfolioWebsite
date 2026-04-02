@@ -489,9 +489,9 @@ var dock = document.getElementById('dock');
 var dockItemsAll = dock ? dock.querySelectorAll('.di') : [];
 var dockIcons = [];
 
-var BASE = 57.6;
-var MAX_W = 115.2;
-var DIST_LIMIT = 345.6;
+var BASE = 48;
+var MAX_W = 96;
+var DIST_LIMIT = 288;
 
 var distIn  = [-DIST_LIMIT, -DIST_LIMIT/1.25, -DIST_LIMIT/2, 0, DIST_LIMIT/2, DIST_LIMIT/1.25, DIST_LIMIT];
 var widthOut = [BASE, BASE*1.1, BASE*1.414, BASE*2, BASE*1.414, BASE*1.1, BASE];
@@ -523,7 +523,7 @@ function updateDock() {
     if (Math.abs(diff) > 0.2) { d.current += diff * 0.15; needsUpdate = true; }
     else d.current = d.target;
     var w = d.current;
-    var lift = ((w - BASE) / (MAX_W - BASE)) * 10;
+    var lift = ((w - BASE) / (MAX_W - BASE)) * 7;
     d.el.style.width = (w / 16) + 'rem';
     d.el.style.height = (w / 16) + 'rem';
     d.el.style.transform = 'translateY(' + (-lift) + 'px)';

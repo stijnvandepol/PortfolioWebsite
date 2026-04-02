@@ -523,7 +523,7 @@ function updateDock() {
     if (Math.abs(diff) > 0.2) { d.current += diff * 0.15; needsUpdate = true; }
     else d.current = d.target;
     var w = d.current;
-    var lift = ((w - BASE) / (MAX_W - BASE)) * 16;
+    var lift = ((w - BASE) / (MAX_W - BASE)) * 10;
     d.el.style.width = (w / 16) + 'rem';
     d.el.style.height = (w / 16) + 'rem';
     d.el.style.transform = 'translateY(' + (-lift) + 'px)';

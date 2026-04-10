@@ -129,6 +129,16 @@ var CONFIG = {
       datetime: '01-03-2026',
       status: 'online',
       text: 'Een mobile-first webapp voor het ontdekken en reviewen van lokale verborgen eetplekken. Gebouwd met een community feed, foto-uploads, structured ratings, nearby discovery en een apart admin panel voor moderatie.'
+    },
+    {
+      title: 'TankNu',
+      image: './assets/images/blog-2.jpg',
+      url: 'https://tanknu.nl',
+      category: 'Project',
+      date: '2025',
+      datetime: '01-11-2025',
+      status: 'offline',
+      text: 'Een web-app die brandstofprijzen rondom jouw locatie direct ophaalt via de publieke API. Geen eigen database, geen opgeslagen data: de browser doet het verzoek en toont realtime welk tankstation in de buurt het goedkoopst is, met directe navigatie via Google Maps.'
     }
   ]
 

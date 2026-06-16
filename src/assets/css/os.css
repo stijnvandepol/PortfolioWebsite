@@ -349,3 +349,10 @@ a.blog-card:hover .blog-img img { transform: scale(1.04); }
   .bento-grid { grid-template-columns: repeat(4, 1fr); }
   .project-grid { grid-template-columns: repeat(3, 1fr); }
 }
+.hero-cta { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.cta-btn { font: inherit; font-size: var(--text-md); font-weight: 600; padding: 9px 18px; border-radius: var(--r-md); cursor: pointer; border: 1px solid transparent; transition: transform 0.12s var(--ease), filter 0.15s var(--ease); }
+.cta-btn:active { transform: translateY(1px); }
+.cta-primary { background: var(--accent); color: #fff; }
+.cta-primary:hover { filter: brightness(1.08); }
+.cta-secondary { background: var(--surface); color: var(--text-primary); border-color: var(--glass-border); }
+.cta-secondary:hover { background: var(--surface-hover); }

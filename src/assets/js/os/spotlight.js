@@ -10,14 +10,21 @@ let overlay = null, input = null, results = null, release = null, index = [], se
 
 function buildIndex() {
   const items = [];
+  const p = CONFIG.profile;
   os.listApps().forEach((a) => items.push({ type: 'App', label: a.title, icon: ICONS.search, run: () => os.open(a.id) }));
   [['Over Mij', 'over-mij'], ['Ontwikkeling', 'ontwikkeling'], ['Portfolio', 'portfolio'], ['Blog', 'blog']]
     .forEach(([label, page]) => items.push({ type: 'Pagina', label, icon: ICONS.folder, run: () => os.open('portfolio', { initialPage: page }) }));
-  CONFIG.projects.forEach((p) => items.push({ type: 'Project', label: p.title, sub: p.tags, icon: ICONS.eye, run: () => os.preview({ src: p.image, title: p.title }) }));
-  items.push({ type: 'Actie', label: 'Stuur e-mail', icon: ICONS.mail, run: () => os.openExternal(`mailto:${CONFIG.profile.email}`) });
-  items.push({ type: 'Actie', label: 'GitHub openen', icon: ICONS.share, run: () => os.openExternal(CONFIG.profile.github) });
+  CONFIG.projects.forEach((pr) => items.push({ type: 'Project', label: pr.title, sub: pr.tags, icon: ICONS.eye, run: () => os.preview({ src: pr.image, title: pr.title }) }));
+  (CONFIG.blog || []).forEach((b) => items.push({ type: 'Blog', label: b.title, sub: b.category, icon: ICONS.share, run: () => os.openExternal(b.url) }));
+  // Sociale kanalen (Instagram bewust níét: dat is de verstopte terminal-easter-egg)
+  items.push({ type: 'Sociaal', label: 'GitHub', sub: 'github.com', icon: ICONS.share, run: () => os.openExternal(p.github) });
+  items.push({ type: 'Sociaal', label: 'LinkedIn', sub: 'linkedin.com', icon: ICONS.share, run: () => os.openExternal(p.linkedin) });
+  // Contact & acties
+  items.push({ type: 'Actie', label: 'Stuur e-mail', sub: p.email, icon: ICONS.mail, run: () => os.openExternal(`mailto:${p.email}`) });
+  items.push({ type: 'Actie', label: 'CV bekijken', sub: 'PDF', icon: ICONS.file, run: () => window.open(p.cv, '_blank', 'noopener,noreferrer') });
   items.push({ type: 'Actie', label: 'Thema: licht', icon: ICONS.sun, run: () => os.setTheme('light') });
   items.push({ type: 'Actie', label: 'Thema: donker', icon: ICONS.moon, run: () => os.setTheme('dark') });
+  items.push({ type: 'Actie', label: 'Thema: auto', icon: ICONS.moon, run: () => os.setTheme('auto') });
   return items;
 }
 
@@ -40,7 +47,7 @@ function ensure() {
 
 function render() {
   const q = input.value.trim().toLowerCase();
-  const matches = (q ? index.filter((i) => i.label.toLowerCase().includes(q) || (i.sub || '').toLowerCase().includes(q)) : index).slice(0, 8);
+  const matches = (q ? index.filter((i) => i.label.toLowerCase().includes(q) || (i.sub || '').toLowerCase().includes(q) || (i.type || '').toLowerCase().includes(q)) : index).slice(0, 8);
   sel = 0;
   results.replaceChildren();
   matches.forEach((m, i) => {

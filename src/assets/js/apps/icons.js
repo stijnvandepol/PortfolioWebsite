@@ -78,3 +78,17 @@ ICONS.dev = '<img src="./assets/images/icon-dev.svg" alt="" width="24">';
 ICONS.app = '<img src="./assets/images/icon-app.svg" alt="" width="24">';
 ICONS.photo = '<img src="./assets/images/icon-photo.svg" alt="" width="24">';
 ICONS.design = '<img src="./assets/images/icon-design.svg" alt="" width="24">';
+
+// ---- Realistische dock/launchpad-iconen (self-hosted PNG, Big Sur-set) ----
+const ICON_BASE = './assets/images/icons/';
+export const APP_ICON_IMG = {
+  finder:    `${ICON_BASE}finder.png`,
+  safari:    `${ICON_BASE}safari.png`,
+  terminal:  `${ICON_BASE}terminal.png`,
+  settings:  `${ICON_BASE}settings.png`,
+  photos:    `${ICON_BASE}photos.png`,
+  launchpad: `${ICON_BASE}launchpad.png`,
+};
+// Levert een <img>-string die dock.js/launchpad via `html:` renderen.
+export const iconImg = (key, label = '') =>
+  `<img src="${APP_ICON_IMG[key]}" alt="${label}" draggable="false">`;

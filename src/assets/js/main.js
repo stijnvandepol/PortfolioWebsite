@@ -15,7 +15,7 @@ import { quickLook } from './os/quicklook.js';
 import { os } from './os/bridge.js';
 import { APPS, getApp, listApps } from './apps/registry.js';
 import { CONFIG } from './data/config.js';
-import { APP_ICONS } from './apps/icons.js';
+import { APP_ICONS, iconImg } from './apps/icons.js';
 
 function openById(id, opts = {}) {
   const meta = getApp(id);
@@ -56,16 +56,15 @@ function boot() {
   initNotifications(desktop);
 
   const dockEntries = [
-    { id: 'finder', label: 'Finder', icon: APP_ICONS.finder },
-    { id: 'portfolio', label: 'Over Mij', icon: APP_ICONS.safari },
-    { id: 'terminal', label: 'Terminal', icon: APP_ICONS.terminal },
-    { id: 'finder', label: 'Projecten', icon: APP_ICONS.photos, action: () => os.open('finder', { initial: 'Projecten' }) },
-    { id: 'settings', label: 'Instellingen', icon: APP_ICONS.settings },
-    { id: 'launchpad', label: 'Launchpad', icon: APP_ICONS.launchpad, action: () => os.toggleLaunchpad() },
+    { id: 'finder', label: 'Finder', icon: iconImg('finder', 'Finder') },
+    { id: 'portfolio', label: 'Over Mij', icon: iconImg('safari', 'Over Mij') },
+    { id: 'terminal', label: 'Terminal', icon: iconImg('terminal', 'Terminal') },
+    { id: 'portfolio', label: 'Projecten', icon: iconImg('photos', 'Projecten'), action: () => os.open('portfolio', { initialPage: 'portfolio' }) },
+    { id: 'settings', label: 'Instellingen', icon: iconImg('settings', 'Instellingen') },
+    { id: 'launchpad', label: 'Launchpad', icon: iconImg('launchpad', 'Launchpad'), action: () => os.toggleLaunchpad() },
     { sep: true },
     { id: 'github', label: 'GitHub', icon: APP_ICONS.github, href: CONFIG.profile.github },
     { id: 'linkedin', label: 'LinkedIn', icon: APP_ICONS.linkedin, href: CONFIG.profile.linkedin },
-    { id: 'instagram', label: 'Instagram', icon: APP_ICONS.instagram, href: CONFIG.profile.instagram },
   ];
   initDock(desktop, dockEntries);
 

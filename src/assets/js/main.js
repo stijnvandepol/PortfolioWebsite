@@ -16,6 +16,10 @@ import { os } from './os/bridge.js';
 import { APPS, getApp, listApps } from './apps/registry.js';
 import { CONFIG } from './data/config.js';
 import { APP_ICONS, iconImg } from './apps/icons.js';
+import { initMobile } from './os/mobile.js';
+
+// ≤768px: toon een statische, leesbare portfolio i.p.v. de macOS-desktop.
+const MOBILE_QUERY = '(max-width: 768px)';
 
 function openById(id, opts = {}) {
   const meta = getApp(id);
@@ -93,6 +97,7 @@ function boot() {
 
 // Boot-scherm afronden en desktop tonen.
 function start() {
+  if (window.matchMedia(MOBILE_QUERY).matches) { initMobile(); return; }
   boot();
 }
 

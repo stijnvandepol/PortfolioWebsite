@@ -13,11 +13,8 @@ const DAYS = ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'];
 const MONTHS = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
 
 export function initMenubar(root) {
-  const appName = el('span', { class: 'mb-item mb-bold mb-appname', text: 'Finder' });
-  const left = el('div', { class: 'mb-left' }, [
-    el('span', { class: 'mb-logo', text: 'SvdP', 'aria-hidden': 'true' }),
-    appName,
-  ]);
+  const logo = el('span', { class: 'mb-logo', text: 'SvdP', 'aria-hidden': 'true' });
+  const left = el('div', { class: 'mb-left' }, [logo]);
 
   const clockLabel = el('span', { class: 'mb-clock-label' });
   const clock = el('button', { class: 'mb-right-item mb-clock', 'aria-label': 'Datum en tijd' }, [clockLabel]);
@@ -58,7 +55,6 @@ export function initMenubar(root) {
   function rebuild() {
     const app = getActiveApp();
     const name = app ? appShortName(app) : 'Finder';
-    appName.textContent = name;
     // verwijder bestaande dynamische menus
     qsa('.mb-menu', bar).forEach((m) => m.remove());
 
@@ -87,7 +83,7 @@ export function initMenubar(root) {
       ]),
     ];
 
-    let anchor = appName;
+    let anchor = logo;
     ordered.forEach((m) => { anchor.after(m); anchor = m; });
   }
 

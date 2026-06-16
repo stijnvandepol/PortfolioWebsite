@@ -83,7 +83,7 @@ function boot() {
   store.set({ booted: true });
 
   // Open het portfolio ná het boot-scherm en verwelkom de bezoeker.
-  const bootDelay = document.documentElement.classList.contains('reduce-motion') ? 100 : 2950;
+  const bootDelay = document.documentElement.classList.contains('reduce-motion') ? 100 : 1850;
   setTimeout(() => openById('portfolio', { initialPage: 'over-mij' }), bootDelay);
   setTimeout(() => {
     notify({

@@ -3,14 +3,13 @@
 // ============================================================
 import { el, qsa } from '../core/dom.js';
 import { os } from './bridge.js';
-import { APP_ICONS } from '../apps/icons.js';
+import { APP_ICONS, iconImg } from '../apps/icons.js';
 import { showContextMenu } from './contextmenu.js';
 import { CONFIG } from '../data/config.js';
 
 const DESKTOP_ICONS = [
-  { id: 'about', label: 'Over Mij', icon: APP_ICONS.safari, open: () => os.open('portfolio', { initialPage: 'over-mij' }) },
-  { id: 'projecten', label: 'Projecten', icon: APP_ICONS.finder, open: () => os.open('finder', { initial: 'Projecten' }) },
-  { id: 'cv', label: 'CV.pdf', icon: fileIcon(), open: () => os.openExternal(CONFIG.profile.github) },
+  { id: 'projecten', label: 'Projecten', icon: iconImg('photos', 'Projecten'), open: () => os.open('portfolio', { initialPage: 'portfolio' }) },
+  { id: 'cv', label: 'CV', icon: fileIcon(), open: () => os.open('portfolio', { initialPage: 'ontwikkeling' }) },
   { id: 'trash', label: 'Prullenmand', icon: APP_ICONS.trash, open: () => os.open('finder', { initial: 'Downloads' }) },
 ];
 

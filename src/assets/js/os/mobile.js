@@ -63,7 +63,7 @@ export function initMobile() {
     ]),
     el('div', { class: 'm-cta' }, [
       el('a', { class: 'm-btn m-btn-primary', href: '#m-projecten', text: 'Bekijk projecten' }),
-      el('a', { class: 'm-btn m-btn-secondary', href: '#m-cv', text: 'Bekijk mijn CV' }),
+      el('a', { class: 'm-btn m-btn-secondary', href: p.cv, target: '_blank', rel: 'noopener noreferrer', text: 'Bekijk mijn CV' }),
     ]),
   ]));
 

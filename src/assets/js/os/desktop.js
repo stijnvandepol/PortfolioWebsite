@@ -9,7 +9,7 @@ import { CONFIG } from '../data/config.js';
 
 const DESKTOP_ICONS = [
   { id: 'projecten', label: 'Projecten', icon: iconImg('photos', 'Projecten'), open: () => os.open('portfolio', { initialPage: 'portfolio' }) },
-  { id: 'cv', label: 'CV', icon: fileIcon(), open: () => os.open('portfolio', { initialPage: 'ontwikkeling' }) },
+  { id: 'cv', label: 'CV.pdf', icon: fileIcon(), open: () => window.open(CONFIG.profile.cv, '_blank', 'noopener,noreferrer') },
   { id: 'trash', label: 'Prullenmand', icon: APP_ICONS.trash, open: () => os.open('finder', { initial: 'Downloads' }) },
 ];
 

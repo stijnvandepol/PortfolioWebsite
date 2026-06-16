@@ -12,6 +12,7 @@ export const CONFIG = {
     github: 'https://github.com/stijnvandepol',
     linkedin: 'https://www.linkedin.com/in/stijnvandepol/',
     instagram: 'https://www.instagram.com/stijnvdpol/',
+    cv: './assets/files/cv.pdf',
   },
 
   opleiding: [

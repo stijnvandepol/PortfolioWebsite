@@ -33,7 +33,7 @@ function pageOverMij() {
         ]),
         el('div', { class: 'hero-cta' }, [
           el('button', { class: 'cta-btn cta-primary', dataset: { goto: 'portfolio' }, type: 'button', text: 'Bekijk projecten' }),
-          el('button', { class: 'cta-btn cta-secondary', dataset: { goto: 'ontwikkeling' }, type: 'button', text: 'Bekijk mijn CV' }),
+          el('a', { class: 'cta-btn cta-secondary', href: CONFIG.profile.cv, target: '_blank', rel: 'noopener noreferrer', text: 'Bekijk mijn CV' }),
         ]),
       ]),
     ]),
@@ -180,7 +180,7 @@ export function createPortfolioApp({ initialPage = 'over-mij', onPreview } = {})
       // ---- Filter ----
       pages.addEventListener('click', (e) => {
         const cta = e.target.closest('.cta-btn');
-        if (cta) { navigate(cta.dataset.goto); return; }
+        if (cta && cta.dataset.goto) { navigate(cta.dataset.goto); return; }
         const fb = e.target.closest('.filter-btn');
         if (fb) {
           const f = fb.dataset.filter;

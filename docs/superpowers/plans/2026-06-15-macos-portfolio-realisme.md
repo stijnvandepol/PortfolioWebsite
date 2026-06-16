@@ -27,9 +27,10 @@ Er zijn geen unit-tests. Elke taak verifieer je zo:
 
 ## File Structure
 
-- `src/assets/images/icons/` — **nieuw**. Eén consistente set macOS-icoon-PNG's (Big Sur-stijl):
-  `finder.png`, `safari.png`, `terminal.png`, `settings.png`, `photos.png`, `launchpad.png`,
-  `github.png`, `linkedin.png`. Verantwoordelijkheid: realistische dock/launchpad-assets.
+- `src/assets/images/icons/` — **nieuw**. Eén consistente set macOS-systeem-icoon-PNG's
+  (Big Sur): `finder.png`, `safari.png`, `terminal.png`, `settings.png`, `photos.png`,
+  `launchpad.png`. GitHub/LinkedIn blijven SVG-squircle-tegels in `icons.js`.
+  Verantwoordelijkheid: realistische dock/launchpad-assets.
 - `src/assets/js/apps/icons.js` — voegt PNG-pad-map + `iconImg()` helper toe. Blijft de bron van
   iconen.
 - `src/assets/js/os/dock.js` — rendert PNG-`<img>` (al via `html:`), geen wijziging nodig behalve
@@ -43,33 +44,41 @@ Er zijn geen unit-tests. Elke taak verifieer je zo:
 
 ---
 
-## Task 1: Echte macOS-icoon-PNG's downloaden (self-hosted, één consistente set)
+## Task 1: Echte macOS-systeem-icoon-PNG's downloaden (self-hosted, één consistente set)
 
 **Files:**
 - Create: `src/assets/images/icons/finder.png`, `safari.png`, `terminal.png`, `settings.png`,
-  `photos.png`, `launchpad.png`, `github.png`, `linkedin.png`
+  `photos.png`, `launchpad.png`
 - Create: `src/assets/images/icons/SOURCE.md` (herkomst + licentie documenteren)
 
-- [ ] **Stap 1: Kies één bron-set (Big Sur-stijl) en download de 8 iconen**
+> **Beslissing (door eigenaar bevestigd):** alleen de échte macOS-**systeem-apps** komen als PNG uit
+> één consistente Big Sur-set. **GitHub/LinkedIn worden NIET gedownload** — die blijven als eigen
+> squircle-SVG-tegels (zie Taak 2) omdat ze geen macOS-apps zijn en dus niet in de set bestaan.
 
-Gebruik één consistente set zodat alle iconen dezelfde macOS-versie/stijl delen (harde eis uit de
-spec). Aanbevolen bron: [nunosans/big-sur-icons](https://github.com/nunosans/big-sur-icons)
-(systeem-apps) aangevuld met merkiconen (GitHub/LinkedIn) in dezelfde squircle-stijl, of de set op
-[macOSicons](https://macosicons.com/). Download elk icoon als PNG (bij voorkeur ≥256px), plaats in
-`src/assets/images/icons/` met exact bovenstaande bestandsnamen.
+- [ ] **Stap 1: Download de 6 systeem-iconen uit één set (geverifieerd werkend)**
 
-> Let op: kies álles uit dezelfde set/versie. Geen Big Sur + Tahoe door elkaar. Als één app in de
-> gekozen set ontbreekt, kies dan een set waarin álle 8 bestaan, of een merkicoon in identieke stijl.
+Bron: [puruvj/macos-web](https://github.com/puruvj/macos-web) — `public/app-icons/<naam>/256.png`,
+één consistente Big Sur-set. Raw-URL's zijn geverifieerd (HTTP 200 op `main`). Run vanuit de
+repo-root:
 
-- [ ] **Stap 2: Optimaliseer en controleer afmetingen**
+```bash
+mkdir -p src/assets/images/icons
+base="https://raw.githubusercontent.com/puruvj/macos-web/main/public/app-icons"
+curl -fsSL "$base/finder/256.png"              -o src/assets/images/icons/finder.png
+curl -fsSL "$base/safari/256.png"              -o src/assets/images/icons/safari.png
+curl -fsSL "$base/terminal/256.png"            -o src/assets/images/icons/terminal.png
+curl -fsSL "$base/system-preferences/256.png"  -o src/assets/images/icons/settings.png
+curl -fsSL "$base/photos/256.png"              -o src/assets/images/icons/photos.png
+curl -fsSL "$base/launchpad/256.png"           -o src/assets/images/icons/launchpad.png
+```
 
-Run (in `src/assets/images/icons/`):
-`python -c "import glob;from PIL import Image;[print(f, Image.open(f).size) for f in glob.glob('*.png')]"`
-Verwacht: 8 bestanden, elk vierkant (bv. 256×256 of 512×512). Geen bestand > ~150 KB; verklein
-zo nodig naar 256px.
+- [ ] **Stap 2: Controleer dat alle 6 bestanden geldig en vierkant zijn**
 
-> Geen Pillow beschikbaar? Controleer dan handmatig in de verkenner dat alle 8 bestanden bestaan en
-> vierkant zijn.
+Run: `cd src/assets/images/icons && file *.png && ls -la *.png`
+Verwacht: 6 × "PNG image data, 256 x 256", elk groter dan 0 bytes (geen lege/404-bestanden).
+
+> Toont `file` "ASCII text" of "HTML" i.p.v. "PNG image data"? Dan is een download mislukt
+> (404 als tekst opgeslagen) — verwijder dat bestand en herhaal de `curl` voor dat icoon.
 
 - [ ] **Stap 3: Documenteer herkomst en licentie**
 
@@ -78,18 +87,19 @@ Schrijf `src/assets/images/icons/SOURCE.md`:
 ```markdown
 # Dock-iconen — herkomst
 
-Bron: <URL van de gekozen icoon-set>
-Licentie: <bv. CC BY-NC 4.0 — vrij voor persoonlijk, niet-commercieel gebruik>
-Stijl/versie: macOS Big Sur (één consistente set)
+Systeem-iconen (finder, safari, terminal, settings, photos, launchpad):
+Bron: https://github.com/puruvj/macos-web (public/app-icons/<app>/256.png)
+Stijl/versie: macOS Big Sur — één consistente set.
 
 Dit zijn Apple's eigen icoon-ontwerpen, gebruikt voor een persoonlijk, niet-commercieel portfolio.
+GitHub/LinkedIn zijn géén systeem-apps en worden als eigen squircle-SVG-tegels gerenderd.
 ```
 
 - [ ] **Stap 4: Commit**
 
 ```bash
 git add src/assets/images/icons/
-git commit -m "assets: self-hosted echte macOS-icoon-PNG's (Big Sur-set) voor dock"
+git commit -m "assets: self-hosted echte macOS-systeem-iconen (Big Sur-set) voor dock"
 ```
 
 ---
@@ -116,8 +126,6 @@ export const APP_ICON_IMG = {
   settings:  `${ICON_BASE}settings.png`,
   photos:    `${ICON_BASE}photos.png`,
   launchpad: `${ICON_BASE}launchpad.png`,
-  github:    `${ICON_BASE}github.png`,
-  linkedin:  `${ICON_BASE}linkedin.png`,
 };
 // Levert een <img>-string die dock.js/launchpad via `html:` renderen.
 export const iconImg = (key, label = '') =>
@@ -129,8 +137,10 @@ export const iconImg = (key, label = '') =>
 Vervang in `src/assets/js/main.js` het `import { APP_ICONS }`-gebruik in `dockEntries` door
 `iconImg(...)`. Werk de import bij (regel 18) en de `dockEntries`-array (regel 58-69):
 
+Werk de import bij (regel 18 gebruikt al `APP_ICONS`; voeg `iconImg` toe):
+
 ```js
-import { iconImg } from './apps/icons.js';
+import { APP_ICONS, iconImg } from './apps/icons.js';
 ```
 
 ```js
@@ -142,15 +152,15 @@ import { iconImg } from './apps/icons.js';
     { id: 'settings', label: 'Instellingen', icon: iconImg('settings', 'Instellingen') },
     { id: 'launchpad', label: 'Launchpad', icon: iconImg('launchpad', 'Launchpad'), action: () => os.toggleLaunchpad() },
     { sep: true },
-    { id: 'github', label: 'GitHub', icon: iconImg('github', 'GitHub'), href: CONFIG.profile.github },
-    { id: 'linkedin', label: 'LinkedIn', icon: iconImg('linkedin', 'LinkedIn'), href: CONFIG.profile.linkedin },
+    { id: 'github', label: 'GitHub', icon: APP_ICONS.github, href: CONFIG.profile.github },
+    { id: 'linkedin', label: 'LinkedIn', icon: APP_ICONS.linkedin, href: CONFIG.profile.linkedin },
   ];
 ```
 
-> Wijzigingen t.o.v. nu: "Projecten" opent de in-app Portfolio-pagina (echte projectengrid) i.p.v.
-> Finder; Instagram is uit de dock gehaald om 'm rustiger te maken (blijft elders bereikbaar). De
-> oude `import { APP_ICONS }` in main.js mag blijven staan als die nog elders gebruikt wordt; zo
-> niet, verwijder 'm.
+> Wijzigingen t.o.v. nu: systeem-apps gebruiken `iconImg(...)` (echte PNG); "Projecten" opent de
+> in-app Portfolio-pagina (echte projectengrid) i.p.v. Finder; Instagram is uit de dock gehaald om
+> 'm rustiger te maken (blijft via het profiel/contact bereikbaar). GitHub/LinkedIn blijven hun
+> bestaande `APP_ICONS.*`-SVG-squircle-tegel (geen echte macOS-apps).
 
 - [ ] **Stap 3: Laat registry/launchpad dezelfde PNG-iconen gebruiken**
 
@@ -173,10 +183,11 @@ export const APPS = [
 - [ ] **Stap 4: Verwijder de squircle-clip op echte icoon-`<img>`**
 
 In `src/assets/css/os.css` regel 75, splits de selector zodat alleen SVG-iconen geklemd worden
-(echte PNG's hebben hun vorm + schaduw al ingebakken):
+(echte PNG's hebben hun vorm + schaduw al ingebakken). Geef de SVG-tegels (GitHub/LinkedIn) een
+zachte drop-shadow zodat ze visueel aansluiten bij de PNG's met ingebakken schaduw:
 
 ```css
-.di-icon svg { width: 100%; height: 100%; display: block; clip-path: url(#squircle); }
+.di-icon svg { width: 100%; height: 100%; display: block; clip-path: url(#squircle); filter: drop-shadow(0 3px 5px rgba(0,0,0,0.28)); }
 .di-icon img { width: 100%; height: 100%; display: block; }
 ```
 

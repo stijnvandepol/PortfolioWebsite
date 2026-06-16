@@ -55,7 +55,7 @@ export function createTerminalApp() {
         experience: () => print(CONFIG.ervaring.map((e) => `<span class="t-accent">${escapeHtml(e.title)}</span><br>  ${escapeHtml(e.date)}`).join('<br>')),
         education: () => print(CONFIG.opleiding.map((e) => `<span class="t-accent">${escapeHtml(e.title)}</span><br>  ${escapeHtml(e.date)}`).join('<br>')),
         contact: () => print(escapeHtml(FS['contact.txt']()).replace(/\n/g, '<br>')),
-        social: () => { print('GitHub · LinkedIn · Instagram — links geopend.'); os.openExternal(CONFIG.profile.github); },
+        social: () => { print('GitHub · LinkedIn — link geopend.'); os.openExternal(CONFIG.profile.github); },
         ls: () => print(Object.keys(FS).map((f) => `<span class="t-file">${escapeHtml(f)}</span>`).join('&nbsp;&nbsp;')),
         cat: (arg) => { if (!arg) return print('cat: ontbrekend bestand', 'term-err'); const f = FS[arg]; if (!f) return print(`cat: ${escapeHtml(arg)}: bestaat niet`, 'term-err'); print(escapeHtml(f()).replace(/\n/g, '<br>')); },
         open: (arg) => { const apps = os.listApps().map((a) => a.id); if (!arg) return print('open: geef een app, bv. open finder', 'term-err'); if (!apps.includes(arg)) return print(`open: onbekende app '${escapeHtml(arg)}'`, 'term-err'); os.open(arg); print(`'${escapeHtml(arg)}' geopend.`); },
@@ -65,8 +65,15 @@ export function createTerminalApp() {
         date: () => print(escapeHtml(new Date().toString())),
         sudo: () => print('stijn is niet in het sudoers-bestand. Dit incident wordt gerapporteerd. 🙂', 'term-err'),
         neofetch: () => print(neofetch(), 'term-fetch'),
+        // Verstopt easter-egg: niet in `help`. Wie hier komt, verdient de link. 📸
+        instagram: () => {
+          const url = CONFIG.profile.instagram;
+          print(`📸 Easter egg gevonden! Instagram: <a class="t-accent" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(url)}</a>`);
+          os.openExternal(url);
+        },
       };
       commands['--help'] = commands.help;
+      commands.insta = commands.instagram;
 
       function run(raw) {
         const cmd = raw.trim();

@@ -34,6 +34,9 @@ vervangen door SVG "om alles self-hosted te maken" — daar zit de realisme-regr
 - **Dock-iconen:** echte macOS-icoon-PNG's, **self-hosted** in de repo (geen externe requests;
   audit-doel C6 blijft overeind). Het zijn Apple's eigen ontwerpen — acceptabel voor een
   persoonlijk, niet-commercieel portfolio.
+- **Icoon-consistentie (harde eis):** alle iconen komen uit **één set / één macOS-versie**. Een
+  oudere stijl (bv. Big Sur) is prima, zolang álle iconen dezelfde versie/stijl delen — geen mix
+  van Big Sur + Tahoe/Sonoma door elkaar.
 - **Desktop-iconen:** terugbrengen tot ~3 (Projecten, CV.pdf, Prullenmand) zodat het venster het
   hoofdpunt is.
 - **Scope:** geen nieuwe apps/features; de bestaande illusie geloofwaardiger maken. Halve/dode

@@ -53,6 +53,7 @@ export const CONFIG = {
 
   blog: [
     { title: 'Bunk Hosting', image: './assets/images/blog-3.jpg', url: 'https://bunkhosting.nl', category: 'Project', date: '2026', datetime: '2026-06-01', status: 'online', text: 'Een full-stack platform voor een Nederlandse VPS-hostingprovider: van het klantportaal en live serverstatistieken tot de backend-automatisering die servers provisioned en beheert. Gebouwd met security en hardening als uitgangspunt. Front-end met Next.js, TypeScript en Tailwind CSS, een eigen API en uitgeserveerd via Cloudflare.' },
+    { title: 'SnackSpot', image: './assets/images/blog-1.jpg', url: 'https://snackspot.online', category: 'Project', date: '2026', datetime: '2026-03-01', status: 'online', text: 'Een mobile-first webapp voor het ontdekken en reviewen van lokale verborgen eetplekken. Met community feed, foto-uploads, structured ratings, nearby discovery en een admin panel voor moderatie.' },
     { title: 'TankNu', image: './assets/images/blog-2.jpg', url: 'https://tanknu.nl', category: 'Project', date: '2025', datetime: '2025-11-01', status: 'offline', text: 'Een web-app die brandstofprijzen rondom jouw locatie ophaalt via de publieke API. Geen eigen database: de browser doet het verzoek en toont realtime het goedkoopste tankstation, met directe navigatie via Google Maps.' },
   ],
 };

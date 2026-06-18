@@ -10,7 +10,7 @@ import { initDock } from './os/dock.js';
 import { initDesktop } from './os/desktop.js';
 import { initNotifications, notify } from './os/notifications.js';
 import { openSpotlight, toggleSpotlight } from './os/spotlight.js';
-import { openLaunchpad } from './os/launchpad.js';
+import { toggleLaunchpad as toggleLaunchpadOverlay } from './os/launchpad.js';
 import { quickLook } from './os/quicklook.js';
 import { os } from './os/bridge.js';
 import { APPS, getApp, listApps } from './apps/registry.js';
@@ -48,7 +48,7 @@ function boot() {
     notify,
     setTheme: themeSet,
     toggleSpotlight,
-    toggleLaunchpad: () => openLaunchpad(APPS.map((a) => ({ id: a.id, title: a.title, icon: a.icon }))),
+    toggleLaunchpad: () => toggleLaunchpadOverlay(APPS.map((a) => ({ id: a.id, title: a.title, icon: a.icon }))),
     listApps,
     preview: quickLook,
   });
@@ -82,17 +82,9 @@ function boot() {
 
   store.set({ booted: true });
 
-  // Open het portfolio ná het boot-scherm en verwelkom de bezoeker.
+  // Open het portfolio ná het boot-scherm.
   const bootDelay = document.documentElement.classList.contains('reduce-motion') ? 100 : 1850;
   setTimeout(() => openById('portfolio', { initialPage: 'over-mij' }), bootDelay);
-  setTimeout(() => {
-    notify({
-      title: 'Welkom 👋',
-      body: 'Druk ⌘Space voor Spotlight, F4 voor Launchpad, of dubbelklik een icoon.',
-      icon: APP_ICONS.safari,
-      timeout: 7000,
-    });
-  }, bootDelay + 900);
 }
 
 // Boot-scherm afronden en desktop tonen.

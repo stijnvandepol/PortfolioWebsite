@@ -31,6 +31,12 @@ export function openLaunchpad(apps) {
   release = trapFocus(overlay, { initial: overlay.querySelector('.lp-app') });
 }
 
+// F4/dock-klik schakelt: open Launchpad, of sluit 'm als hij al open staat.
+export function toggleLaunchpad(apps) {
+  if (overlay && overlay.classList.contains('open')) { close(); return; }
+  openLaunchpad(apps);
+}
+
 export function close() {
   if (!overlay) return;
   overlay.classList.remove('open');

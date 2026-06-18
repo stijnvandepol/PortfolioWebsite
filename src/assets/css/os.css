@@ -72,7 +72,9 @@
 .di-tip::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: var(--glass-strong); }
 .di:hover .di-tip { opacity: 1; }
 .di-icon { width: 2.4rem; height: 2.4rem; overflow: visible; transform-origin: bottom center; will-change: width, height, transform; flex-shrink: 0; }
-.di-icon svg { width: 100%; height: 100%; display: block; clip-path: url(#squircle); filter: drop-shadow(0 3px 5px rgba(0,0,0,0.28)); }
+/* SVG-dock-iconen (GitHub/LinkedIn) brengen hun eigen afronding mee (rect rx=14).
+   Géén clip-path/filter: die vervormen tijdens de dock-magnification (zie .di-icon img). */
+.di-icon svg { width: 100%; height: 100%; display: block; }
 .di-icon img { width: 100%; height: 100%; display: block; }
 .di-icon-custom { display: flex; align-items: center; justify-content: center; clip-path: url(#squircle); }
 .di-dot { width: 4px; height: 4px; border-radius: 50%; margin-top: 3px; background: var(--text-primary); opacity: 0; transition: opacity 0.2s; }

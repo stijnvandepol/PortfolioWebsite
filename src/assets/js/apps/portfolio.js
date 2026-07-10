@@ -6,7 +6,7 @@ import { el, qsa, escapeHtml, prefersReducedMotion } from '../core/dom.js';
 import { CONFIG } from '../data/config.js';
 import { ICONS } from './icons.js';
 
-const PAGE_NAMES = { 'over-mij': 'Over Mij', ontwikkeling: 'Ontwikkeling', portfolio: 'Portfolio', blog: 'Blog' };
+const PAGE_NAMES = { 'over-mij': 'Over Mij', ontwikkeling: 'Ontwikkeling', portfolio: 'Portfolio', blog: 'Projecten' };
 
 function svg(markup) { return el('span', { class: 'i', html: markup }); }
 
@@ -87,7 +87,7 @@ function pagePortfolio() {
       el('button', { class: `filter-btn${i === 0 ? ' active' : ''}`, role: 'tab', 'aria-selected': i === 0 ? 'true' : 'false', dataset: { filter: c.id }, text: c.label })));
   const grid = el('div', { class: 'project-grid' }, CONFIG.projects.map((p) =>
     el('div', { class: 'project-card active reveal', dataset: { category: p.category } }, [
-      el('button', { class: 'project-open', dataset: { img: p.image, title: p.title }, 'aria-label': `Bekijk ${p.title}` }, [
+      el('button', { class: 'project-open', dataset: { img: p.image, title: p.title, desc: p.text || '' }, 'aria-label': `Bekijk ${p.title}` }, [
         el('figure', { class: 'project-img' }, [
           el('img', { src: p.image, alt: p.title, loading: 'lazy', decoding: 'async' }),
           el('div', { class: 'project-overlay', html: ICONS.eye }),
@@ -103,7 +103,7 @@ function pagePortfolio() {
 
 function pageBlog() {
   return el('article', { class: 'page', dataset: { page: 'blog' } }, [
-    el('h2', { class: 'section-heading' }, ['Blog']),
+    el('h2', { class: 'section-heading' }, ['Projecten']),
     el('div', { class: 'blog-grid' }, CONFIG.blog.map((b) =>
       el('a', { class: 'blog-card reveal', href: b.url, target: '_blank', rel: 'noopener noreferrer' }, [
         el('figure', { class: 'blog-img' }, [el('img', { src: b.image, alt: b.title, loading: 'lazy', decoding: 'async' })]),
@@ -189,7 +189,7 @@ export function createPortfolioApp({ initialPage = 'over-mij', onPreview } = {})
           return;
         }
         const open = e.target.closest('.project-open');
-        if (open && onPreview) onPreview({ src: open.dataset.img, title: open.dataset.title });
+        if (open && onPreview) onPreview({ src: open.dataset.img, title: open.dataset.title, desc: open.dataset.desc });
       });
 
       // ---- Reveal + skills ----
@@ -225,7 +225,7 @@ function portfolioMenus(navigate) {
       { label: 'Over Mij', action: () => navigate('over-mij') },
       { label: 'Ontwikkeling', action: () => navigate('ontwikkeling') },
       { label: 'Portfolio', action: () => navigate('portfolio') },
-      { label: 'Blog', action: () => navigate('blog') },
+      { label: 'Projecten', action: () => navigate('blog') },
     ] },
   ];
 }

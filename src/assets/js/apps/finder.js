@@ -16,7 +16,7 @@ function buildFS() {
       { type: 'pdf', name: 'CV — Stijn van de Pol.pdf', href: CONFIG.profile.github },
       { type: 'text', name: 'over-mij.txt', body: `${CONFIG.profile.name}\n${CONFIG.profile.role}\n${CONFIG.profile.location}\n${CONFIG.profile.email}` },
     ] },
-    Blog: { kind: 'folder', children: CONFIG.blog.map((b) => ({ type: 'link', name: `${b.title}.url`, href: b.url })) },
+    Websites: { kind: 'folder', children: CONFIG.blog.map((b) => ({ type: 'link', name: `${b.title}.url`, href: b.url })) },
     Downloads: { kind: 'folder', children: [] },
   };
 }

@@ -32,7 +32,13 @@ export function el(tag, props = {}, children = []) {
     if (val == null || val === false) continue;
     if (key === 'class') node.className = val;
     else if (key === 'dataset') Object.assign(node.dataset, val);
-    else if (key === 'style' && typeof val === 'object') Object.assign(node.style, val);
+    else if (key === 'style' && typeof val === 'object') {
+      // Object.assign werkt niet voor custom properties (--var): die vereisen setProperty.
+      for (const [prop, v] of Object.entries(val)) {
+        if (prop.startsWith('--')) node.style.setProperty(prop, v);
+        else node.style[prop] = v;
+      }
+    }
     else if (key === 'html') node.innerHTML = val; // alleen voor vertrouwde, samengestelde markup
     else if (key === 'text') node.textContent = val;
     else if (key.startsWith('on') && typeof val === 'function') {

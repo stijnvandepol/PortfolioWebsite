@@ -12,10 +12,10 @@ function buildIndex() {
   const items = [];
   const p = CONFIG.profile;
   os.listApps().forEach((a) => items.push({ type: 'App', label: a.title, icon: ICONS.search, run: () => os.open(a.id) }));
-  [['Over Mij', 'over-mij'], ['Ontwikkeling', 'ontwikkeling'], ['Portfolio', 'portfolio'], ['Blog', 'blog']]
+  [['Over Mij', 'over-mij'], ['Ontwikkeling', 'ontwikkeling'], ['Portfolio', 'portfolio'], ['Projecten', 'blog']]
     .forEach(([label, page]) => items.push({ type: 'Pagina', label, icon: ICONS.folder, run: () => os.open('portfolio', { initialPage: page }) }));
-  CONFIG.projects.forEach((pr) => items.push({ type: 'Project', label: pr.title, sub: pr.tags, icon: ICONS.eye, run: () => os.preview({ src: pr.image, title: pr.title }) }));
-  (CONFIG.blog || []).forEach((b) => items.push({ type: 'Blog', label: b.title, sub: b.category, icon: ICONS.share, run: () => os.openExternal(b.url) }));
+  CONFIG.projects.forEach((pr) => items.push({ type: 'Project', label: pr.title, sub: pr.tags, icon: ICONS.eye, run: () => os.preview({ src: pr.image, title: pr.title, desc: pr.text }) }));
+  (CONFIG.blog || []).forEach((b) => items.push({ type: 'Project', label: b.title, sub: b.category, icon: ICONS.share, run: () => os.openExternal(b.url) }));
   // Sociale kanalen (Instagram bewust níét: dat is de verstopte terminal-easter-egg)
   items.push({ type: 'Sociaal', label: 'GitHub', sub: 'github.com', icon: ICONS.share, run: () => os.openExternal(p.github) });
   items.push({ type: 'Sociaal', label: 'LinkedIn', sub: 'linkedin.com', icon: ICONS.share, run: () => os.openExternal(p.linkedin) });

@@ -14,6 +14,7 @@ function ensure() {
       el('button', { class: 'ql-close', 'aria-label': 'Sluit', dataset: { close: '1' }, text: '×' }),
       el('div', { class: 'ql-content' }),
       el('p', { class: 'ql-title' }),
+      el('p', { class: 'ql-desc' }),
     ]),
   ]);
   document.getElementById('desktop').append(overlay);
@@ -21,14 +22,17 @@ function ensure() {
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay.classList.contains('open')) close(); });
 }
 
-export function quickLook({ src, text, title }) {
+export function quickLook({ src, text, title, desc }) {
   ensure();
   const content = overlay.querySelector('.ql-content');
   const titleEl = overlay.querySelector('.ql-title');
+  const descEl = overlay.querySelector('.ql-desc');
   content.replaceChildren();
   if (src) content.append(el('img', { src, alt: title || '', class: 'ql-img' }));
   else if (text) content.append(el('pre', { class: 'ql-text', text }));
   titleEl.textContent = title || '';
+  descEl.textContent = desc || '';
+  descEl.hidden = !desc;
   overlay.classList.add('open');
   release = trapFocus(overlay.querySelector('.ql-panel'), { initial: overlay.querySelector('.ql-close') });
 }

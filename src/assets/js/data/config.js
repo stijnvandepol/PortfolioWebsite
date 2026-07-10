@@ -42,13 +42,20 @@ export const CONFIG = {
   ],
 
   projects: [
-    { title: 'OTAP Omgeving', category: 'infrastructuur', image: './assets/images/project-1.png', tags: 'GitHub Workflows · Cloudflared · Databases · Containerisatie' },
-    { title: 'Hybride IT-Infrastructuur', category: 'infrastructuur', image: './assets/images/project-2.png', tags: 'Azure · Intune · On-Prem Services · Windows · Linux' },
-    { title: 'Containerized Full-Stack Applicatie', category: 'applicaties', image: './assets/images/project-3.png', tags: 'Backend · Frontend · API · Database · Containerisatie' },
-    { title: 'Monitoring & Inzicht', category: 'applicaties', image: './assets/images/project-4.png', tags: 'Beszel · Checkmk · Dashboards · Alerts' },
-    { title: 'Virtualisatie & Containerisatie', category: 'infrastructuur', image: './assets/images/project-5.png', tags: 'Proxmox · VMs · LXC Containers · Docker · Scripting · Backups' },
-    { title: 'Microsoft Power Platform', category: 'applicaties', image: './assets/images/project-7.png', tags: 'Power Automate · Power Apps · Copilot Studio · AI Agents' },
-    { title: 'Procesautomatisering & AI', category: 'applicaties', image: './assets/images/project-8.png', tags: 'Low-Code / No-Code · n8n · AI Agents · MCP · API Integraties' },
+    { title: 'OTAP Omgeving', category: 'infrastructuur', image: './assets/images/project-1.png', tags: 'GitHub Workflows · Cloudflared · Databases · Containerisatie',
+      text: 'Een volledige OTAP-straat voor eigen projecten: gescheiden ontwikkel-, test-, acceptatie- en productieomgevingen met geautomatiseerde deployments via GitHub Workflows, veilig ontsloten via Cloudflared.' },
+    { title: 'Hybride IT-Infrastructuur', category: 'infrastructuur', image: './assets/images/project-2.png', tags: 'Azure · Intune · On-Prem Services · Windows · Linux',
+      text: 'Een hybride omgeving waarin Azure en on-premises servers samenwerken: apparaatbeheer met Intune en cloud-identiteit, gecombineerd met Windows- en Linux-services op eigen hardware.' },
+    { title: 'Containerized Full-Stack Applicatie', category: 'applicaties', image: './assets/images/project-3.png', tags: 'Backend · Frontend · API · Database · Containerisatie',
+      text: 'Zelf ontwikkelde full-stack webapplicatie — frontend, API en database — volledig gecontaineriseerd opgezet met gescheiden services.' },
+    { title: 'Monitoring & Inzicht', category: 'applicaties', image: './assets/images/project-4.png', tags: 'Beszel · Checkmk · Dashboards · Alerts',
+      text: 'Centrale monitoring van alle systemen in mijn homelab met Beszel en Checkmk: realtime dashboards en alerts om problemen te zien vóórdat ze uitval veroorzaken.' },
+    { title: 'Virtualisatie & Containerisatie', category: 'infrastructuur', image: './assets/images/project-5.png', tags: 'Proxmox · VMs · LXC Containers · Docker · Scripting · Backups',
+      text: 'Proxmox als fundament van mijn homelab: virtuele machines en LXC-containers, aangevuld met Docker, beheerscripts en geautomatiseerde backups.' },
+    { title: 'Microsoft Power Platform', category: 'applicaties', image: './assets/images/project-7.png', tags: 'Power Automate · Power Apps · Copilot Studio · AI Agents',
+      text: 'Automatiseringsoplossingen gebouwd tijdens mijn stage: workflows met Power Automate, apps met Power Apps en AI-agents via Copilot Studio.' },
+    { title: 'Procesautomatisering & AI', category: 'applicaties', image: './assets/images/project-8.png', tags: 'Low-Code / No-Code · n8n · AI Agents · MCP · API Integraties',
+      text: 'Werkprocessen geautomatiseerd met n8n en AI-agents: van e-mailverwerking tot API-integraties, onderling gekoppeld via MCP.' },
   ],
 
   blog: [

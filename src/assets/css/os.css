@@ -141,11 +141,13 @@
 .ql { position: fixed; inset: 0; z-index: 2800; display: none; align-items: center; justify-content: center; }
 .ql.open { display: flex; }
 .ql-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.78); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
-.ql-panel { position: relative; max-width: 90vw; max-height: 86vh; z-index: 1; animation: qlIn 0.28s var(--spring); }
+.ql-panel { position: relative; max-width: 90vw; max-height: 86vh; z-index: 1; display: flex; flex-direction: column; align-items: center; animation: qlIn 0.28s var(--spring); }
 @keyframes qlIn { 0%{opacity:0;transform:scale(0.92)} 100%{opacity:1;transform:scale(1)} }
-.ql-img { max-width: 90vw; max-height: 82vh; object-fit: contain; border-radius: 10px; box-shadow: 0 24px 80px rgba(0,0,0,0.6); }
+.ql-img { max-width: 90vw; max-height: 72vh; object-fit: contain; border-radius: 10px; box-shadow: 0 24px 80px rgba(0,0,0,0.6); }
 .ql-text { background: var(--glass-strong); color: var(--text-primary); padding: 24px 28px; border-radius: 12px; font-family: var(--mono); font-size: 13px; line-height: 1.7; white-space: pre-wrap; max-width: 80vw; }
-.ql-title { position: absolute; bottom: -34px; left: 0; right: 0; text-align: center; color: #fff; font-size: 13px; font-weight: 500; }
+.ql-title { margin-top: 14px; text-align: center; color: #fff; font-size: 14px; font-weight: 600; }
+.ql-desc { margin-top: 6px; max-width: 560px; text-align: center; color: rgba(255,255,255,0.78); font-size: 13px; line-height: 1.6; }
+.ql-desc[hidden] { display: none; }
 .ql-close { position: absolute; top: -16px; left: -16px; width: 30px; height: 30px; border-radius: 50%; background: var(--glass-strong); border: 0.5px solid var(--glass-border); color: var(--text-primary); font-size: 18px; display: flex; align-items: center; justify-content: center; z-index: 2; }
 .ql-close:hover { background: var(--surface-hover); }
 
@@ -311,7 +313,7 @@ a.blog-card:hover .blog-img img { transform: scale(1.04); }
 :root[data-theme="light"] .bento-card:hover,
 :root[data-theme="light"] .project-card > .project-open:hover,
 :root[data-theme="light"] a.blog-card:hover { background: rgba(255,255,255,0.92); }
-:root[data-theme="light"] .bento-icon img { filter: none; }
+:root[data-theme="light"] .bento-icon img { filter: brightness(0) opacity(0.72); }
 :root[data-theme="light"] .tabbar { background: rgba(0,0,0,0.025); }
 :root[data-theme="light"] .tab.active { background: rgba(0,0,0,0.07); }
 :root[data-theme="light"] .tb-url,

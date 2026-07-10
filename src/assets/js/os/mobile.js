@@ -82,6 +82,7 @@ export function initMobile() {
         ]),
         el('div', { class: 'm-project-body' }, [
           el('h3', { class: 'm-project-title', text: pr.title }),
+          pr.text ? el('p', { class: 'm-project-text', text: pr.text }) : null,
           el('p', { class: 'm-project-tags', text: pr.tags }),
         ]),
       ]))),

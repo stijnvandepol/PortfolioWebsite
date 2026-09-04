@@ -52,7 +52,7 @@ export function initTheme() {
   const prefs = load();
   store.set({
     theme: prefs.theme || 'auto',
-    accent: prefs.accent || 'green',
+    accent: prefs.accent || 'blue',
     reducedMotion:
       typeof prefs.reducedMotion === 'boolean'
         ? prefs.reducedMotion

@@ -61,6 +61,7 @@ class WindowInstance {
     this.maximized = false;
     this.snapState = null;
     this.preGeo = null; // geometrie vóór maximize/snap
+    this._pendingSnap = null;
     this._cleanup = [];
     this._build();
   }
@@ -204,7 +205,7 @@ class WindowInstance {
     const nearLeft = x <= vp.left + SNAP_EDGE;
     const nearRight = x >= vp.left + vp.width - SNAP_EDGE;
     const nearTop = y <= vp.top + SNAP_EDGE;
-    const nearBottom = y >= vp.bottom - SNAP_EDGE + 30;
+    const nearBottom = y >= vp.bottom - SNAP_EDGE + 30; // ruimere marge: cursor zit door de drag-offset al iets boven de dock
     if (nearTop && nearLeft) return 'tl';
     if (nearTop && nearRight) return 'tr';
     if (nearBottom && nearLeft) return 'bl';
@@ -273,12 +274,12 @@ class WindowInstance {
 
   _wireResize() {
     this.elResizers.forEach((handle) => {
-      let resizing = false, sx = 0, sy = 0, g0 = null, dir = '';
+      let resizing = false, sx = 0, sy = 0, startGeo = null, dir = '';
       handle.addEventListener('pointerdown', (e) => {
         if (e.button !== 0) return;
         e.stopPropagation();
         resizing = true; dir = handle.dataset.dir;
-        sx = e.clientX; sy = e.clientY; g0 = { ...this.geo };
+        sx = e.clientX; sy = e.clientY; startGeo = { ...this.geo };
         this._restoreGeo();
         handle.setPointerCapture(e.pointerId);
         this.el.classList.add('resizing');
@@ -290,11 +291,11 @@ class WindowInstance {
         const minW = this.app.minWidth || 360;
         const minH = this.app.minHeight || 240;
         const dx = e.clientX - sx, dy = e.clientY - sy;
-        let { x, y, w, h } = g0;
-        if (dir.includes('e')) w = clamp(g0.w + dx, minW, vp.width - x);
-        if (dir.includes('s')) h = clamp(g0.h + dy, minH, vp.bottom - y);
-        if (dir.includes('w')) { const nw = clamp(g0.w - dx, minW, g0.x + g0.w - vp.left); x = g0.x + (g0.w - nw); w = nw; }
-        if (dir.includes('n')) { const nh = clamp(g0.h - dy, minH, g0.y + g0.h - vp.top); y = g0.y + (g0.h - nh); h = nh; }
+        let { x, y, w, h } = startGeo;
+        if (dir.includes('e')) w = clamp(startGeo.w + dx, minW, vp.width - x);
+        if (dir.includes('s')) h = clamp(startGeo.h + dy, minH, vp.bottom - y);
+        if (dir.includes('w')) { const nw = clamp(startGeo.w - dx, minW, startGeo.x + startGeo.w - vp.left); x = startGeo.x + (startGeo.w - nw); w = nw; }
+        if (dir.includes('n')) { const nh = clamp(startGeo.h - dy, minH, startGeo.y + startGeo.h - vp.top); y = startGeo.y + (startGeo.h - nh); h = nh; }
         this.geo = { x, y, w, h };
         this._applyGeo();
       });
@@ -342,7 +343,7 @@ class WindowInstance {
       const next = [...windows.values()].filter((w) => !w.minimized).pop();
       if (next) next.focus(); else store.set({ activeWindowId: null }); };
     if (prefersReducedMotion()) done();
-    else { this.el.addEventListener('animationend', done, { once: true }); setTimeout(done, 280); }
+    else { this.el.addEventListener('animationend', done, { once: true }); setTimeout(done, 280); } // fallback als animationend niet vuurt
   }
 }
 

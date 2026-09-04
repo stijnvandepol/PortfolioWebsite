@@ -9,7 +9,7 @@ import { initMenubar } from './os/menubar.js';
 import { initDock } from './os/dock.js';
 import { initDesktop } from './os/desktop.js';
 import { initNotifications, notify } from './os/notifications.js';
-import { openSpotlight, toggleSpotlight } from './os/spotlight.js';
+import { toggleSpotlight } from './os/spotlight.js';
 import { toggleLaunchpad as toggleLaunchpadOverlay } from './os/launchpad.js';
 import { quickLook } from './os/quicklook.js';
 import { os } from './os/bridge.js';
@@ -63,6 +63,7 @@ function boot() {
     { id: 'finder', label: 'Finder', icon: iconImg('finder', 'Finder') },
     { id: 'portfolio', label: 'Over Mij', icon: iconImg('safari', 'Over Mij') },
     { id: 'terminal', label: 'Terminal', icon: iconImg('terminal', 'Terminal') },
+    // Zelfde app, tweede dock-icoon: opent portfolio direct op de projectenpagina.
     { id: 'portfolio', label: 'Projecten', icon: iconImg('photos', 'Projecten'), action: () => os.open('portfolio', { initialPage: 'portfolio' }) },
     { id: 'settings', label: 'Instellingen', icon: iconImg('settings', 'Instellingen') },
     { id: 'launchpad', label: 'Launchpad', icon: iconImg('launchpad', 'Launchpad'), action: () => os.toggleLaunchpad() },

@@ -21,10 +21,10 @@ export const CONFIG = {
   ],
 
   ervaring: [
-    { title: 'Projectstage – Verweijen ICT', date: 'sep. 2025 — jan. 2026 · 5 mnd · Mill', text: 'Onderzoek naar de inzet van AI en low-code via het Microsoft Power Platform voor automatiseringsoplossingen.' },
-    { title: 'Teamleider – Jumbo', date: 'feb. 2025 — heden · Mill', text: 'Sinds 2020 werkzaam binnen deze vestiging. Doorgegroeid naar teamleider, met focus op aansturing, opleiding en procesverbetering.' },
-    { title: 'IT Engineer (stage) – Vanboxtel', date: 'feb. 2023 — jun. 2023 · 5 mnd · Boekel', text: 'Firewalls, updates, MFA, werkplek-inrichting en on-site support.' },
-    { title: 'IT Engineer (stage) – Verweijen ICT', date: 'sep. 2021 — jan. 2022 · 5 mnd · Mill', text: 'Hardware registreren/installeren, MFA instellen en on-site support.' },
+    { title: 'Projectstage – Verweijen ICT', date: 'sep. 2025 — jan. 2026 · 5 mnd · Mill', text: 'Onderzoek naar AI en low-code in het Microsoft Power Platform; adviesrapport voor een nieuwe dienst gepresenteerd. Automatiseringen uitgerold met Power Automate, Power Apps en Copilot Studio.' },
+    { title: 'Teamleider – Jumbo', date: 'feb. 2025 — heden · Mill', text: 'Aansturen van de vulploeg en eindverantwoordelijk voor de winkel.' },
+    { title: 'Stagiair IT – Vanboxtel', date: 'feb. 2023 — jun. 2023 · 5 mnd · Boekel', text: 'Firewalls en switches geconfigureerd en vervangen bij klanten op locatie. Netwerkontwerp opgesteld en bestaande klantomgevingen bijgewerkt en beveiligd.' },
+    { title: 'Stagiair IT – Verweijen ICT', date: 'sep. 2021 — jan. 2022 · 5 mnd · Mill', text: 'Werkplekken, access points en telefonie geconfigureerd en op locatie uitgeleverd bij klanten.' },
   ],
 
   vaardigheden: [
@@ -33,6 +33,8 @@ export const CONFIG = {
     { name: 'Security',           value: 50 },
     { name: 'Cloud engineering',  value: 50 },
   ],
+
+  softskills: ['Communicatie', 'Teamleiding', 'Samenwerken', 'Zelfstandigheid', 'Plannen'],
 
   portfolioCategories: [
     { id: 'all',            label: 'All' },

@@ -26,10 +26,11 @@ export function createSettingsApp() {
         ]);
       };
 
+      // 'auto' heeft geen eigen glyph in ICONS (ICONS.settings bestaat niet) — leeg icoon is bedoeld gedrag.
       const themeSeg = el('div', { class: 'seg' }, [
         themeRow('light', 'Licht', ICONS.sun),
         themeRow('dark', 'Donker', ICONS.moon),
-        themeRow('auto', 'Auto', ICONS.settings ? '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a9 9 0 100 18V3z"/></svg>' : ''),
+        themeRow('auto', 'Auto', ''),
       ]);
       themeSeg.addEventListener('click', (e) => {
         const b = e.target.closest('.seg-btn'); if (!b) return;

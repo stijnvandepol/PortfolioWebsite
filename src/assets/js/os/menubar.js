@@ -29,16 +29,16 @@ export function initMenubar(root) {
   spot.addEventListener('click', (e) => { e.stopPropagation(); os.toggleSpotlight(); });
 
   // ---- Dropdown infrastructuur ----
-  let open = null;
-  function closeMenus() { qsa('.mb-menu.open', bar).forEach((m) => m.classList.remove('open')); ccPop.classList.remove('open'); clockPop.classList.remove('open'); open = null; }
+  let openMenu = null;
+  function closeMenus() { qsa('.mb-menu.open', bar).forEach((m) => m.classList.remove('open')); ccPop.classList.remove('open'); clockPop.classList.remove('open'); openMenu = null; }
   document.addEventListener('click', closeMenus);
 
   function menu(label, items, { bold } = {}) {
     const trigger = el('span', { class: `mb-item${bold ? ' mb-bold' : ''}`, text: label, tabindex: '0', role: 'menuitem' });
     const dd = el('div', { class: 'mb-dropdown' }, items.map(renderItem));
     const wrap = el('div', { class: 'mb-menu' }, [trigger, dd]);
-    trigger.addEventListener('click', (e) => { e.stopPropagation(); const wasOpen = wrap.classList.contains('open'); closeMenus(); if (!wasOpen) { wrap.classList.add('open'); open = wrap; } });
-    trigger.addEventListener('mouseenter', () => { if (open && open !== wrap) { closeMenus(); wrap.classList.add('open'); open = wrap; } });
+    trigger.addEventListener('click', (e) => { e.stopPropagation(); const wasOpen = wrap.classList.contains('open'); closeMenus(); if (!wasOpen) { wrap.classList.add('open'); openMenu = wrap; } });
+    trigger.addEventListener('mouseenter', () => { if (openMenu && openMenu !== wrap) { closeMenus(); wrap.classList.add('open'); openMenu = wrap; } });
     return wrap;
   }
   function renderItem(it) {

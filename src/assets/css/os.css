@@ -293,26 +293,26 @@
 .project-card > .project-open:hover { border-color: var(--glass-border); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
 .project-card > .project-open:hover .project-img img { transform: scale(1.06); }
 .project-card > .project-open:hover .project-overlay { opacity: 1; }
-/* blog-card is nu zelf de <a>. */
-a.blog-card {
+/* blog-card is meestal de <a> zelf; zonder url (geen link meer beschikbaar) is het een <div>. */
+.blog-card {
   display: block; border-radius: var(--r-lg); overflow: hidden;
   background: linear-gradient(135deg, var(--surface), rgba(255,255,255,0.01));
   border: 0.5px solid var(--hairline);
   transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out), border-color 0.3s;
 }
-a.blog-card:hover { border-color: var(--glass-border); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
-a.blog-card:hover .blog-img img { transform: scale(1.04); }
+.blog-card:hover { border-color: var(--glass-border); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
+.blog-card:hover .blog-img img { transform: scale(1.04); }
 
 /* ============================== LIGHT-MODE CONTENT OVERRIDES ============================== */
 :root[data-theme="light"] .bento-card,
 :root[data-theme="light"] .skills-card,
 :root[data-theme="light"] .project-card > .project-open,
-:root[data-theme="light"] a.blog-card {
+:root[data-theme="light"] .blog-card {
   background: rgba(255,255,255,0.7); border-color: var(--hairline);
 }
 :root[data-theme="light"] .bento-card:hover,
 :root[data-theme="light"] .project-card > .project-open:hover,
-:root[data-theme="light"] a.blog-card:hover { background: rgba(255,255,255,0.92); }
+:root[data-theme="light"] .blog-card:hover { background: rgba(255,255,255,0.92); }
 :root[data-theme="light"] .bento-icon img { filter: brightness(0) opacity(0.72); }
 :root[data-theme="light"] .tabbar { background: rgba(0,0,0,0.025); }
 :root[data-theme="light"] .tab.active { background: rgba(0,0,0,0.07); }

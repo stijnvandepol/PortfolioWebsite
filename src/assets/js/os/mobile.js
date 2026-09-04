@@ -101,7 +101,7 @@ export function initMobile() {
   if (CONFIG.blog && CONFIG.blog.length) {
     root.append(section('Meer', 'm-blog', [
       el('div', { class: 'm-blog' }, CONFIG.blog.map((b) =>
-        el('a', { class: 'm-blog-card', href: b.url, target: '_blank', rel: 'noopener noreferrer' }, [
+        el(b.url ? 'a' : 'div', { class: 'm-blog-card', href: b.url, target: b.url ? '_blank' : null, rel: b.url ? 'noopener noreferrer' : null }, [
           el('figure', { class: 'm-blog-img' }, [
             el('img', { src: b.image, alt: b.title, loading: 'lazy', decoding: 'async' }),
           ]),

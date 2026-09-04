@@ -15,7 +15,7 @@ function buildIndex() {
   [['Over Mij', 'over-mij'], ['Ontwikkeling', 'ontwikkeling'], ['Portfolio', 'portfolio'], ['Projecten', 'blog']]
     .forEach(([label, page]) => items.push({ type: 'Pagina', label, icon: ICONS.folder, run: () => os.open('portfolio', { initialPage: page }) }));
   CONFIG.projects.forEach((pr) => items.push({ type: 'Project', label: pr.title, sub: pr.tags, icon: ICONS.eye, run: () => os.preview({ src: pr.image, title: pr.title, desc: pr.text }) }));
-  (CONFIG.blog || []).forEach((b) => items.push({ type: 'Project', label: b.title, sub: b.category, icon: ICONS.share, run: () => os.openExternal(b.url) }));
+  (CONFIG.blog || []).filter((b) => b.url).forEach((b) => items.push({ type: 'Project', label: b.title, sub: b.category, icon: ICONS.share, run: () => os.openExternal(b.url) }));
   // Sociale kanalen (Instagram bewust níét: dat is de verstopte terminal-easter-egg)
   items.push({ type: 'Sociaal', label: 'GitHub', sub: 'github.com', icon: ICONS.share, run: () => os.openExternal(p.github) });
   items.push({ type: 'Sociaal', label: 'LinkedIn', sub: 'linkedin.com', icon: ICONS.share, run: () => os.openExternal(p.linkedin) });

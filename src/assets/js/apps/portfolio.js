@@ -108,7 +108,7 @@ function pageBlog() {
   return el('article', { class: 'page', dataset: { page: 'blog' } }, [
     el('h2', { class: 'section-heading' }, ['Projecten']),
     el('div', { class: 'blog-grid' }, CONFIG.blog.map((b) =>
-      el('a', { class: 'blog-card reveal', href: b.url, target: '_blank', rel: 'noopener noreferrer' }, [
+      el(b.url ? 'a' : 'div', { class: 'blog-card reveal', href: b.url, target: b.url ? '_blank' : null, rel: b.url ? 'noopener noreferrer' : null }, [
         el('figure', { class: 'blog-img' }, [el('img', { src: b.image, alt: b.title, loading: 'lazy', decoding: 'async' })]),
         el('div', { class: 'blog-content' }, [
           el('div', { class: 'blog-meta' }, [

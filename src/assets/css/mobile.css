@@ -120,6 +120,8 @@
 .m-skill-val { color: var(--text-secondary); }
 .m-skill-track { height: 6px; border-radius: 6px; background: var(--surface-hover); overflow: hidden; }
 .m-skill-fill { height: 100%; border-radius: 6px; background: var(--accent); }
+.m-softskills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.m-softskill-tag { padding: 6px 12px; border-radius: 100px; font-size: var(--text-sm); font-weight: 500; color: var(--text-secondary); background: var(--surface); border: 1px solid var(--hairline); }
 
 /* ---- Blog ---- */
 .m-blog { display: grid; gap: 16px; }

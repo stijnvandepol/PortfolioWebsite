@@ -36,9 +36,9 @@ export function applyTheme() {
   root.dataset.accent = accent;
   root.classList.toggle('reduce-motion', !!reducedMotion);
 
-  const a = ACCENTS[accent] || ACCENTS.green;
-  root.style.setProperty('--accent', a.base);
-  root.style.setProperty('--accent-rgb', a.rgb);
+  const palette = ACCENTS[accent] || ACCENTS.green;
+  root.style.setProperty('--accent', palette.base);
+  root.style.setProperty('--accent-rgb', palette.rgb);
 
   save({ theme, accent, reducedMotion });
 }
@@ -51,8 +51,8 @@ export const accentList = () => Object.keys(ACCENTS);
 export function initTheme() {
   const prefs = load();
   store.set({
-    theme: prefs.theme || 'auto',
-    accent: prefs.accent || 'green',
+    theme: prefs.theme || 'dark',
+    accent: prefs.accent || 'blue',
     reducedMotion:
       typeof prefs.reducedMotion === 'boolean'
         ? prefs.reducedMotion

@@ -48,10 +48,14 @@ export function createTerminalApp() {
         about: () => print(escapeHtml(FS['about.txt']()).replace(/\n/g, '<br>')),
         whoami: () => print('stijn'),
         projects: () => print(CONFIG.projects.map((p) => `• <span class="t-accent">${escapeHtml(p.title)}</span> — ${escapeHtml(p.tags)}`).join('<br>')),
-        skills: () => print(CONFIG.vaardigheden.map((s) => {
-          const filled = Math.round(s.value / 5);
-          return `${escapeHtml(s.name).padEnd(20)} <span class="t-accent">${'█'.repeat(filled)}</span>${'░'.repeat(20 - filled)} ${s.value}%`;
-        }).join('<br>')),
+        skills: () => print([
+          ...CONFIG.vaardigheden.map((s) => {
+            const filled = Math.round(s.value / 5);
+            return `${escapeHtml(s.name).padEnd(20)} <span class="t-accent">${'█'.repeat(filled)}</span>${'░'.repeat(20 - filled)} ${s.value}%`;
+          }),
+          '',
+          `Soft skills: ${CONFIG.softskills.map(escapeHtml).join(', ')}`,
+        ].join('<br>')),
         experience: () => print(CONFIG.ervaring.map((e) => `<span class="t-accent">${escapeHtml(e.title)}</span><br>  ${escapeHtml(e.date)}`).join('<br>')),
         education: () => print(CONFIG.opleiding.map((e) => `<span class="t-accent">${escapeHtml(e.title)}</span><br>  ${escapeHtml(e.date)}`).join('<br>')),
         contact: () => print(escapeHtml(FS['contact.txt']()).replace(/\n/g, '<br>')),

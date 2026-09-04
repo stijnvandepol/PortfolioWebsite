@@ -21,8 +21,11 @@ function ensure(apps) {
   ]);
   document.getElementById('desktop').append(overlay);
   overlay.addEventListener('click', (e) => { if (e.target === overlay || e.target.classList.contains('lp-grid')) close(); });
-  window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay?.classList.contains('open')) close(); });
 }
+
+// Buiten ensure() (die bij elke open opnieuw draait): anders stapelen zich bij elke
+// open() net zoveel identieke keydown-listeners op window op.
+window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay?.classList.contains('open')) close(); });
 
 export function openLaunchpad(apps) {
   if (overlay) overlay.remove();

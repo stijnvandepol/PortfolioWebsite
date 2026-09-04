@@ -2,7 +2,7 @@
 // apps/portfolio.js — Safari-achtige browser met portfolio-content
 // Rendert veilig vanuit data/config.js (escaped).
 // ============================================================
-import { el, qsa, escapeHtml, prefersReducedMotion } from '../core/dom.js';
+import { el, qsa, prefersReducedMotion } from '../core/dom.js';
 import { CONFIG } from '../data/config.js';
 import { ICONS } from './icons.js';
 
@@ -71,6 +71,8 @@ function pageOntwikkeling() {
       ]),
       el('div', { class: 'skill-track' }, [el('div', { class: 'skill-fill', style: { '--target': `${s.value}%` } })]),
     ])));
+  const softSkills = el('div', { class: 'softskills' }, CONFIG.softskills.map((s) =>
+    el('span', { class: 'softskill-tag', text: s })));
   return el('article', { class: 'page', dataset: { page: 'ontwikkeling' } }, [
     el('h2', { class: 'section-heading', html: `${ICONS.cap} Opleiding` }),
     timeline(CONFIG.opleiding),
@@ -78,6 +80,7 @@ function pageOntwikkeling() {
     timeline(CONFIG.ervaring),
     el('h2', { class: 'section-heading', html: `${ICONS.medal} Vaardigheden` }),
     skills,
+    softSkills,
   ]);
 }
 

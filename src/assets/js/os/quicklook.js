@@ -1,7 +1,7 @@
 // ============================================================
 // os/quicklook.js — Quick Look preview-overlay (afbeelding/tekst)
 // ============================================================
-import { el, trapFocus, prefersReducedMotion } from '../core/dom.js';
+import { el, trapFocus } from '../core/dom.js';
 
 let overlay = null;
 let release = null;

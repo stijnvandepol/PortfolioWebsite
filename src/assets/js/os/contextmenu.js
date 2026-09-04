@@ -6,10 +6,11 @@ import { el, clamp } from '../core/dom.js';
 let menu = null;
 
 function ensure() {
-  if (menu) return;
+  if (menu) return; // eenmalig; voorkomt dubbele listeners bij herhaalde showContextMenu-calls
   menu = el('div', { class: 'ctx-menu', role: 'menu' });
   document.body.append(menu);
   document.addEventListener('click', hide);
+  // capture-phase: sluit een openstaand menu vóór een nieuw contextmenu-event elders zijn eigen handler bereikt.
   document.addEventListener('contextmenu', (e) => { if (!e.target.closest('.ctx-menu')) hide(); }, true);
   window.addEventListener('blur', hide);
 }

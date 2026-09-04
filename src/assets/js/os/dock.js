@@ -6,6 +6,7 @@ import { store } from '../core/store.js';
 import { os } from './bridge.js';
 
 const BASE = 38, MAX_W = 58, DIST = 227;
+// 7 controlepunten (macOS-stijl magnify-curve): afstand tot cursor -> icoonbreedte, lineair geinterpoleerd tussen punten.
 const distIn = [-DIST, -DIST / 1.25, -DIST / 2, 0, DIST / 2, DIST / 1.25, DIST];
 const widthOut = [BASE, BASE * 1.1, BASE * 1.414, BASE * 2, BASE * 1.414, BASE * 1.1, BASE];
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -84,5 +85,6 @@ export function bounce(icon) {
   const orig = icon.style.transform || '';
   icon.style.transition = 'transform 0.42s cubic-bezier(0.36,0.07,0.19,0.97)';
   icon.style.transform = `${orig} translateY(-38px)`;
+  // transition blijft aan tot de terugval ook is afgerond, pas dan opruimen zodat die niet zelf geanimeerd wordt.
   setTimeout(() => { icon.style.transform = orig; setTimeout(() => { icon.style.transition = ''; }, 420); }, 420);
 }

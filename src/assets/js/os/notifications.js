@@ -21,7 +21,7 @@ export function notify({ title, body, icon, timeout = 5200, onClick } = {}) {
   ].filter(Boolean));
   if (onClick) { card.style.cursor = 'pointer'; card.addEventListener('click', () => { onClick(); dismiss(); }); }
   stack.append(card);
-  requestAnimationFrame(() => card.classList.add('in'));
+  requestAnimationFrame(() => card.classList.add('in')); // na eerste paint, anders triggert de CSS-transitie niet
   const t = setTimeout(dismiss, timeout);
   function dismiss() { clearTimeout(t); card.classList.remove('in'); card.classList.add('out'); setTimeout(() => card.remove(), 320); }
   return dismiss;

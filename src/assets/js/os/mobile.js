@@ -93,6 +93,8 @@ export function initMobile() {
     el('h3', { class: 'm-subtitle', text: 'Opleiding' }), timeline(CONFIG.opleiding),
     el('h3', { class: 'm-subtitle', text: 'Ervaring' }), timeline(CONFIG.ervaring),
     el('h3', { class: 'm-subtitle', text: 'Vaardigheden' }), skills(CONFIG.vaardigheden),
+    el('div', { class: 'm-softskills' }, CONFIG.softskills.map((s) =>
+      el('span', { class: 'm-softskill-tag', text: s }))),
   ]));
 
   // 6) Blog / meer

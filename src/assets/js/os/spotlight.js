@@ -20,7 +20,7 @@ function buildIndex() {
   const items = [];
   os.listApps().forEach((a) => items.push({ type: 'App', label: a.title, sub: a.kind === 'system' ? 'Systeem-app' : 'Portfolio-app', iconHtml: a.icon, tile: true, run: () => os.activate(a.id) }));
   [['Home', 'home', 'person'], ['Projecten', 'projecten', 'grid'], ['Ervaring', 'ervaring', 'briefcase'], ['Skills', 'skills', 'chart'],
-   ['Opleiding', 'opleiding', 'cap'], ['Contact', 'contact', 'envelope'], ['CV', 'cv', 'doc']]
+   ['Contact', 'contact', 'envelope'], ['CV', 'cv', 'doc']]
     .forEach(([label, page, ic]) => items.push({ type: 'Pagina', label, sub: 'Portfolio', iconHtml: sym(ic, 17), run: () => os.open('portfolio', { initialPage: page }) }));
 
   CONFIG.projects.forEach((pr) => items.push({ type: 'Project', label: pr.title, sub: `${pr.subtitle} · ${pr.tags.join(', ')}`, iconHtml: sym(pr.kind === 'web' ? 'globe' : 'grid', 17), run: () => os.open('portfolio', { initialPage: `projecten/${pr.id}` }) }));

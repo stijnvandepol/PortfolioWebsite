@@ -87,40 +87,27 @@
 .set-content .about-specs dt { text-align: left; }
 
 /* ============================== CONTACT ============================== */
-.contact-body { flex-direction: row; background: var(--window-bg); }
-.contact-view { display: flex; flex: 1; min-width: 0; min-height: 0; width: 100%; }
-.ct-card { width: 270px; flex-shrink: 0; padding: var(--sp-6) var(--sp-5); border-right: 0.5px solid var(--hairline); background: var(--sidebar-bg); overflow-y: auto; }
-.ct-avatar { width: 84px; height: 84px; margin: 0 auto var(--sp-3); border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 0.5px var(--edge), 0 4px 14px rgba(0, 0, 0, 0.25); }
+.contact-body { background: var(--window-bg); }
+.contact-view { display: flex; justify-content: center; width: 100%; padding: var(--sp-6) var(--sp-5) var(--sp-8); overflow-y: auto; }
+.ct-card { width: 100%; max-width: 460px; text-align: center; }
+.ct-avatar { width: 96px; height: 96px; margin: 0 auto var(--sp-3); border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 0.5px var(--edge), 0 0 26px rgba(var(--accent-rgb), 0.3), 0 6px 18px rgba(0, 0, 0, 0.25); }
 .ct-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.ct-name { text-align: center; font-size: var(--text-lg); font-weight: var(--fw-bold); letter-spacing: -0.02em; }
-.ct-role { text-align: center; font-size: var(--text-sm); color: var(--text-secondary); margin: 2px 0 var(--sp-5); line-height: 1.35; }
-.ct-rows { display: flex; flex-direction: column; }
-.ct-row { display: flex; gap: 10px; padding: 9px 0; border-top: 0.5px solid var(--separator); }
+.ct-name { font-size: 22px; font-weight: var(--fw-bold); letter-spacing: -0.025em; }
+.ct-role { display: inline-block; margin: 6px 0 0; padding: 3px 12px; border-radius: 20px; background: var(--accent-dim); color: var(--accent-text); font-size: var(--text-base); font-weight: var(--fw-semibold); }
+.ct-intro { margin: var(--sp-4) auto 0; max-width: 40ch; color: var(--text-secondary); font-size: 15px; line-height: 1.55; }
+.ct-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--sp-2); margin: var(--sp-5) 0; }
+.ct-actions .btn { height: 34px; padding: 0 14px; font-weight: var(--fw-semibold); }
+.ct-copy-btn.done { color: var(--accent-text); }
+.ct-rows { text-align: left; border-radius: var(--r-md); background: var(--surface); border: 0.5px solid var(--hairline); padding: 0 var(--sp-4); }
+.ct-row { display: flex; gap: 12px; padding: 10px 0; }
+.ct-row + .ct-row { border-top: 0.5px solid var(--separator); }
 .ct-row-ic { color: var(--accent-text); display: flex; padding-top: 2px; }
 .ct-row-main { min-width: 0; display: flex; flex-direction: column; gap: 1px; }
 .ct-row-label { font-size: var(--text-xs); color: var(--text-secondary); }
-.ct-val, .ct-link { font-size: var(--text-base); overflow-wrap: anywhere; }
+.ct-val, .ct-link { font-size: 15px; overflow-wrap: anywhere; }
+.ct-selectable { user-select: all; cursor: text; }
 .ct-link { color: var(--accent-text); }
 .ct-link:hover { text-decoration: underline; }
-.ct-mail { display: flex; align-items: center; gap: 4px; }
-.ct-copy { width: 24px; height: 24px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; color: var(--text-secondary); flex-shrink: 0; cursor: pointer; }
-.ct-copy:hover { background: var(--surface-hover); color: var(--text-primary); }
-.ct-copy.done { color: var(--accent-text); }
-.ct-compose { flex: 1; min-width: 0; display: flex; flex-direction: column; padding: var(--sp-4) var(--sp-5) var(--sp-4); }
-.ct-field { display: flex; align-items: center; gap: var(--sp-3); padding: 8px 0; border-bottom: 0.5px solid var(--separator); }
-.ct-field-label { width: 76px; flex-shrink: 0; font-size: var(--text-base); color: var(--text-secondary); text-align: right; }
-.ct-field .field { border: none; background: none; height: 24px; padding: 0; box-shadow: none; }
-.ct-field .field:focus-visible { outline: none; }
-.ct-to { font-size: var(--text-base); overflow-wrap: anywhere; }
-.ct-message { flex: 1; min-height: 120px; border: none; background: none; padding: var(--sp-3) 0; font-size: var(--text-md); line-height: 1.55; }
-.ct-message:focus-visible { outline: none; }
-.ct-message[aria-invalid="true"]::placeholder { color: #ff6961; }
-.ct-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); padding-top: var(--sp-3); border-top: 0.5px solid var(--separator); }
-.ct-hint { font-size: var(--text-sm); color: var(--text-secondary); }
-.ct-status { min-height: 18px; font-size: var(--text-sm); color: var(--text-secondary); padding-top: 6px; }
-.ct-message[aria-invalid="true"] ~ .ct-status { color: #d1342a; }
-:root[data-theme="dark"] .ct-message[aria-invalid="true"] ~ .ct-status { color: #ff6961; }
-@container win (max-width: 720px) { .contact-view { flex-direction: column; overflow-y: auto; } .ct-card { width: auto; border-right: 0; border-bottom: 0.5px solid var(--hairline); } }
 
 /* ============================== TERMINAL ============================== */
 /* Terminal is altijd donker (zoals macOS Terminal met standaardprofiel "Pro"). */

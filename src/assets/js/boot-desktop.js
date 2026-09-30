@@ -88,7 +88,7 @@ export function boot() {
     { id: 'launchpad', label: 'Launchpad', icon: iconImg('launchpad', 'Launchpad'), action: () => os.toggleLaunchpad(), noMenu: true },
     app('portfolio'),
     { id: 'photos', app: 'portfolio', label: 'Projecten', icon: iconImg('photos', 'Projecten'), action: page('projecten'), noMenu: true },
-    { id: 'calendar', app: 'portfolio', label: 'Ervaring & opleiding', icon: calendarIcon(), action: page('ervaring'), noMenu: true },
+    { id: 'calendar', app: 'portfolio', label: 'Ervaring', icon: calendarIcon(), action: page('ervaring'), noMenu: true },
     app('contact'),
     app('terminal'),
     { id: 'settings', label: 'Systeeminstellingen', icon: iconForApp('settings'), closable: true },

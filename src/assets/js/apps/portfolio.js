@@ -2,7 +2,7 @@
 // apps/portfolio.js — de Portfolio-app: zijbalk + inhoud
 //
 // Informatiearchitectuur (altijd zichtbaar in de zijbalk):
-//   Home · Projecten · Ervaring · Skills · Opleiding · Contact · CV
+//   Over mij · Projecten · Ervaring (incl. opleiding) · Skills · Contact · CV
 // Elke pagina heeft een deelbare URL (#projecten, #projecten/snackspot, …).
 // Rendert veilig vanuit data/config.js (alles via el()/textContent).
 // ============================================================
@@ -19,7 +19,6 @@ const PAGES = [
   { id: 'projecten', label: 'Projecten', icon: 'grid' },
   { id: 'ervaring', label: 'Ervaring', icon: 'briefcase' },
   { id: 'skills', label: 'Skills', icon: 'chart' },
-  { id: 'opleiding', label: 'Opleiding', icon: 'cap' },
   { id: 'contact', label: 'Contact', icon: 'envelope' },
   { id: 'cv', label: 'CV', icon: 'doc' },
 ];
@@ -30,6 +29,8 @@ const ALIAS = { 'over-mij': 'home', ontwikkeling: 'ervaring', portfolio: 'projec
 /** 'projecten/snackspot' → { page: 'projecten', project: <project> } */
 export function parseRoute(route) {
   const [head, slug] = String(route || 'home').replace(/^#/, '').split('/');
+  // Opleiding staat onder Ervaring; oude links (#opleiding) scrollen naar dat deel.
+  if (head === 'opleiding') return { page: 'ervaring', anchor: 'opleiding' };
   const page = ALIAS[head] || head;
   if (!LABEL[page]) return { page: 'home' };
   if (page === 'projecten' && slug) {
@@ -129,7 +130,7 @@ function pageHome() {
       el('div', { class: 'pgrid' }, featured.map(projectCard)),
     ]),
     el('section', { class: 'home-sec', 'aria-label': 'Ervaring in het kort' }, [
-      sectionHead('Ervaring', { route: 'ervaring', label: 'Alle ervaring & opleiding' }),
+      sectionHead('Ervaring', { route: 'ervaring', label: 'Ervaring & opleiding' }),
       el('ul', { class: 'exp-glance' }, CONFIG.experience.slice(0, 3).map((e) =>
         el('li', {}, [
           el('span', { class: 'eg-main' }, [el('strong', { text: e.role }), ` — ${e.org}`]),
@@ -227,7 +228,7 @@ function pageCV() {
       el('a', { class: 'btn btn-primary', href: p.cv, download: p.cvName }, [icon('download', 15), 'Download CV (PDF)']),
       el('a', { class: 'btn', href: p.cv, target: '_blank', rel: 'noopener noreferrer' }, ['Open in nieuw tabblad', icon('external', 13)]),
     ]),
-    el('p', { class: 'prose muted', text: 'Liever eerst een overzicht? Bekijk mijn ervaring, opleiding en skills in de zijbalk.' }),
+    el('p', { class: 'prose muted', text: 'Liever eerst een overzicht? Bekijk Ervaring (incl. opleiding) en Skills in de zijbalk.' }),
   ]);
 }
 
@@ -265,7 +266,7 @@ export function createPortfolioApp({ initialPage = 'home', onPreview } = {}) {
       const projectHost = el('div', { class: 'project-host' });
       const pages = el('div', { class: 'win-pages', tabindex: '0', role: 'region', 'aria-label': 'Inhoud' }, [
         pageHome(), pageProjecten(), pageErvaring(), pageSkills(),
-        el('article', { class: 'page', dataset: { page: 'contact' } }, [el('h2', { class: 'section-heading', text: 'Contact' }), contactView(`${win.id}-pf`).view]),
+        el('article', { class: 'page', dataset: { page: 'contact' } }, [el('h2', { class: 'section-heading', text: 'Contact' }), contactView().view]),
         pageCV(), projectHost,
       ]);
       body.classList.add('pf-body');
@@ -287,9 +288,7 @@ export function createPortfolioApp({ initialPage = 'home', onPreview } = {}) {
           projectHost.firstElementChild.classList.add('active');
           crumb = `Projecten › ${r.project.title}`;
         } else {
-          // Opleiding staat (zoals vroeger) op dezelfde pagina als Ervaring.
-          const pageId = r.page === 'opleiding' ? 'ervaring' : r.page;
-          pages.querySelector(`.page[data-page="${pageId}"]`)?.classList.add('active');
+          pages.querySelector(`.page[data-page="${r.page}"]`)?.classList.add('active');
         }
         qsa('.pf-item[data-route]', sidebar).forEach((t) => {
           const on = t.dataset.route === r.page;
@@ -298,7 +297,7 @@ export function createPortfolioApp({ initialPage = 'home', onPreview } = {}) {
         });
         subtitle.textContent = crumb;
         win.setTitle(`Portfolio — ${crumb}`);
-        if (r.page === 'opleiding') pages.querySelector('[data-anchor="opleiding"]')?.scrollIntoView({ block: 'start' });
+        if (r.anchor) pages.querySelector(`[data-anchor="${r.anchor}"]`)?.scrollIntoView({ block: 'start' });
         else if (started) pages.scrollTop = 0; // geen layout-read bij de eerste render
         started = true;
         // Deelbare URL zonder de browsergeschiedenis vol te schrijven

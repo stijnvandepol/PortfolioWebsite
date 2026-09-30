@@ -177,7 +177,6 @@ export function initMenubar(root) {
     { label: 'Projecten', action: () => os.open('portfolio', { initialPage: 'projecten' }) },
     { label: 'Ervaring', action: () => os.open('portfolio', { initialPage: 'ervaring' }) },
     { label: 'Skills', action: () => os.open('portfolio', { initialPage: 'skills' }) },
-    { label: 'Opleiding', action: () => os.open('portfolio', { initialPage: 'opleiding' }) },
     { label: 'Contact', action: () => os.open('portfolio', { initialPage: 'contact' }) },
     { label: 'CV', action: () => os.open('portfolio', { initialPage: 'cv' }) },
     { divider: true },

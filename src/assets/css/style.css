@@ -323,12 +323,8 @@ textarea.field { height: auto; padding: 8px 10px; resize: none; line-height: 1.4
 .pager-link:hover { background: var(--surface-hover); }
 .pager-next { justify-content: flex-end; text-align: right; }
 
-/* Contact als pagina */
-.page .contact-view { border: 0.5px solid var(--hairline); border-radius: var(--r-md); overflow: hidden; background: var(--surface); min-height: 420px; }
-@container win (max-width: 900px) {
-  .page .contact-view { flex-direction: column; }
-  .page .ct-card { width: auto; border-right: 0; border-bottom: 0.5px solid var(--hairline); }
-}
+/* Contact als pagina: kaart links uitgelijnd onder de kop */
+.page .contact-view { justify-content: flex-start; padding: 0; overflow: visible; }
 
 .reduce-motion .pcard:hover { transform: none; }
 

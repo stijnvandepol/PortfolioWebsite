@@ -131,6 +131,10 @@ const body = `<!-- static:start (gegenereerd door scripts/generate-static.mjs â€
         <h2 class="m-section-title" id="h-ervaring">Ervaring</h2>
         <ol class="m-timeline">${CONFIG.experience.map(experience).join('')}
         </ol>
+        <h3 class="m-subtitle" id="opleiding">Opleiding</h3>
+        <ol class="m-timeline">${CONFIG.education.map((e) => `
+          <li class="m-tl-item"><h3 class="m-tl-title">${esc(e.title)} <span class="m-tl-org">â€” ${esc(e.org)}</span></h3><p class="m-tl-date">${esc(e.period)}</p><p class="m-text">${esc(e.text)}</p></li>`).join('')}
+        </ol>
       </section>
 
       <section class="m-section" id="skills" aria-labelledby="h-skills">
@@ -140,13 +144,6 @@ const body = `<!-- static:start (gegenereerd door scripts/generate-static.mjs â€
         </div>
         <h3 class="m-subtitle">Soft skills</h3>
         ${tags(CONFIG.softskills)}
-      </section>
-
-      <section class="m-section" id="opleiding" aria-labelledby="h-opleiding">
-        <h2 class="m-section-title" id="h-opleiding">Opleiding</h2>
-        <ol class="m-timeline">${CONFIG.education.map((e) => `
-          <li class="m-tl-item"><h3 class="m-tl-title">${esc(e.title)} <span class="m-tl-org">â€” ${esc(e.org)}</span></h3><p class="m-tl-date">${esc(e.period)}</p><p class="m-text">${esc(e.text)}</p></li>`).join('')}
-        </ol>
       </section>
 
       <section class="m-section" id="over" aria-labelledby="h-over">

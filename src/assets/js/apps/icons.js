@@ -104,10 +104,26 @@ ${glyph}
 </svg>`;
 }
 
-const S_GLYPH = '<path d="M43.5 21.5C41 18 36.5 16.5 32 16.5c-6.5 0-10.5 3.2-10.5 7.6 0 4.6 4.2 6.2 10.9 7.9 6.9 1.7 10.6 3.4 10.6 8.2 0 4.6-4 7.7-10.8 7.7-5 0-9.3-1.6-12.2-5" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>';
+// Merkteken: schuine serif-S (Playfair Display Italic, OFL) als vectorpad — scherp op elk formaat.
+const S_PATH = 'M47.20 14.45L48.20 14.45Q47.70 15.75 46.85 18.23Q46 20.70 45.25 24.65L44.25 24.65Q44.40 23.95 44.48 23.20Q44.55 22.45 44.55 21.85Q44.55 19.90 43.73 18.43Q42.90 16.95 41.33 16.13Q39.75 15.30 37.40 15.30Q34.90 15.30 33.13 16.58Q31.35 17.85 31.35 20.75Q31.35 22.50 32.20 24.13Q33.05 25.75 34.38 27.30Q35.70 28.85 37.20 30.43Q38.70 32 40.05 33.63Q41.40 35.25 42.25 37.05Q43.10 38.85 43.10 40.90Q43.10 43.60 41.78 45.50Q40.45 47.40 38.35 48.60Q36.25 49.80 33.85 50.35Q31.45 50.90 29.30 50.90Q26.95 50.90 25.42 50.60Q23.90 50.30 22.80 49.78Q21.70 49.25 20.65 48.60Q20.10 48.25 19.65 48.05Q19.20 47.85 18.90 47.85Q18.25 47.85 17.85 48.45Q17.45 49.05 16.80 50.55L15.80 50.55Q16.25 49.45 16.75 48Q17.25 46.55 17.85 44.28Q18.45 42 19.20 38.55L20.20 38.55Q19.95 39.40 19.82 40.48Q19.70 41.55 19.75 42.50Q19.90 46.05 21.98 47.93Q24.05 49.80 27.90 49.80Q31.30 49.80 32.83 48.40Q34.35 47 34.35 44.55Q34.35 42.45 33.58 40.70Q32.80 38.95 31.57 37.40Q30.35 35.85 29 34.38Q27.65 32.90 26.42 31.35Q25.20 29.80 24.45 28Q23.70 26.20 23.70 24.10Q23.70 21.55 24.80 19.68Q25.90 17.80 27.75 16.55Q29.60 15.30 31.75 14.70Q33.90 14.10 36 14.10Q38.95 14.10 40.80 14.83Q42.65 15.55 43.90 16.30Q44.35 16.60 44.83 16.85Q45.30 17.10 45.55 17.10Q46.25 17.10 47.20 14.45';
 
-/** Los S-merkteken (voor menubalk/About), kleur via currentColor. */
-export const S_MARK = `<svg class="sym-s" width="15" height="15" viewBox="14 10 36 44" aria-hidden="true" focusable="false"><path d="${S_GLYPH.match(/d="([^"]+)"/)[1]}" fill="none" stroke="currentColor" stroke-width="7.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+/** Los S-merkteken (menubalk), kleur via currentColor. */
+export const S_MARK = `<svg class="sym-s" width="13" height="15" viewBox="14.8 13.1 34.4 38.8" aria-hidden="true" focusable="false"><path d="${S_PATH}" fill="currentColor"/></svg>`;
+
+/** App-/merktegel: donkere midnight-tegel met blauwe gloed en lichte S (zelfde als de favicon). */
+function logoTile(id) {
+  return `<svg viewBox="0 0 64 64" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<defs>
+<linearGradient id="lb-${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1f2a44"/><stop offset="1" stop-color="#0a0f1c"/></linearGradient>
+<radialGradient id="lg-${id}" cx=".5" cy="1.05" r=".75"><stop offset="0" stop-color="#0A84FF" stop-opacity=".55"/><stop offset="1" stop-color="#0A84FF" stop-opacity="0"/></radialGradient>
+<linearGradient id="lf-${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#cfe3ff"/></linearGradient>
+</defs>
+<rect width="64" height="64" rx="14.4" fill="url(#lb-${id})"/>
+<rect width="64" height="64" rx="14.4" fill="url(#lg-${id})"/>
+<path d="${S_PATH}" fill="url(#lf-${id})"/>
+<rect x=".4" y=".4" width="63.2" height="63.2" rx="14" fill="none" stroke="#fff" stroke-opacity=".14" stroke-width=".8"/>
+</svg>`;
+}
 
 function brand(bg, glyph) {
   return `<svg viewBox="0 0 64 64" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="64" height="64" rx="14.4" fill="${bg}"/>${glyph}<rect x=".4" y=".4" width="63.2" height="63.2" rx="14" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width=".8"/></svg>`;
@@ -115,12 +131,12 @@ function brand(bg, glyph) {
 
 export const APP_ICONS = {
   // Portfolio-apps (eigen identiteit)
-  portfolio: tile('pf', ['#3DA2FF', '#0A6FE8'], S_GLYPH),
+  portfolio: logoTile('pf'),
   contact: tile('ct', ['#4DB1FF', '#0B72EC'],
     '<rect x="13" y="18" width="38" height="28" rx="5.5" fill="#fff"/><path d="m15.5 22.5 16.5 12.5 16.5-12.5" fill="none" stroke="#0B72EC" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>'),
   cv: tile('cv', ['#5AB8FF', '#1C7BEA'],
     '<path d="M22 13h14l8 8v28a3 3 0 0 1-3 3H22a3 3 0 0 1-3-3V16a3 3 0 0 1 3-3z" fill="#fff"/><path d="M36 13v8h8" fill="none" stroke="#1C7BEA" stroke-opacity=".5" stroke-width="2.4" stroke-linejoin="round"/><path d="M25 30h14M25 36h14M25 42h9" stroke="#1C7BEA" stroke-width="2.6" stroke-linecap="round"/>'),
-  about: tile('ab', ['#3DA2FF', '#0A6FE8'], S_GLYPH),
+  about: logoTile('ab'),
   folder: tile('fo', ['#56B4FF', '#1479E6'],
     '<path d="M12 22a4 4 0 0 1 4-4h9.5l4 4.5H48a4 4 0 0 1 4 4V45a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4z" fill="#fff" fill-opacity=".95"/>'),
   // Externe diensten (merkkleuren)

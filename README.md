@@ -4,7 +4,7 @@ Een persoonlijke portfolio van Stijn van de Pol, gepresenteerd als een **interac
 
 ## Functionaliteiten
 
-- **Portfolio eerst.** De Portfolio-app opent direct en heeft een zijbalk met labels: **Home · Projecten · Ervaring · Skills · Opleiding · Contact · CV**. Elke pagina heeft een deelbare URL (`#projecten/snackspot`).
+- **Portfolio eerst.** De Portfolio-app opent direct en heeft een zijbalk met labels: **Over mij · Projecten · Ervaring · Skills · Opleiding · Contact · CV**. Elke pagina heeft een deelbare URL (`#projecten/snackspot`).
 - **Home** toont naam, rol, specialisaties, vier duidelijke knoppen (contact, CV, projecten, GitHub), uitgelichte projecten, skills en ervaring.
 - **Projecten** zijn scanbaar (titel, ondertitel, tags) met een projectpagina, kruimelpad en vorige/volgende.
 - **Eenvoudige weergave** — het portfolio als gewone, snelle pagina zonder desktop (S-menu, zijbalk, Help of Spotlight). Mobiel (≤ 768 px) gebruikt dit automatisch.

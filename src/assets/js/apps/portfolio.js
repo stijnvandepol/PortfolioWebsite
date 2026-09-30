@@ -15,7 +15,7 @@ import { contactView } from './contact.js';
 import { setView } from '../core/view.js';
 
 const PAGES = [
-  { id: 'home', label: 'Home', icon: 'person' },
+  { id: 'home', label: 'Over mij', icon: 'person' },
   { id: 'projecten', label: 'Projecten', icon: 'grid' },
   { id: 'ervaring', label: 'Ervaring', icon: 'briefcase' },
   { id: 'skills', label: 'Skills', icon: 'chart' },
@@ -68,7 +68,7 @@ function projectCard(pr) {
 
 function sectionHead(title, more) {
   return el('div', { class: 'sec-head' }, [
-    el('h2', { class: 'section-heading', text: title }),
+    el('h2', { class: 'section-heading accent-bar', text: title }),
     more ? routeLink(more.route, 'sec-more', [more.label, icon('chevron.right', 13)]) : null,
   ]);
 }
@@ -84,7 +84,7 @@ function timelineList(items, render) {
   return el('ol', { class: 'timeline' }, items.map((it) => el('li', { class: 'timeline-item' }, render(it))));
 }
 const expItem = (e) => [
-  el('h3', { class: 'tl-title' }, [e.role, el('span', { class: 'tl-org', text: ` — ${e.org}` })]),
+  el('h3', { class: 'tl-title' }, [e.role, el('span', { class: 'tl-org', text: ` – ${e.org}` })]),
   el('p', { class: 'tl-date', text: [e.period, e.duration, e.location].filter(Boolean).join(' · ') }),
   el('p', { class: 'tl-text', text: e.text }),
   e.tags?.length ? chips(e.tags, 'chips chips-sm') : null,
@@ -95,12 +95,17 @@ function pageHome() {
   const featured = CONFIG.projects.filter((x) => x.featured);
   return el('article', { class: 'page', dataset: { page: 'home' } }, [
     el('header', { class: 'hero' }, [
-      el('figure', { class: 'avatar-box' }, [el('img', { src: './assets/images/portret.webp', alt: `Portret van ${p.name}`, width: 112, height: 112, decoding: 'async' })]),
+      el('div', { class: 'avatar-wrap' }, [
+        el('div', { class: 'avatar-glow', 'aria-hidden': 'true' }),
+        el('figure', { class: 'avatar-box' }, [el('img', { src: './assets/images/portret.webp', alt: `Portret van ${p.name}`, width: 116, height: 116, decoding: 'async' })]),
+      ]),
       el('div', { class: 'hero-text' }, [
         el('h1', { class: 'profile-name', text: p.name }),
         el('p', { class: 'profile-role', text: p.role }),
-        el('p', { class: 'hero-intro', text: p.intro }),
-        chips(CONFIG.focus.map((f) => f.title), 'chips chips-accent'),
+        el('div', { class: 'profile-meta' }, [
+          el('a', { class: 'meta-item', href: `mailto:${p.email}` }, [icon('envelope', 14), p.email]),
+          el('span', { class: 'meta-item' }, [icon('mappin', 14), p.location]),
+        ]),
         el('div', { class: 'hero-cta' }, [
           routeLink('contact', 'btn btn-primary', ['Neem contact op']),
           el('a', { class: 'btn', href: p.cv, download: p.cvName }, [icon('download', 15), 'Download CV']),
@@ -109,24 +114,9 @@ function pageHome() {
         ]),
       ]),
     ]),
-    el('section', { class: 'home-sec', 'aria-label': 'Uitgelichte projecten' }, [
-      sectionHead('Uitgelichte projecten', { route: 'projecten', label: 'Alle projecten' }),
-      el('div', { class: 'pgrid' }, featured.map(projectCard)),
-    ]),
-    el('section', { class: 'home-sec', 'aria-label': 'Skills in het kort' }, [
-      sectionHead('Waar ik mee werk', { route: 'skills', label: 'Alle skills' }),
-      el('div', { class: 'skgrid' }, CONFIG.skills.slice(0, 4).map(skillGroup)),
-    ]),
-    el('section', { class: 'home-sec', 'aria-label': 'Ervaring in het kort' }, [
-      sectionHead('Ervaring', { route: 'ervaring', label: 'Alle ervaring' }),
-      el('ul', { class: 'exp-glance' }, CONFIG.experience.slice(0, 3).map((e) =>
-        el('li', {}, [
-          el('span', { class: 'eg-main' }, [el('strong', { text: e.role }), ` — ${e.org}`]),
-          el('span', { class: 'eg-date', text: e.period }),
-        ]))),
-    ]),
-    el('section', { class: 'home-sec', 'aria-label': 'Specialisaties' }, [
-      el('h2', { class: 'section-heading', text: 'Wat ik doe' }),
+    el('section', { class: 'about-text', 'aria-label': 'Over mij' }, CONFIG.about.map((t) => el('p', { text: t }))),
+    el('section', { class: 'home-sec', 'aria-label': 'Wat ik doe' }, [
+      el('h2', { class: 'section-heading accent-bar', text: 'Wat ik doe' }),
       el('div', { class: 'bento-grid' }, CONFIG.focus.map((f) =>
         el('div', { class: 'bento-card' }, [
           el('div', { class: 'bento-icon', html: sym(f.icon, 20) }),
@@ -134,9 +124,17 @@ function pageHome() {
           el('p', { text: f.text }),
         ]))),
     ]),
-    el('section', { class: 'home-sec', 'aria-label': 'Over mij' }, [
-      el('h2', { class: 'section-heading', text: 'Over mij' }),
-      ...CONFIG.about.map((t) => el('p', { class: 'prose', text: t })),
+    el('section', { class: 'home-sec', 'aria-label': 'Uitgelichte projecten' }, [
+      sectionHead('Uitgelichte projecten', { route: 'projecten', label: 'Alle projecten' }),
+      el('div', { class: 'pgrid' }, featured.map(projectCard)),
+    ]),
+    el('section', { class: 'home-sec', 'aria-label': 'Ervaring in het kort' }, [
+      sectionHead('Ervaring', { route: 'ervaring', label: 'Alle ervaring & opleiding' }),
+      el('ul', { class: 'exp-glance' }, CONFIG.experience.slice(0, 3).map((e) =>
+        el('li', {}, [
+          el('span', { class: 'eg-main' }, [el('strong', { text: e.role }), ` — ${e.org}`]),
+          el('span', { class: 'eg-date', text: e.period }),
+        ]))),
     ]),
   ]);
 }
@@ -193,31 +191,30 @@ function pageProject(pr, onPreview) {
   ]);
 }
 
+const bigHead = (ic, text, id) => el('h2', { class: 'section-heading accent-bar big', id }, [el('span', { class: 'i head-ic', html: sym(ic, 20) }), text]);
+
 function pageErvaring() {
   return el('article', { class: 'page', dataset: { page: 'ervaring' } }, [
-    el('h2', { class: 'section-heading', text: 'Ervaring' }),
+    bigHead('briefcase', 'Ervaring'),
     timelineList(CONFIG.experience, expItem),
+    el('div', { class: 'tl-section', dataset: { anchor: 'opleiding' } }, [
+      bigHead('cap', 'Opleiding'),
+      timelineList(CONFIG.education, (e) => [
+        el('h3', { class: 'tl-title' }, [e.title, el('span', { class: 'tl-org', text: ` – ${e.org}` })]),
+        el('p', { class: 'tl-date', text: e.period }),
+        el('p', { class: 'tl-text', text: e.text }),
+      ]),
+    ]),
   ]);
 }
 
 function pageSkills() {
   return el('article', { class: 'page', dataset: { page: 'skills' } }, [
-    el('h2', { class: 'section-heading', text: 'Skills' }),
+    bigHead('chart', 'Skills'),
     el('p', { class: 'lead', text: 'Waar ik mee werk, gegroepeerd per vakgebied.' }),
     el('div', { class: 'skgrid' }, CONFIG.skills.map(skillGroup)),
     el('h3', { class: 'pd-h', text: 'Soft skills' }),
-    chips(CONFIG.softskills),
-  ]);
-}
-
-function pageOpleiding() {
-  return el('article', { class: 'page', dataset: { page: 'opleiding' } }, [
-    el('h2', { class: 'section-heading', text: 'Opleiding' }),
-    timelineList(CONFIG.education, (e) => [
-      el('h3', { class: 'tl-title' }, [e.title, el('span', { class: 'tl-org', text: ` — ${e.org}` })]),
-      el('p', { class: 'tl-date', text: e.period }),
-      el('p', { class: 'tl-text', text: e.text }),
-    ]),
+    chips(CONFIG.softskills, 'chips chips-pill'),
   ]);
 }
 
@@ -267,7 +264,7 @@ export function createPortfolioApp({ initialPage = 'home', onPreview } = {}) {
       ]);
       const projectHost = el('div', { class: 'project-host' });
       const pages = el('div', { class: 'win-pages', tabindex: '0', role: 'region', 'aria-label': 'Inhoud' }, [
-        pageHome(), pageProjecten(), pageErvaring(), pageSkills(), pageOpleiding(),
+        pageHome(), pageProjecten(), pageErvaring(), pageSkills(),
         el('article', { class: 'page', dataset: { page: 'contact' } }, [el('h2', { class: 'section-heading', text: 'Contact' }), contactView(`${win.id}-pf`).view]),
         pageCV(), projectHost,
       ]);
@@ -290,7 +287,9 @@ export function createPortfolioApp({ initialPage = 'home', onPreview } = {}) {
           projectHost.firstElementChild.classList.add('active');
           crumb = `Projecten › ${r.project.title}`;
         } else {
-          pages.querySelector(`.page[data-page="${r.page}"]`)?.classList.add('active');
+          // Opleiding staat (zoals vroeger) op dezelfde pagina als Ervaring.
+          const pageId = r.page === 'opleiding' ? 'ervaring' : r.page;
+          pages.querySelector(`.page[data-page="${pageId}"]`)?.classList.add('active');
         }
         qsa('.pf-item[data-route]', sidebar).forEach((t) => {
           const on = t.dataset.route === r.page;
@@ -299,7 +298,8 @@ export function createPortfolioApp({ initialPage = 'home', onPreview } = {}) {
         });
         subtitle.textContent = crumb;
         win.setTitle(`Portfolio — ${crumb}`);
-        if (started) pages.scrollTop = 0; // geen layout-read bij de eerste render
+        if (r.page === 'opleiding') pages.querySelector('[data-anchor="opleiding"]')?.scrollIntoView({ block: 'start' });
+        else if (started) pages.scrollTop = 0; // geen layout-read bij de eerste render
         started = true;
         // Deelbare URL zonder de browsergeschiedenis vol te schrijven
         const hash = r.project ? `#projecten/${r.project.id}` : `#${r.page}`;

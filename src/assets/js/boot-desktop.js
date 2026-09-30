@@ -11,11 +11,13 @@ import { initMenubar } from './os/menubar.js';
 import { initDock } from './os/dock.js';
 import { initDesktop } from './os/desktop.js';
 import { initNotifications, notify } from './os/notifications.js';
-import { toggleSpotlight } from './os/spotlight.js';
-import { toggleLaunchpad as toggleLaunchpadOverlay } from './os/launchpad.js';
 import { quickLook } from './os/quicklook.js';
 import { os } from './os/bridge.js';
-import { getApp, listApps, iconForApp } from './apps/registry.js';
+import { getApp, listApps, iconForApp, prefetchApps } from './apps/registry.js';
+
+// Overlays pas laden als ze voor het eerst gebruikt worden.
+const toggleSpotlight = async () => (await import('./os/spotlight.js')).toggleSpotlight();
+const toggleLaunchpadOverlay = async (apps) => (await import('./os/launchpad.js')).toggleLaunchpad(apps);
 import { CONFIG } from './data/config.js';
 import { APP_ICONS, iconImg } from './apps/icons.js';
 import { prefersReducedMotion } from './core/dom.js';
@@ -24,10 +26,10 @@ import { setView } from './core/view.js';
 const BOOT_MS = 650; // moet gelijk zijn aan --boot-t in style.css
 const isApple = /Mac|iPhone|iPad/i.test(navigator.platform || navigator.userAgent);
 
-function openById(id, opts = {}) {
+async function openById(id, opts = {}) {
   const meta = getApp(id);
   if (!meta) return null;
-  const inst = openApp(meta.create(opts));
+  const inst = openApp(await meta.create(opts));
   // Navigeer een reeds-open singleton (Portfolio, Instellingen) naar de gevraagde pagina.
   if (opts.initialPage && inst?.hooks?.api?.navigate) inst.hooks.api.navigate(opts.initialPage);
   return inst;
@@ -114,7 +116,7 @@ export function boot() {
 
   // Deelbare URL: #projecten/snackspot opent het portfolio direct op die pagina.
   const route = location.hash.length > 1 ? location.hash.slice(1) : 'home';
-  const open = () => { openById('portfolio', { initialPage: route }); welcome(); };
+  const open = () => { openById('portfolio', { initialPage: route }); welcome(); prefetchApps(); };
   if (delay) {
     // Opstartscherm is nooit een wachtkamer: elke toets of klik slaat het over.
     let done = false;

@@ -25,9 +25,25 @@ Botst een macOS-effect met een hoger punt, dan wordt het effect aangepast of ver
 | Geen weg terug als je alle vensters sloot; geen manier om de desktop te vermijden | Hint op leeg bureaublad ("Open Portfolio"); **Eenvoudige weergave** (gewone pagina) via zijbalk, S-menu, Help en Spotlight |
 | Mobiel bouwde de pagina met JS | Mobiel = statische HTML (direct leesbaar), tabbalk, geen desktop-JS |
 
+## Tweede ronde: warmer, meer macOS, sneller
+
+Na de UX-ronde voelden Over mij en Ervaring te abstract. Uit het originele ontwerp zijn teruggehaald:
+foto met zachte glow, functie als accentpil, e-mail en plaats onder de naam, de persoonlijke
+over-mij-tekst direct onder de kop, koppen met accentstreep (en icoon bij Ervaring/Opleiding),
+een tijdlijn met gloeiende punten, en kaarten met een zacht verloop die optillen bij hover.
+Ervaring en Opleiding staan weer samen op één pagina (de zijbalklink "Opleiding" scrolt ernaartoe);
+de navigatie, deep-links en de overige UX-verbeteringen zijn behouden.
+
+- **Logo:** donkere midnight-tegel met een schuine serif-S (Playfair Display Italic, OFL) als vectorpad
+  en een blauwe gloed; gebruikt in favicon, Dock, Over-venster en menubalk.
+- **macOS-look:** eigen golvend behang (donker en licht, 12–16 KB WebP) en doorschijnender vensterchrome,
+  zodat titel- en zijbalken het behang laten doorschemeren; leesvlakken blijven effen.
+- **Sneller:** Finder, Terminal, Instellingen, Spotlight en Launchpad laden pas als ze nodig zijn
+  (of stil na het openen van het portfolio). Tooltips hebben geen backdrop-filter meer.
+
 ## Informatiearchitectuur
 
-`Home · Projecten (+ projectpagina) · Ervaring · Skills · Opleiding · Contact · CV`
+`Over mij · Projecten (+ projectpagina) · Ervaring (+ Opleiding) · Skills · Contact · CV`
 
 Elke pagina heeft een deelbare URL (`#projecten`, `#projecten/snackspot`, `#skills`, …) die in
 zowel de desktop- als de eenvoudige weergave werkt. Metaforen worden alleen gebruikt waar ze
@@ -92,9 +108,10 @@ schaduwen publiceert Apple niet; die waarden zijn eigen keuzes. Geen SVG-lensing
 | Desktop, overdracht (onverkleind, zonder gzip) | 739 KB | 309 KB | 497 KB¹ |
 | Desktop, overdracht met gzip | — | 156 KB | 305 KB¹ |
 | Mobiel, overdracht met gzip | — | 178 KB | 190 KB |
-| Lighthouse desktop (Perf · A11y · BP · SEO) | — | 99 · 96 · 100 · 100 | 99 · 97 · 100 · 100 |
-| Lighthouse mobiel (simulated 4G) | 72 | 89 | **96** · 100 · 100 · 100 |
-| Mobiel eerste weergave (FCP) | 4,6 s | 2,8 s | **1,7 s** |
+| Lighthouse desktop (Perf · A11y · BP · SEO) | — | 99 · 96 · 100 · 100 | **100** · 97 · 100 · 100 |
+| Lighthouse mobiel (simulated 4G) | 72 | 89 | **98** · 100 · 100 · 100 |
+| Mobiel eerste weergave (FCP) | 4,6 s | 2,8 s | **1,6 s** |
+| Desktop: JS tot het venster zichtbaar is | — | — | 51 KB gzip, venster na ~0,3 s (lokaal) |
 | CLS | 0 / 0,02 | 0 | 0–0,004 |
 
 ¹ De homepage toont nu direct drie uitgelichte projectafbeeldingen (die eerder pas na klikken laadden);

@@ -136,7 +136,7 @@
 
   /* Vlakken */
   --window-bg: #1e1f22;                       /* inhoudsvlak van een venster */
-  --sidebar-bg: rgba(255, 255, 255, 0.035);
+  --sidebar-bg: rgba(255, 255, 255, 0.02);
   --surface: rgba(255, 255, 255, 0.055);
   --surface-hover: rgba(255, 255, 255, 0.095);
   --surface-pressed: rgba(255, 255, 255, 0.13);
@@ -144,10 +144,11 @@
   --separator: rgba(255, 255, 255, 0.10);
   --field-bg: rgba(255, 255, 255, 0.07);
   --seg-active: rgba(255, 255, 255, 0.17);
+  --tooltip-bg: #2a2c31;
 
   /* Materialen — hiërarchie: chrome (dun) < window < popover (dik) < overlay */
   --material-chrome: rgba(24, 25, 30, 0.58);
-  --material-window: rgba(30, 31, 35, 0.94);
+  --material-window: rgba(28, 30, 36, 0.80);
   --material-popover: rgba(40, 41, 46, 0.82);
   --material-overlay: rgba(14, 15, 20, 0.50);
   --edge: rgba(255, 255, 255, 0.14);          /* 0.5px randdefinitie */
@@ -162,9 +163,8 @@
   --win-ring: rgba(255, 255, 255, 0.16);
 
   --wallpaper:
-    radial-gradient(ellipse 70% 60% at 18% 12%, rgba(var(--accent-rgb), 0.22) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 55% at 86% 78%, rgba(94, 92, 230, 0.16) 0%, transparent 60%),
-    linear-gradient(165deg, #13151c 0%, #0d0f15 55%, #08090d 100%);
+    url('../images/wallpaper-dark.webp') center / cover no-repeat,
+    linear-gradient(165deg, #0b1224 0%, #070b17 55%, #04060d 100%);
 
   /* Aliassen (bestaande CSS) */
   --glass: var(--material-window);
@@ -192,9 +192,10 @@
   --separator: rgba(0, 0, 0, 0.13);
   --field-bg: rgba(0, 0, 0, 0.055);
   --seg-active: #ffffff;
+  --tooltip-bg: #f7f7f9;
 
   --material-chrome: rgba(246, 247, 250, 0.62);
-  --material-window: rgba(248, 248, 250, 0.93);
+  --material-window: rgba(246, 247, 250, 0.78);
   --material-popover: rgba(250, 250, 252, 0.84);
   --material-overlay: rgba(230, 233, 240, 0.50);
   --edge: rgba(0, 0, 0, 0.12);
@@ -208,9 +209,8 @@
   --win-ring: rgba(0, 0, 0, 0.14);
 
   --wallpaper:
-    radial-gradient(ellipse 70% 60% at 18% 12%, rgba(var(--accent-rgb), 0.24) 0%, transparent 62%),
-    radial-gradient(ellipse 60% 55% at 86% 78%, rgba(94, 92, 230, 0.16) 0%, transparent 62%),
-    linear-gradient(165deg, #eef1f7 0%, #dde3ee 55%, #cbd4e3 100%);
+    url('../images/wallpaper-light.webp') center / cover no-repeat,
+    linear-gradient(165deg, #dfe9fb 0%, #e9eef9 55%, #f3eefc 100%);
 
   --glass: var(--material-window);
   --glass-strong: var(--material-popover);

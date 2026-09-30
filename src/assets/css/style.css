@@ -352,3 +352,46 @@ textarea.field { height: auto; padding: 8px 10px; resize: none; line-height: 1.4
 }
 
 .seg-filter { margin-bottom: var(--sp-5); flex-wrap: wrap; }
+
+/* ============================== OUDE LOOK (Over mij & Ervaring) ============================== */
+/* Teruggehaald uit het originele ontwerp: warmere kop, accentstrepen, gloeiende tijdlijn, verloopkaarten. */
+.section-heading.accent-bar::before { content: ''; flex-shrink: 0; width: 26px; height: 3px; border-radius: 3px; background: var(--accent); }
+.section-heading.big { font-size: 22px; margin-bottom: var(--sp-5); }
+.section-heading .head-ic { color: var(--accent-text); }
+.tl-section { margin-top: var(--sp-8); scroll-margin-top: var(--sp-5); }
+
+/* Kop */
+.avatar-wrap { position: relative; flex-shrink: 0; }
+.avatar-glow { position: absolute; inset: -8px; border-radius: 50%; background: radial-gradient(circle, var(--accent), rgba(var(--accent-rgb), 0.15) 70%); opacity: 0.32; filter: blur(16px); pointer-events: none; }
+.avatar-wrap .avatar-box { position: relative; width: 116px; height: 116px; box-shadow: 0 0 0 2px var(--edge), 0 10px 28px rgba(0, 0, 0, 0.32); }
+.profile-name { font-size: 34px; font-weight: 800; letter-spacing: -0.03em; }
+.profile-role { display: inline-block; width: fit-content; margin: 8px 0 12px; padding: 4px 14px; border-radius: 20px; background: var(--accent-dim); color: var(--accent-text); font-size: var(--text-lg); font-weight: var(--fw-semibold); }
+.profile-meta { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.meta-item { display: inline-flex; align-items: center; gap: 6px; color: var(--text-secondary); font-size: var(--text-base); }
+.meta-item .i { color: var(--accent-text); }
+a.meta-item:hover { color: var(--accent-text); }
+.hero-cta .btn { height: 38px; padding: 0 18px; border-radius: var(--r-md); font-weight: var(--fw-semibold); }
+.about-text { margin-top: var(--sp-8); }
+.about-text p { color: var(--text-secondary); font-size: 15px; line-height: 1.8; max-width: 70ch; margin-bottom: var(--sp-3); }
+
+/* Kaarten met zacht verloop + optillen bij hover */
+.bento-card, .skill-group, .pcard, .pager-link { background: linear-gradient(135deg, var(--surface-hover), var(--surface) 55%, transparent); }
+.bento-card { transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease); }
+.bento-card:hover { border-color: var(--edge); transform: translateY(-3px); box-shadow: var(--shadow-window-blur); }
+.bento-icon { width: 40px; height: 40px; border-radius: var(--r-md); }
+.reduce-motion .bento-card:hover { transform: none; }
+
+/* Tijdlijn: gloeiende punten, datum in accent, titel vet */
+.timeline { margin-left: 8px; }
+.timeline-item { padding-left: 26px; }
+.timeline-item:not(:last-child)::before { top: 14px; left: 3px; background: linear-gradient(var(--separator), var(--separator)); }
+.timeline-item::after { top: 6px; left: 0; width: 8px; height: 8px; box-shadow: 0 0 0 3px var(--accent-dim), 0 0 10px rgba(var(--accent-rgb), 0.35); }
+.tl-title { font-size: 16px; }
+.tl-org { color: var(--text-primary); font-weight: var(--fw-bold); }
+.tl-date { color: var(--accent-text); }
+
+/* Soft skills als pillen */
+.chips-pill .chip { border-radius: 100px; padding: 5px 14px; }
+/* Vier specialisaties: altijd 2×2 (nooit 3+1) */
+.page .bento-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@container win (max-width: 620px) { .page .bento-grid { grid-template-columns: 1fr; } }

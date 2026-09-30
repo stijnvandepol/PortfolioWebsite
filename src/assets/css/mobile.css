@@ -120,3 +120,11 @@ html.is-simple, html.is-simple body { background: var(--bg); }
 .m-tab:active { background: var(--surface-hover); }
 .m-tab:focus-visible { outline: 3px solid var(--accent-ring); outline-offset: -2px; }
 @media (max-width: 360px) { .m-tab-label { font-size: 10px; } }
+
+/* Warmere look (zoals het originele ontwerp): rolpil, accentstreep voor koppen, gloeiende tijdlijn, glow achter de foto */
+.m-role { display: inline-block; padding: 4px 14px; border-radius: 20px; background: var(--accent-dim); }
+.m-avatar { position: relative; box-shadow: 0 0 0 2px var(--edge), 0 0 34px rgba(var(--accent-rgb), 0.35), 0 10px 28px rgba(0, 0, 0, 0.3); }
+.m-section-title { display: flex; align-items: center; gap: 10px; border-bottom: 0; padding-bottom: 0; }
+.m-section-title::before { content: ''; flex-shrink: 0; width: 26px; height: 3px; border-radius: 3px; background: var(--accent); }
+.m-tl-item::before { box-shadow: 0 0 0 3px var(--accent-dim), 0 0 10px rgba(var(--accent-rgb), 0.4); }
+.m-project, .m-skill-group { background: linear-gradient(135deg, var(--surface-hover), var(--surface) 55%, transparent); }

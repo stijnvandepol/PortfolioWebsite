@@ -127,9 +127,8 @@ html.no-boot .dock { animation: none; }
 .di-tip {
   position: absolute; bottom: calc(100% + 10px); left: 50%; translate: -50% 0;
   padding: 4px 10px; border-radius: 7px; white-space: nowrap; pointer-events: none;
-  background: var(--material-popover); color: var(--text-primary); font-size: var(--text-base); font-weight: var(--fw-medium);
-  -webkit-backdrop-filter: blur(var(--blur-popover)) saturate(var(--saturate)); backdrop-filter: blur(var(--blur-popover)) saturate(var(--saturate));
-  box-shadow: 0 0 0 0.5px var(--edge), var(--shadow-popover);
+  background: var(--tooltip-bg); color: var(--text-primary); font-size: var(--text-base); font-weight: var(--fw-medium);
+  box-shadow: 0 0 0 0.5px var(--edge), var(--shadow-popover); /* geen backdrop-filter: tooltips hoeven geen glas (scheelt GPU-werk) */
   opacity: 0; transition: opacity var(--dur-fast) var(--ease); z-index: var(--z-tooltip);
 }
 .di:hover .di-tip, .di:focus-visible .di-tip { opacity: 1; }

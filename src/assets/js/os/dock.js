@@ -14,11 +14,11 @@ import { os } from './bridge.js';
 import { showContextMenu } from './contextmenu.js';
 
 const BASE = 46;          // rustgrootte icoon (px)
-const PEAK = 76;          // grootte direct onder de cursor
-const RADIUS = 118;       // afstand (px) waarover de vergroting uitdooft
+const PEAK = 76;          // grootte onder de cursor (groter laat iconen over venster-glas uitsteken: dat halveert de framerate)
+const RADIUS = 130;       // afstand (px) waarover de vergroting uitdooft
 const GAP = 4;            // ruimte tussen iconen
 const SEP_W = 9;          // breedte scheidingslijn incl. marges
-const LIFT = 6;           // maximale optilling bij magnificatie
+const LIFT = 10;          // maximale optilling bij magnificatie
 
 let dockEl = null, itemsEl = null, tilesSep = null;
 const icons = [];         // { el (icoon), host (button), current, target }
@@ -58,7 +58,7 @@ export function initDock(root, entries, { appIcon } = {}) {
     // Tijdgebaseerd (niet framegebaseerd): even snel op 30, 60 of 120 Hz.
     const dt = Math.min(64, last ? now - last : 16.7);
     last = now;
-    const k = 1 - Math.exp(-dt / 52);
+    const k = prefersReducedMotion() ? 1 : 1 - Math.exp(-dt / 52);
     let need = false;
     icons.forEach((d) => {
       const diff = d.target - d.current;
@@ -76,7 +76,9 @@ export function initDock(root, entries, { appIcon } = {}) {
   kick = () => { if (!raf) raf = requestAnimationFrame(frame); };
 
   dockEl.addEventListener('pointermove', (e) => {
-    if (e.pointerType !== 'mouse' || prefersReducedMotion()) return;
+    // Alleen touch overslaan. Vergroting volgt direct de cursor en blijft (zoals op macOS)
+    // ook aan bij 'Verminder beweging'; dan springt hij zonder na-ijlen (zie frame()).
+    if (e.pointerType === 'touch') return;
     hovering = true; pointerX = e.clientX;
     refreshTargets(); kick();
   });

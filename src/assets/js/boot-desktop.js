@@ -17,7 +17,8 @@ import { os } from './os/bridge.js';
 import { getApp, listApps, iconForApp, prefetchApps } from './apps/registry.js';
 
 // Overlays pas laden als ze voor het eerst gebruikt worden.
-const toggleSpotlight = async () => (await import('./os/spotlight.js')).toggleSpotlight();
+// Spotlight laadt direct mee (±3 KB): bij lui laden gingen de eerste toetsaanslagen na ⌘K verloren.
+import { toggleSpotlight } from './os/spotlight.js';
 const toggleLaunchpadOverlay = async (apps) => (await import('./os/launchpad.js')).toggleLaunchpad(apps);
 import { CONFIG } from './data/config.js';
 import { APP_ICONS, iconImg, calendarIcon } from './apps/icons.js';

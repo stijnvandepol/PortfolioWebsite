@@ -164,10 +164,15 @@ class WindowInstance {
     const t = getDockTarget(null, this.app.id);
     if (t) this.el.style.transformOrigin = `${t.x - this.geo.x}px ${t.y - this.geo.y}px`;
     this.el.classList.add('win-opening');
-    this.el.addEventListener('animationend', () => {
+    // Alleen het eigen animationend telt: animaties van de inhoud (bubbelend) mogen de
+    // open-animatie niet halverwege afkappen.
+    const done = (e) => {
+      if (e.target !== this.el) return;
+      this.el.removeEventListener('animationend', done);
       this.el.classList.remove('win-opening');
       this.el.style.transformOrigin = '';
-    }, { once: true });
+    };
+    this.el.addEventListener('animationend', done);
   }
 
   _applyGeo() {
@@ -446,7 +451,7 @@ class WindowInstance {
     let done = false;
     const finish = () => { if (done) return; done = true; this.el.remove(); };
     if (prefersReducedMotion()) finish();
-    else { this.el.addEventListener('animationend', finish, { once: true }); setTimeout(finish, 320); }
+    else { this.el.addEventListener('animationend', (e) => { if (e.target === this.el) finish(); }); setTimeout(finish, 400); }
   }
 }
 

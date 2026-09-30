@@ -18,7 +18,8 @@ const norm = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toL
 function buildIndex() {
   const p = CONFIG.profile;
   const items = [];
-  os.listApps().forEach((a) => items.push({ type: 'App', label: a.title, sub: a.kind === 'system' ? 'Systeem-app' : 'Portfolio-app', iconHtml: a.icon, tile: true, run: () => os.activate(a.id) }));
+  // Portfolio en Contact staan al als pagina; alleen de overige apps apart tonen (geen dubbele resultaten).
+  os.listApps().filter((a) => a.kind === 'system').forEach((a) => items.push({ type: 'App', label: a.title, sub: a.kind === 'system' ? 'Systeem-app' : 'Portfolio-app', iconHtml: a.icon, tile: true, run: () => os.activate(a.id) }));
   [['Home', 'home', 'person'], ['Projecten', 'projecten', 'grid'], ['Ervaring', 'ervaring', 'briefcase'], ['Skills', 'skills', 'chart'],
    ['Contact', 'contact', 'envelope'], ['CV', 'cv', 'doc']]
     .forEach(([label, page, ic]) => items.push({ type: 'Pagina', label, sub: 'Portfolio', iconHtml: sym(ic, 17), run: () => os.open('portfolio', { initialPage: page }) }));

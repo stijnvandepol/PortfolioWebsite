@@ -241,6 +241,7 @@ export function createPortfolioApp({ initialPage = 'home', onPreview } = {}) {
     width: 1040, height: 680, minWidth: 460, minHeight: 360,
     grow: { maxWidth: 1280, maxHeight: 820 },
     fillBelow: { width: 1100, height: 760 },   // op kleinere schermen: venster vult het scherm
+    sidebar: true,
     singleton: true,
     mount({ win, titlebar, body }) {
       // ---- Toolbar ----
@@ -250,7 +251,7 @@ export function createPortfolioApp({ initialPage = 'home', onPreview } = {}) {
       const titleWrap = el('div', { class: 'tb-title' }, [el('span', { class: 'tb-title-main', text: 'Portfolio' }), subtitle]);
       const contactBtn = el('a', { class: 'tb-btn tb-text no-drag', href: '#contact', dataset: { route: 'contact' }, title: 'Contact', html: `${sym('envelope', 15)}<span>Contact</span>` });
       const cvBtn = el('a', { class: 'tb-btn tb-text no-drag', href: CONFIG.profile.cv, download: CONFIG.profile.cvName, title: 'Download CV', html: `${sym('download', 15)}<span>CV</span>` });
-      titlebar.append(el('div', { class: 'tb-nav' }, [back, fwd]), titleWrap, el('div', { class: 'tb-actions' }, [contactBtn, cvBtn]));
+      titlebar.append(el('div', { class: 'tb-nav' }, [back, fwd]), titleWrap, el('div', { class: 'tb-actions lg-cap' }, [contactBtn, cvBtn]));
 
       // ---- Zijbalk + pagina's ----
       const simpleBtn = el('button', { class: 'pf-item pf-simple', type: 'button', title: 'Toon het portfolio als gewone pagina, zonder desktop' }, [

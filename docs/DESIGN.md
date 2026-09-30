@@ -45,9 +45,30 @@ de navigatie, deep-links en de overige UX-verbeteringen zijn behouden.
 - **Sneller:** Finder, Terminal, Instellingen, Spotlight en Launchpad laden pas als ze nodig zijn
   (of stil na het openen van het portfolio). Tooltips hebben geen backdrop-filter meer.
 
+## Liquid Glass (macOS Tahoe)
+
+Gebaseerd op Apple's beschrijving van Liquid Glass (WWDC25, HIG Materials) en Tahoe: glas alleen
+voor navigatie en bediening, nooit voor de leesinhoud.
+
+- **Menubalk volledig doorzichtig**: alleen tekst met een zachte schaduw, zoals in Tahoe.
+- **Zijbalk als zwevend glaspaneel** onder de verkeerslichten (Portfolio, Finder, Instellingen);
+  vensters hebben rondere hoeken (20 px) en de zijbalk een concentrische radius (12 px).
+- **Toolbarknoppen in zwevende glascapsules**; knoppen en segmented controls zijn capsules.
+- **Lichtrand (specular)**: 1px verlooprand, helder linksboven, zwakker rechtsonder; in het Dock
+  volgt de hoogste lichtplek de muis.
+- **Breking (lensing) aan de rand van het Dock**: een SVG-verplaatsingskaart (afgeronde rechthoek met bol
+  randprofiel) in `backdrop-filter`. Werkt alleen in Chromium; Safari en Firefox tonen gewoon helder glas.
+- Menu's en popovers blijven wat dichter (94 %) omdat daar gelezen wordt.
+- **Minder transparantie** zet het glas weer ondoorzichtig.
+- **Performance**: tijdens slepen of resizen staat de blur onder dat venster uit (dat kostte ~50 % van de
+  frames); Dock-hover en slepen lopen op 60 fps.
+
 ## Informatiearchitectuur
 
-`Over mij · Projecten (+ projectpagina) · Ervaring (+ Opleiding) · Skills · Contact · CV`
+`Over mij · Projecten (+ projectpagina) · Ervaring (incl. opleiding) · Skills · Contact · CV`
+
+Contact is een contactkaart (e-mail kopiëren/mailen, LinkedIn, GitHub, CV) — bewust geen formulier:
+zonder backend kon dat alleen de mail-app van de bezoeker openen en werkte het vaak niet.
 
 Elke pagina heeft een deelbare URL (`#projecten`, `#projecten/snackspot`, `#skills`, …) die in
 zowel de desktop- als de eenvoudige weergave werkt. Metaforen worden alleen gebruikt waar ze

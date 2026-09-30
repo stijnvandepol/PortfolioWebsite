@@ -126,3 +126,8 @@
 .t-accent { color: color-mix(in srgb, var(--accent) 78%, #fff); }
 .t-file { color: #6cb6ff; }
 .window:has(.term-body) .titlebar { border-bottom-color: rgba(255, 255, 255, 0.08); }
+/* Smal instellingenvenster: label boven de bediening i.p.v. ernaast */
+@container win (max-width: 680px) {
+  .set-row:not(.set-key-row) { flex-direction: column; align-items: flex-start; gap: var(--sp-2); }
+  .set-row-text { width: 100%; }
+}

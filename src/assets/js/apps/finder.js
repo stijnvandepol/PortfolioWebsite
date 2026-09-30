@@ -31,6 +31,7 @@ export function createFinderApp({ initial = 'Projecten' } = {}) {
     title: 'Finder',
     menuName: 'Finder',
     width: 780, height: 500, minWidth: 520, minHeight: 320,
+    sidebar: true,
     singleton: false,
     mount({ win, titlebar, body }) {
       const fs = buildFS();

@@ -117,7 +117,7 @@ class WindowInstance {
       : [];
 
     this.el = el('div', {
-      class: `window app-window${this.app.chrome === 'plain' ? ' win-plain' : ''}`,
+      class: `window app-window${this.app.chrome === 'plain' ? ' win-plain' : ''}${this.app.sidebar ? ' has-sidebar' : ''}`,
       role: 'dialog',
       'aria-label': this.app.title,
       tabindex: '-1',

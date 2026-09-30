@@ -4,11 +4,11 @@ Een persoonlijke portfolio van Stijn van de Pol, gepresenteerd als een **interac
 
 ## Functionaliteiten
 
-- **Portfolio eerst.** De Portfolio-app opent direct en heeft een zijbalk met labels: **Over mij · Projecten · Ervaring · Skills · Opleiding · Contact · CV**. Elke pagina heeft een deelbare URL (`#projecten/snackspot`).
+- **Portfolio eerst.** De Portfolio-app opent direct en heeft een zijbalk met labels: **Over mij · Projecten · Ervaring (incl. opleiding) · Skills · Contact · CV**. Elke pagina heeft een deelbare URL (`#projecten/snackspot`).
 - **Home** toont naam, rol, specialisaties, vier duidelijke knoppen (contact, CV, projecten, GitHub), uitgelichte projecten, skills en ervaring.
 - **Projecten** zijn scanbaar (titel, ondertitel, tags) met een projectpagina, kruimelpad en vorige/volgende.
 - **Eenvoudige weergave** — het portfolio als gewone, snelle pagina zonder desktop (S-menu, zijbalk, Help of Spotlight). Mobiel (≤ 768 px) gebruikt dit automatisch.
-- **macOS-desktop** — vensterbeheer (slepen, resizen, zoomen, tegelen, minimaliseren naar het Dock), menubalk met toetsenbordnavigatie, Dock, Spotlight (`⌘K`), Launchpad, Finder, Terminal, Systeeminstellingen, Contact.
+- **macOS-desktop** — vensterbeheer (slepen, resizen, zoomen, tegelen, minimaliseren naar het Dock), menubalk met toetsenbordnavigatie, Dock, Spotlight (`⌘K`), Launchpad, Finder, Terminal, Systeeminstellingen, Contact — in Liquid Glass-stijl (doorzichtige menubalk, zwevende zijbalken, lichtranden, breking in het Dock).
 - **Weergave** — Licht / Donker / Automatisch, vijf accentkleuren (standaard **blauw**), verminder beweging en transparantie.
 - **SEO** — statische, semantische HTML met alle inhoud, canonical, Open Graph, JSON-LD, `robots.txt`, `sitemap.xml`; werkt ook zonder JavaScript.
 - **Toegankelijk** — volledig toetsenbord, ARIA, focus-ring, contrast per accent berekend, `prefers-reduced-motion/-transparency/-contrast`.

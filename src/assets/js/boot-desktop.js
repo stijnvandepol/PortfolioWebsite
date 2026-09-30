@@ -9,6 +9,7 @@ import {
 } from './os/windowManager.js';
 import { initMenubar } from './os/menubar.js';
 import { initDock } from './os/dock.js';
+import { initDockGlass } from './os/glass.js';
 import { initDesktop } from './os/desktop.js';
 import { initNotifications, notify } from './os/notifications.js';
 import { quickLook } from './os/quicklook.js';
@@ -96,6 +97,7 @@ export function boot() {
     { id: 'github', label: 'GitHub', icon: iconImg('github', 'GitHub'), href: CONFIG.profile.github },
     { id: 'linkedin', label: 'LinkedIn', icon: APP_ICONS.linkedin, href: CONFIG.profile.linkedin },
   ], { appIcon: iconForApp });
+  initDockGlass(desktop.querySelector('.dock'));
 
   // Globale sneltoetsen (⌘ op macOS, Ctrl elders).
   window.addEventListener('keydown', (e) => {

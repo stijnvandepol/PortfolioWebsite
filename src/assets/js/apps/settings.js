@@ -35,7 +35,8 @@ export function createSettingsApp({ initialPage } = {}) {
     id: 'settings',
     title: 'Systeeminstellingen',
     menuName: 'Systeeminstellingen',
-    width: 700, height: 500, minWidth: 560, minHeight: 380,
+    width: 780, height: 520, minWidth: 560, minHeight: 380,
+    sidebar: true,
     singleton: true,
     mount({ win, titlebar, body }) {
       const titleEl = el('span', { class: 'win-title', text: '' });

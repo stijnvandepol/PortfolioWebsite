@@ -67,7 +67,7 @@ export function createContactApp() {
     id: 'contact',
     title: 'Contact',
     menuName: 'Contact',
-    width: 520, height: 640, minWidth: 380, minHeight: 420,
+    width: 520, height: 690, minWidth: 380, minHeight: 420,
     singleton: true,
     mount({ win, titlebar, body }) {
       titlebar.append(el('span', { class: 'win-title', text: 'Contact' }));

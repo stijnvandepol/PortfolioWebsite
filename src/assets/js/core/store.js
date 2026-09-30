@@ -45,7 +45,7 @@ export function createStore(initial = {}) {
 // Globale OS-state.
 export const store = createStore({
   theme: 'dark',        // 'light' | 'dark' | 'auto'
-  accent: 'green',
+  accent: 'blue',
   reducedMotion: false,
   activeWindowId: null, // id van het gefocuste venster
   windows: [],          // [{ id, appId, title, minimized }]

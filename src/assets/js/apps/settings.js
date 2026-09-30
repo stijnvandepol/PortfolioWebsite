@@ -6,7 +6,7 @@ import { store } from '../core/store.js';
 import { setTheme, setAccent, setReducedMotion, accentList } from '../core/theme.js';
 import { APP_ICONS, ICONS } from './icons.js';
 
-const ACCENT_HEX = { green: '#7DB87A', blue: '#0A84FF', purple: '#BF5AF2', pink: '#FF375F', orange: '#FF9F0A' };
+const ACCENT_HEX = { blue: '#0A84FF', green: '#7DB87A', purple: '#BF5AF2', pink: '#FF375F', orange: '#FF9F0A' };
 
 export function createSettingsApp() {
   return {

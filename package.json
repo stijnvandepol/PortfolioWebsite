@@ -1,0 +1,10 @@
+{
+  "name": "portfoliowebsite",
+  "private": true,
+  "type": "module",
+  "description": "Portfolio van Stijn van de Pol — vanilla HTML/CSS/ES-modules, geen build-stap. Alleen de statische SEO-laag wordt gegenereerd.",
+  "scripts": {
+    "generate": "node scripts/generate-static.mjs",
+    "check": "node scripts/generate-static.mjs --check"
+  }
+}

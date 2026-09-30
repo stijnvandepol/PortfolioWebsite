@@ -124,6 +124,14 @@ class WindowInstance {
       dataset: { winId: this.id, appId: this.app.id },
     }, [this.elClip, this.elFrame, ...this.elResizers]);
 
+    // `fillBelow`: op kleinere schermen vult het venster direct het beschikbare gebied (geen handmatig vergroten nodig).
+    const fb = this.app.fillBelow;
+    if (fb && this.zoomable && (vp.width <= fb.width || vp.height <= fb.height)) {
+      this.preGeo = { ...this.geo };
+      this.snapState = 'max'; this.maximized = true;
+      this.geo = this._zoneRect('max');
+    }
+
     this._applyGeo();
     desktopEl.append(this.el);
     this._playOpen();

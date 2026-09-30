@@ -45,21 +45,19 @@ export function createTerminalApp() {
           '  skills       vaardigheden', '  experience   werkervaring', '  education    opleiding',
           '  contact      contactgegevens', '  social       sociale links', '  ls           bestanden',
           '  cat <file>   toon bestand', '  open <app>   open een app (portfolio, finder, contact, settings)',
+          '  Alle informatie staat ook overzichtelijk in de Portfolio-app.',
           '  theme <t>    light|dark|auto', '  neofetch     systeeminfo', '  clear        leeg scherm', '  help         deze lijst',
         ].map(escapeHtml).join('<br>')),
         about: () => print(escapeHtml(FS['about.txt']()).replace(/\n/g, '<br>')),
         whoami: () => print('stijn'),
-        projects: () => print(CONFIG.projects.map((p) => `• <span class="t-accent">${escapeHtml(p.title)}</span> — ${escapeHtml(p.tags)}`).join('<br>')),
+        projects: () => print(CONFIG.projects.map((p) => `• <span class="t-accent">${escapeHtml(p.title)}</span> — ${escapeHtml(p.tags.join(' · '))}`).join('<br>')),
         skills: () => print([
-          ...CONFIG.vaardigheden.map((s) => {
-            const filled = Math.round(s.value / 5);
-            return `${escapeHtml(s.name).padEnd(20)} <span class="t-accent">${'█'.repeat(filled)}</span>${'░'.repeat(20 - filled)} ${s.value}%`;
-          }),
+          ...CONFIG.skills.map((g) => `<span class="t-accent">${escapeHtml(g.category)}</span><br>  ${escapeHtml(g.items.join(' · '))}`),
           '',
           `Soft skills: ${CONFIG.softskills.map(escapeHtml).join(', ')}`,
         ].join('<br>')),
-        experience: () => print(CONFIG.ervaring.map((e) => `<span class="t-accent">${escapeHtml(e.title)}</span><br>  ${escapeHtml(e.date)}`).join('<br>')),
-        education: () => print(CONFIG.opleiding.map((e) => `<span class="t-accent">${escapeHtml(e.title)}</span><br>  ${escapeHtml(e.date)}`).join('<br>')),
+        experience: () => print(CONFIG.experience.map((e) => `<span class="t-accent">${escapeHtml(e.role)} — ${escapeHtml(e.org)}</span><br>  ${escapeHtml(e.period)}`).join('<br>')),
+        education: () => print(CONFIG.education.map((e) => `<span class="t-accent">${escapeHtml(e.title)} — ${escapeHtml(e.org)}</span><br>  ${escapeHtml(e.period)}`).join('<br>')),
         contact: () => print(escapeHtml(FS['contact.txt']()).replace(/\n/g, '<br>')),
         social: () => { print('GitHub · LinkedIn — link geopend.'); os.openExternal(CONFIG.profile.github); },
         ls: () => print(Object.keys(FS).map((f) => `<span class="t-file">${escapeHtml(f)}</span>`).join('&nbsp;&nbsp;')),

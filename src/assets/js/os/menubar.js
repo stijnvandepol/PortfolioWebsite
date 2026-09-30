@@ -16,6 +16,7 @@ import { buildMenu, moveFocus } from './menu.js';
 import { os } from './bridge.js';
 import { sym, batterySym, S_MARK } from '../apps/icons.js';
 import { CONFIG } from '../data/config.js';
+import { setView } from '../core/view.js';
 import { appearanceControl, accentPicker, motionSwitch, transparencySwitch } from '../ui/controls.js';
 
 const DAYS = ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'];
@@ -115,6 +116,7 @@ export function initMenubar(root) {
     { divider: true },
     { label: 'Systeeminstellingen…', key: '⌘,', action: () => os.open('settings') },
     { divider: true },
+    { label: 'Eenvoudige weergave (gewone pagina)', action: () => setView('simple') },
     { label: 'Broncode op GitHub', action: () => os.openExternal(`${CONFIG.profile.github}/PortfolioWebsite`) },
     { divider: true },
     { label: 'Sluit alle vensters', key: '⌥⌘W', action: () => closeAll(), disabled: !store.get('windows').length },
@@ -171,15 +173,16 @@ export function initMenubar(root) {
   };
 
   const goItems = () => [
-    { label: 'Over mij', action: () => os.open('portfolio', { initialPage: 'over-mij' }) },
-    { label: 'Ontwikkeling', action: () => os.open('portfolio', { initialPage: 'ontwikkeling' }) },
-    { label: 'Portfolio', action: () => os.open('portfolio', { initialPage: 'portfolio' }) },
-    { label: 'Websites', action: () => os.open('portfolio', { initialPage: 'blog' }) },
+    { label: 'Home', action: () => os.open('portfolio', { initialPage: 'home' }) },
+    { label: 'Projecten', action: () => os.open('portfolio', { initialPage: 'projecten' }) },
+    { label: 'Ervaring', action: () => os.open('portfolio', { initialPage: 'ervaring' }) },
+    { label: 'Skills', action: () => os.open('portfolio', { initialPage: 'skills' }) },
+    { label: 'Opleiding', action: () => os.open('portfolio', { initialPage: 'opleiding' }) },
+    { label: 'Contact', action: () => os.open('portfolio', { initialPage: 'contact' }) },
+    { label: 'CV', action: () => os.open('portfolio', { initialPage: 'cv' }) },
     { divider: true },
     { label: 'GitHub', action: () => os.openExternal(CONFIG.profile.github) },
     { label: 'LinkedIn', action: () => os.openExternal(CONFIG.profile.linkedin) },
-    { label: 'Stuur e-mail', action: () => os.open('contact') },
-    { label: 'Bekijk CV', action: () => os.openFile(CONFIG.profile.cv) },
   ];
 
   const windowItems = () => {
@@ -207,6 +210,7 @@ export function initMenubar(root) {
   const helpItems = () => [
     { label: 'Zoek…', key: '⌘K', action: () => os.toggleSpotlight() },
     { label: 'Sneltoetsen', action: () => os.open('settings', { initialPage: 'keyboard' }) },
+    { label: 'Eenvoudige weergave', action: () => setView('simple') },
     { divider: true },
     { label: 'Launchpad', key: 'F4', action: () => os.toggleLaunchpad() },
   ];

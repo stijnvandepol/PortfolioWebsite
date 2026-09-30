@@ -14,12 +14,12 @@ const KIND = { image: 'Afbeelding', pdf: 'PDF-document', text: 'Tekstbestand', l
 function buildFS() {
   const byName = (a, b) => a.name.localeCompare(b.name, 'nl');
   return {
-    Projecten: CONFIG.projects.map((p) => ({ type: 'image', name: `${p.title}.webp`, src: p.image, title: p.title, desc: p.text, tags: p.tags })).sort(byName),
+    Projecten: CONFIG.projects.map((p) => ({ type: 'image', name: `${p.title}.webp`, id: p.id, src: p.image, title: p.title, desc: p.subtitle, tags: p.tags.join(' ') })).sort(byName),
     Documenten: [
       { type: 'pdf', name: 'CV — Stijn van de Pol.pdf', href: CONFIG.profile.cv },
       { type: 'text', name: 'over-mij.txt', body: `${CONFIG.profile.name}\n${CONFIG.profile.role}\n${CONFIG.profile.location}\n${CONFIG.profile.email}` },
     ].sort(byName),
-    Websites: CONFIG.blog.filter((b) => b.url).map((b) => ({ type: 'link', name: `${b.title}.url`, href: b.url })).sort(byName),
+    Websites: CONFIG.projects.filter((p) => p.url).map((p) => ({ type: 'link', name: `${p.title}.url`, href: p.url })).sort(byName),
   };
 }
 
@@ -51,8 +51,10 @@ export function createFinderApp({ initial = 'Projecten' } = {}) {
         options: [{ value: 'icons', label: 'Pictogrammen', icon: sym('grid', 15) }, { value: 'list', label: 'Lijst', icon: sym('list', 15) }],
         onChange: (v) => { view = v; paint(); },
       });
+      const openBtn = el('button', { class: 'btn no-drag finder-open', type: 'button', text: 'Open', disabled: true });
+      openBtn.addEventListener('click', () => { if (visible[selected]) openItem(visible[selected]); });
       const search = el('input', { class: 'field field-search no-drag', type: 'search', placeholder: 'Zoek', 'aria-label': 'Zoek in map', autocomplete: 'off' });
-      titlebar.append(el('div', { class: 'tb-nav' }, [back, fwd]), titleEl, el('div', { class: 'tb-actions' }, [viewSeg, search]));
+      titlebar.append(el('div', { class: 'tb-nav' }, [back, fwd]), titleEl, el('div', { class: 'tb-actions' }, [openBtn, viewSeg, search]));
 
       // ---- Zijbalk + hoofdvlak ----
       body.classList.add('finder-body');
@@ -70,16 +72,22 @@ export function createFinderApp({ initial = 'Projecten' } = {}) {
       body.append(sidebar, main);
 
       function openItem(item) {
-        if (item.type === 'image') os.preview({ items: fs[loc].filter((i) => i.type === 'image').map((i) => ({ src: i.src, title: i.title, desc: i.desc })), index: fs[loc].filter((i) => i.type === 'image').indexOf(item) });
+        if (item.type === 'image') os.open('portfolio', { initialPage: `projecten/${item.id}` });   // volledige projectpagina
         else if (item.type === 'pdf') os.openFile(item.href);
         else if (item.type === 'link') os.openExternal(item.href);
         else if (item.type === 'text') os.preview({ text: item.body, title: item.name });
       }
-      // Spatie = voorvertoning; voor pdf/links is dat gewoon openen.
-      const quick = (item) => (item.type === 'pdf' || item.type === 'link' ? null : openItem(item));
+      // Spatie = voorvertoning (Quick Look); voor pdf/links doet het niets.
+      const quick = (item) => {
+        if (item.type === 'image') {
+          const imgs = fs[loc].filter((i) => i.type === 'image');
+          os.preview({ items: imgs.map((i) => ({ src: i.src, title: i.title, desc: i.desc })), index: imgs.indexOf(item) });
+        } else if (item.type === 'text') openItem(item);
+      };
 
       function select(i, { focus = true } = {}) {
         selected = i;
+        openBtn.disabled = i < 0;
         qsa('.finder-item', grid).forEach((c, idx) => {
           const on = idx === i;
           c.classList.toggle('selected', on);
@@ -93,7 +101,7 @@ export function createFinderApp({ initial = 'Projecten' } = {}) {
       function updateStatus() {
         const total = fs[loc].length;
         const q = search.value.trim();
-        status.textContent = q ? `${visible.length} van ${total} onderdelen` : `${total} onderdelen`;
+        status.textContent = (q ? `${visible.length} van ${total} onderdelen` : `${total} onderdelen`) + ' — dubbelklik of druk op Enter om te openen';
       }
 
       function paint() {

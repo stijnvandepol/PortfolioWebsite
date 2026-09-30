@@ -34,7 +34,7 @@
 .finder-status { flex-shrink: 0; padding: 5px 14px; border-top: 0.5px solid var(--hairline); text-align: center; font-size: var(--text-sm); color: var(--text-secondary); }
 .field-search { width: 140px; }
 .titlebar .seg { margin-right: 2px; }
-@media (max-width: 640px) { .finder-sidebar { width: 130px; } .field-search { width: 90px; } }
+@container win (max-width: 640px) { .finder-sidebar { width: 130px; } .field-search { width: 90px; } }
 
 /* ============================== INSTELLINGEN ============================== */
 .settings-body { flex-direction: row; }
@@ -69,7 +69,7 @@
 .switch.on { background: var(--accent); }
 .switch-knob { position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35); transition: transform var(--dur-base) var(--ease-out); }
 .switch.on .switch-knob { transform: translateX(16px); }
-@media (max-width: 640px) { .set-sidebar { width: 52px; align-items: center; } .set-nav-item { padding: 0; width: 36px; justify-content: center; } .set-nav-item span:not(.set-nav-ic) { display: none; } }
+@container win (max-width: 640px) { .set-sidebar { width: 52px; align-items: center; } .set-nav-item { padding: 0; width: 36px; justify-content: center; } .set-nav-item span:not(.set-nav-ic) { display: none; } }
 
 /* ============================== OVER DIT PORTFOLIO ============================== */
 .about-body { align-items: center; justify-content: flex-start; background: var(--window-bg); }
@@ -88,6 +88,7 @@
 
 /* ============================== CONTACT ============================== */
 .contact-body { flex-direction: row; background: var(--window-bg); }
+.contact-view { display: flex; flex: 1; min-width: 0; min-height: 0; width: 100%; }
 .ct-card { width: 270px; flex-shrink: 0; padding: var(--sp-6) var(--sp-5); border-right: 0.5px solid var(--hairline); background: var(--sidebar-bg); overflow-y: auto; }
 .ct-avatar { width: 84px; height: 84px; margin: 0 auto var(--sp-3); border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 0.5px var(--edge), 0 4px 14px rgba(0, 0, 0, 0.25); }
 .ct-avatar img { width: 100%; height: 100%; object-fit: cover; }
@@ -119,7 +120,7 @@
 .ct-status { min-height: 18px; font-size: var(--text-sm); color: var(--text-secondary); padding-top: 6px; }
 .ct-message[aria-invalid="true"] ~ .ct-status { color: #d1342a; }
 :root[data-theme="dark"] .ct-message[aria-invalid="true"] ~ .ct-status { color: #ff6961; }
-@media (max-width: 720px) { .contact-body { flex-direction: column; overflow-y: auto; } .ct-card { width: auto; border-right: 0; border-bottom: 0.5px solid var(--hairline); } }
+@container win (max-width: 720px) { .contact-view { flex-direction: column; overflow-y: auto; } .ct-card { width: auto; border-right: 0; border-bottom: 0.5px solid var(--hairline); } }
 
 /* ============================== TERMINAL ============================== */
 /* Terminal is altijd donker (zoals macOS Terminal met standaardprofiel "Pro"). */

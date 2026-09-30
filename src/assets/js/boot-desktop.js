@@ -19,8 +19,9 @@ import { getApp, listApps, iconForApp } from './apps/registry.js';
 import { CONFIG } from './data/config.js';
 import { APP_ICONS, iconImg } from './apps/icons.js';
 import { prefersReducedMotion } from './core/dom.js';
+import { setView } from './core/view.js';
 
-const BOOT_MS = 1100; // moet gelijk zijn aan --boot-t in style.css
+const BOOT_MS = 650; // moet gelijk zijn aan --boot-t in style.css
 const isApple = /Mac|iPhone|iPad/i.test(navigator.platform || navigator.userAgent);
 
 function openById(id, opts = {}) {
@@ -66,6 +67,7 @@ export function boot() {
     setTheme,
     toggleSpotlight,
     toggleLaunchpad: () => toggleLaunchpadOverlay(listApps()),
+    setView,
     listApps,
     preview: quickLook,
   });
@@ -110,10 +112,16 @@ export function boot() {
   const bootEl = document.getElementById('boot');
   if (bootEl) { if (delay) setTimeout(() => bootEl.remove(), delay + 600); else bootEl.remove(); }
 
-  setTimeout(() => {
-    openById('portfolio', { initialPage: 'over-mij' });
-    welcome();
-  }, delay);
+  // Deelbare URL: #projecten/snackspot opent het portfolio direct op die pagina.
+  const route = location.hash.length > 1 ? location.hash.slice(1) : 'home';
+  const open = () => { openById('portfolio', { initialPage: route }); welcome(); };
+  if (delay) {
+    // Opstartscherm is nooit een wachtkamer: elke toets of klik slaat het over.
+    let done = false;
+    const go = () => { if (done) return; done = true; clearTimeout(t); document.documentElement.classList.add('no-boot'); bootEl?.remove(); open(); window.removeEventListener('keydown', go); window.removeEventListener('pointerdown', go); };
+    const t = setTimeout(go, delay);
+    window.addEventListener('keydown', go); window.addEventListener('pointerdown', go);
+  } else open();
 }
 
 /** Minimale onboarding: één keer een banner, geen tutorial. */
@@ -124,7 +132,7 @@ function welcome() {
   } catch { return; }
   setTimeout(() => notify({
     title: 'Welkom op mijn desktop',
-    body: `Open apps via het Dock of zoek alles met ${isApple ? '⌘K' : 'Ctrl+K'}.`,
+    body: `Zoek alles met ${isApple ? '⌘K' : 'Ctrl+K'}. Liever een gewone pagina? Kies “Eenvoudige weergave” in het S-menu.`,
     icon: APP_ICONS.portfolio,
     timeout: 7000,
   }), 900);

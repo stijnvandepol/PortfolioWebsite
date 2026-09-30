@@ -1,25 +1,24 @@
 // ============================================================
-// main.js — kleine ingang: kiest desktop of mobiele weergave.
-// Alleen wat nodig is wordt geladen (mobiel haalt geen desktop-code op).
+// main.js — kleine ingang: kiest desktop of eenvoudige weergave.
+// Alleen wat nodig is wordt geladen. preboot.js heeft de keuze al gemaakt.
 // ============================================================
 import { initTheme } from './core/theme.js';
 
-// ≤768px: statische, leesbare portfolio i.p.v. de macOS-desktop.
-const MOBILE = window.matchMedia('(max-width: 768px)');
+const NARROW = window.matchMedia('(max-width: 768px)');
 
 async function start() {
   initTheme();
-  if (MOBILE.matches) {
-    const { initMobile } = await import('./os/mobile.js');
-    initMobile();
+  if (document.documentElement.classList.contains('is-simple')) {
+    const { initSimple } = await import('./os/simple.js');
+    initSimple();
   } else {
     const { boot } = await import('./boot-desktop.js');
     boot();
   }
 }
 
-// Wisselt de viewport tussen desktop en mobiel (rotatie, venster-resize): opnieuw opstarten.
-MOBILE.addEventListener('change', () => location.reload());
+// Verandert de venstergrootte tussen mobiel en desktop (rotatie, resize): opnieuw bepalen.
+NARROW.addEventListener('change', () => location.reload());
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
 else start();

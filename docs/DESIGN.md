@@ -1,21 +1,65 @@
-# Ontwerp & kwaliteit
+# Ontwerp, UX & kwaliteit
 
-Dit portfolio is een kleine macOS-omgeving waarin de content draait. Dit document
-beschrijft de ontwerpkeuzes, het design system en hoe alles is gecontroleerd.
+Dit is een portfolio dat toevallig als macOS-desktop wordt gepresenteerd — niet andersom.
+Prioriteit bij elke beslissing:
 
-## Uitgangspunten
+1. informatie toegankelijk · 2. navigatie eenvoudig · 3. leesbaarheid · 4. snelheid ·
+5. visuele hiërarchie · 6. macOS-realisme · 7. extra interacties
 
-1. **Inhoud eerst.** Binnen een paar seconden moet duidelijk zijn wie, wat, welke
-   techniek en hoe contact. Het Portfolio-venster opent automatisch; de zijbalk toont
-   permanent alle secties; Contact staat in Dock, toolbar en Spotlight.
-2. **Geen gimmicks.** Elk onderdeel heeft een doel. Weggelaten omdat ze niets deden:
-   Prullenmand, doorlopende achtergrondanimaties, gloeiende avatar, decoratieve
-   blur-schijven, een tweede Dock-icoon voor dezelfde app.
-3. **Glas alleen in de navigatielaag** (menubalk, Dock, menu's, popovers, Spotlight,
-   zijbalken). Inhoudsvlakken zijn effen. Zo blijft er hiërarchie en blijft het licht.
-4. **Eigen identiteit.** Systeem-apps (Finder, Terminal, Instellingen) gebruiken
-   het Big Sur-icoonpakket; mijn eigen apps (Portfolio, Contact, Over) hebben eigen
-   blauwe tegels met het S-merkteken (dat ook de favicon is).
+Botst een macOS-effect met een hoger punt, dan wordt het effect aangepast of verwijderd.
+
+## UX-review: wat er mis was en wat er is gedaan
+
+| Bevinding (nulmeting) | Oplossing |
+|---|---|
+| Home toonde naam en CTA's, maar geen projecten, ervaring of skills; alleen scrollen bracht die naar boven | Home = echte portfolio-homepage: naam, rol, intro, specialisaties, vier CTA's, uitgelichte projecten, skills, ervaring in het kort |
+| Navigatie: "Over mij · Ontwikkeling · Portfolio · Websites" — "Ontwikkeling" verborg ervaring, opleiding én skills; "Portfolio" vs "Websites" was verwarrend | Zijbalk met labels: **Home · Projecten · Ervaring · Skills · Opleiding · Contact · CV** |
+| Contact en CV alleen als kleine toolbar-knoppen; Contact was een apart venster | Contact en CV zijn pagina's in de zijbalk en knoppen in de toolbar en op Home |
+| Skills als percentagebalken (arbitrair) | Skill-groepen met concrete technieken (uit de eigen projecten en ervaring) |
+| Projecten: alleen plaatje + Quick Look; live websites stonden op een andere pagina | Eén scanbare lijst (kaart: titel, ondertitel, tags, "Bekijk project") + projectpagina met kruimelpad, links en vorige/volgende |
+| Ervaring als samengevoegd tijdlijn-blok | Aparte pagina: functie, organisatie, periode, duur, plaats, werkzaamheden, technologieën |
+| Bureaubladicoon vereiste dubbelklik | Eén klik opent |
+| Opstartscherm 1,1 s, content verscheen gefaseerd (reveal-animaties) | 0,65 s, één keer per sessie, elke toets/klik slaat over; content is direct zichtbaar |
+| Venster 980×620 op elk scherm; smal venster = onleesbare iconen-zijbalk | Venster groeit mee op grote schermen en vult het scherm op laptops/tablets; smal venster → horizontale tabbalk mét labels |
+| Geen crawlbare inhoud (lege `<body>` tot JS klaar was), geen OG/JSON-LD | Statische, semantische HTML met alle inhoud + title/description/canonical/OG/Twitter/JSON-LD, `robots.txt`, `sitemap.xml` |
+| Geen weg terug als je alle vensters sloot; geen manier om de desktop te vermijden | Hint op leeg bureaublad ("Open Portfolio"); **Eenvoudige weergave** (gewone pagina) via zijbalk, S-menu, Help en Spotlight |
+| Mobiel bouwde de pagina met JS | Mobiel = statische HTML (direct leesbaar), tabbalk, geen desktop-JS |
+
+## Informatiearchitectuur
+
+`Home · Projecten (+ projectpagina) · Ervaring · Skills · Opleiding · Contact · CV`
+
+Elke pagina heeft een deelbare URL (`#projecten`, `#projecten/snackspot`, `#skills`, …) die in
+zowel de desktop- als de eenvoudige weergave werkt. Metaforen worden alleen gebruikt waar ze
+de inhoud helpen: Finder voor bestanden en projecten, Mail/Contacten voor contact, Instellingen
+voor voorkeuren, Terminal als demonstratie. Alle informatie is óók zonder die apps bereikbaar.
+
+**Progressive disclosure bij projecten:** kaart (titel, ondertitel, tags) → projectpagina
+(beschrijving, technologieën, links) → optionele velden `role`, `result`, `details`, `links` in
+`config.js` verschijnen automatisch zodra ze zijn ingevuld. Er is niets verzonnen.
+
+## Weergaven
+
+| Weergave | Wanneer | Techniek |
+|---|---|---|
+| **Desktop** | ≥ 769 px (standaard) | macOS-desktop, dynamisch opgebouwd |
+| **Eenvoudig** | ≤ 768 px, of gekozen | statische HTML, normaal scrollen, tabbalk |
+| **Zonder JavaScript / zoekmachines** | altijd | dezelfde statische HTML |
+
+De statische HTML wordt gegenereerd uit `config.js` (`node scripts/generate-static.mjs`) en de
+Docker-build doet dat automatisch, zodat inhoud nooit uit de pas loopt.
+
+## Leesbaarheid
+
+Contentpagina's: 15 px, regelhoogte ≥ 1,5–1,65, leesbreedte ≤ 72 tekens (~650 px), contrast ≥ 4,5:1
+(accentkleuren worden per thema op WCAG berekend). Statische pagina: 16 px. Geen smalle appkolommen:
+het portfolio-venster start op 1040 px en groeit tot 1280 px.
+
+## Animatie en scroll
+
+Alleen korte overgangen (80–400 ms) voor venstergedrag, navigatie en focus; geen gefaseerde
+content-reveal, geen doorlopende animaties. Vensterinhoud scrolt op zichzelf (`overscroll-behavior:
+contain`), de pagina niet; geen scroll-lock bij overlays; geen horizontale scroll.
 
 ## Design system (`assets/css/tokens.css`)
 
@@ -23,69 +67,53 @@ Alle componenten gebruiken tokens; geen losse `border-radius`/`box-shadow`/`tran
 
 | Onderdeel | Tokens |
 |---|---|
-| Kleur | `--accent`, `--accent-fill` (vulling, ≥ 4.5:1 met tekst), `--accent-text` (accent als tekst), `--on-accent`; semantisch: `--text-*`, `--surface*`, `--hairline`, `--separator`, `--window-bg` |
-| Materialen | `--material-chrome` (dun) < `--material-window` < `--material-popover` < `--material-overlay`, met `--edge` (0,5px rand) en `--specular` (lichtrand bovenaan) |
-| Typografie | SF Pro via `-apple-system`; Inter (zelf gehost, alleen niet-Apple) met metrisch afgestemde fallback; schaal 11/12/13/14/16/20/24/30 |
-| Radii · spacing | `--r-*`, `--win-radius`, `--dock-radius`, 4pt-raster `--sp-*` |
-| Motion | `--dur-*` (80–400 ms), `--ease-window` (kritisch gedempt, geen overshoot), `--ease-out`, `--ease-in` |
-| Z-lagen | `--z-window` … `--z-tooltip` (vensters < snap < dock < menubalk < meldingen < overlays < menu's) |
-| Toegankelijkheid | `prefers-reduced-motion`, `prefers-reduced-transparency`, `prefers-contrast` + eigen schakelaars voor beweging en transparantie |
+| Kleur | `--accent`, `--accent-fill` (vulling ≥ 4.5:1 met tekst), `--accent-text`, `--on-accent`; semantisch: `--text-*`, `--surface*`, `--hairline`, `--separator`, `--window-bg` |
+| Materialen | `--material-chrome` < `--material-window` < `--material-popover` < `--material-overlay`, met `--edge` en `--specular` |
+| Typografie | SF Pro via `-apple-system`; Inter (zelf gehost, alleen niet-Apple) met metrisch afgestemde fallback |
+| Motion | `--dur-*`, `--ease-window`, `--ease-out`, `--ease-in` |
+| Z-lagen | `--z-window` … `--z-tooltip` |
+| Toegankelijkheid | `prefers-reduced-motion/-transparency/-contrast` + eigen schakelaars |
 
-**Accent.** Blauw (`#0A84FF`) is de standaard. Per accent worden vulkleur, tekst-op-vulling
-en accent-tekst automatisch op WCAG-contrast berekend (`core/theme.js`), zodat ook
-oranje/groen leesbaar blijven. Alleen bewuste keuzes worden opgeslagen; een oude,
-automatisch bewaarde groene voorkeur wordt eenmalig teruggezet naar blauw.
-
-## Gedrag
-
-- **Vensters:** slepen via `translate` (GPU), 8 resize-handles, dubbelklik = zoomen,
-  tegelen naar randen en hoeken (of via Venster-menu), passen zich aan viewport-wijziging aan.
-- **Motion als ruimtelijke uitleg:** een venster schaalt vanuit zijn Dock-icoon;
-  minimaliseren vliegt naar een eigen Dock-tegel en terug; sluiten is een korte fade-schaal.
-- **Menubalk:** Apple-menu, app-menu, Bestand, Bewerken, Weergave, Ga, Venster, Help;
-  gevuld bij openen; ←/→/↑/↓/Esc/type-ahead; hover wisselt tussen menu's; gekozen item knippert.
-- **Dock:** cosinus-magnificatie zonder layout-reads, bounce alleen bij starten,
-  contextmenu met venster­lijst, running-indicator.
-- **Zoeken (⌘K):** apps, pagina's, projecten, ervaring, vaardigheden en acties.
-- **Onboarding:** één melding bij het eerste bezoek. Geen tutorial.
-
-## Toetsenbord
-
-Zie Systeeminstellingen → Sneltoetsen. Browsers houden ⌘W/⌘Q/⌘, soms voor zichzelf;
-alle acties staan daarom ook in de menu's.
+Glas alleen in de navigatielaag (menubalk, Dock, menu's, zijbalken, overlays); inhoud is effen.
+Blauw (`#0A84FF`) is de standaard accentkleur.
 
 ## Onderzoek
 
-Gebaseerd op Apple's Human Interface Guidelines (Windows, Menus, The menu bar, Dock
-menus, Sidebars, Materials, Typography, Motion, Accessibility, Color), WWDC25 (Liquid Glass) en
-de SwiftUI-animatiedocumentatie. Pixelmaten voor menu's, Dock en schaduwen publiceert Apple niet;
-die waarden zijn eigen, gemotiveerde keuzes. Er is bewust geen SVG-lensing
-(`backdrop-filter: url()`) gebruikt: dat werkt alleen in Chromium en is duur.
+Apple HIG (Windows, Menus, Menu bar, Dock menus, Sidebars, Materials, Typography, Motion,
+Accessibility, Color), WWDC25 (Liquid Glass) en de SwiftUI-animatiedocumentatie; gecontroleerd met
+de community-skill `valentinllpz/apple-human-interface-guidelines`. Pixelmaten voor menu's, Dock en
+schaduwen publiceert Apple niet; die waarden zijn eigen keuzes. Geen SVG-lensing
+(`backdrop-filter: url()`): alleen Chromium en duur.
 
-## Metingen (Chromium 141, lokaal)
+## Metingen (Chromium, lokaal, met nginx-achtige CSP + gzip)
 
-| | Voor | Na |
-|---|---|---|
-| Desktop, overdracht (onverkleind, zonder gzip) | 739 KB | 309 KB |
-| Desktop, overdracht met gzip | — | 156 KB |
-| Afbeeldingen | 575 KB | 32 KB (WebP, incl. Dock-iconen) |
-| Externe verzoeken (Google Fonts) | 1 | 0 |
-| Mobiel: JS dat wordt geladen | 105 KB | 36 KB (15,5 KB gzip) |
-| Lighthouse desktop | — | Perf 99 · A11y 96 · BP 100 · SEO 100 |
-| Lighthouse mobiel (simulated 4G) | 72 (vóór CSS/modulepreload-fix) | Perf 89 · A11y 100 · BP 100 · SEO 100 |
-| CLS | 0 / 0,02 (mobiel) | 0 |
+| | Begin | Na de eerste ronde | Na de UX-ronde |
+|---|---|---|---|
+| Desktop, overdracht (onverkleind, zonder gzip) | 739 KB | 309 KB | 497 KB¹ |
+| Desktop, overdracht met gzip | — | 156 KB | 305 KB¹ |
+| Mobiel, overdracht met gzip | — | 178 KB | 190 KB |
+| Lighthouse desktop (Perf · A11y · BP · SEO) | — | 99 · 96 · 100 · 100 | 99 · 97 · 100 · 100 |
+| Lighthouse mobiel (simulated 4G) | 72 | 89 | **96** · 100 · 100 · 100 |
+| Mobiel eerste weergave (FCP) | 4,6 s | 2,8 s | **1,7 s** |
+| CLS | 0 / 0,02 | 0 | 0–0,004 |
 
-De resterende toegankelijkheidsmelding (desktop) is `target-size` op de verkeerslichten:
-bewust op Apple-maat (12 px, klikdoel 20 px). Op touch-apparaten worden ze 24 px.
+¹ De homepage toont nu direct drie uitgelichte projectafbeeldingen (die eerder pas na klikken laadden);
+dat is bewust: projecten zijn de belangrijkste inhoud.
 
-## Getest
+## Bruikbaarheidstests (uitgevoerd)
 
-Automatisch in Chromium (Playwright) tegen een server met dezelfde CSP/gzip als nginx:
-vensters (slepen, resizen, zoomen, tegelen, minimaliseren/herstellen, sluiten, z-order,
-viewport-resize), Dock, alle menu's met toetsenbord, Spotlight, Quick Look, Finder, Contact,
-Instellingen (thema, accent, beweging), Terminal, Launchpad, contextmenu's, reduced motion,
-toetsenbord-only gebruik, axe-core in donker/licht/mobiel en alle vijf accenten (0 schendingen),
-Lighthouse desktop en mobiel, viewports 1920 / 1600 / 1280 / 1024 / 820 / 390.
+**30-secondentest** (desktop 1440×900, laptop 1280×720, tablet 1024×768, mobiel 390×844):
+alle zeven vragen — wie, wat, technische richting, projecten, ervaring, contact, CV — worden in
+de eerste viewport beantwoord, zonder klik (7/7 op elk formaat).
+
+**Recruiter-flow** (zonder instructies, klikken geteld): project openen = 1 klik; details lezen,
+"Bezoek website" zichtbaar; terug via kruimelpad, Esc of de terugknop; Ervaring, Skills, Opleiding,
+Contact en CV = elk 1 klik; deelbare deep-links; Spotlight, Ga-menu en Finder leiden naar dezelfde pagina's.
+
+**Overig:** zonder JavaScript (naam, alle 10 projecten, ervaring, skills, contact crawlbaar; één `h1`,
+logische `h2`'s; JSON-LD Person + ItemList), eenvoudige weergave (aan/uit, onthouden), leeg bureaublad
+(escape-route), opstart overslaan, scrollgedrag, kleine schermen, smal venster, reduced motion,
+toetsenbord, axe-core op alle pagina's in donker/licht/mobiel (0 schendingen), Lighthouse.
 
 **Niet getest:** Firefox en Safari (niet beschikbaar in de testomgeving), echte GPU-framerates,
 echte schermlezers (VoiceOver/NVDA). Controleer die handmatig.

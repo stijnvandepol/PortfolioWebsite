@@ -10,8 +10,8 @@ import { sym } from '../apps/icons.js';
 
 let overlay = null, input = null, results = null, release = null;
 let index = [], shown = [], sel = 0;
-const GROUP_ORDER = ['App', 'Pagina', 'Project', 'Website', 'Ervaring', 'Vaardigheid', 'Actie'];
-const GROUP_LABEL = { App: 'Apps', Pagina: 'Pagina\'s', Project: 'Projecten', Website: 'Websites', Ervaring: 'Ervaring & opleiding', Vaardigheid: 'Vaardigheden', Actie: 'Acties' };
+const GROUP_ORDER = ['Pagina', 'Project', 'Ervaring', 'Vaardigheid', 'App', 'Actie'];
+const GROUP_LABEL = { App: 'Apps', Pagina: 'Pagina\'s', Project: 'Projecten', Ervaring: 'Ervaring & opleiding', Vaardigheid: 'Vaardigheden', Actie: 'Acties' };
 
 const norm = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 
@@ -19,23 +19,24 @@ function buildIndex() {
   const p = CONFIG.profile;
   const items = [];
   os.listApps().forEach((a) => items.push({ type: 'App', label: a.title, sub: a.kind === 'system' ? 'Systeem-app' : 'Portfolio-app', iconHtml: a.icon, tile: true, run: () => os.activate(a.id) }));
-  [['Over mij', 'over-mij', 'person'], ['Ontwikkeling', 'ontwikkeling', 'briefcase'], ['Portfolio', 'portfolio', 'grid'], ['Websites', 'blog', 'globe']]
+  [['Home', 'home', 'person'], ['Projecten', 'projecten', 'grid'], ['Ervaring', 'ervaring', 'briefcase'], ['Skills', 'skills', 'chart'],
+   ['Opleiding', 'opleiding', 'cap'], ['Contact', 'contact', 'envelope'], ['CV', 'cv', 'doc']]
     .forEach(([label, page, ic]) => items.push({ type: 'Pagina', label, sub: 'Portfolio', iconHtml: sym(ic, 17), run: () => os.open('portfolio', { initialPage: page }) }));
 
-  const shots = CONFIG.projects.map((pr) => ({ src: pr.image, title: pr.title, desc: pr.text }));
-  CONFIG.projects.forEach((pr, i) => items.push({ type: 'Project', label: pr.title, sub: pr.tags, iconHtml: sym('image', 17), run: () => os.preview({ items: shots, index: i }) }));
-  (CONFIG.blog || []).filter((b) => b.url).forEach((b) => items.push({ type: 'Website', label: b.title, sub: b.url.replace(/^https?:\/\//, ''), iconHtml: sym('globe', 17), run: () => os.openExternal(b.url) }));
-  [...CONFIG.ervaring, ...CONFIG.opleiding].forEach((e) => items.push({ type: 'Ervaring', label: e.title, sub: e.date, iconHtml: sym('briefcase', 17), run: () => os.open('portfolio', { initialPage: 'ontwikkeling' }) }));
-  CONFIG.vaardigheden.forEach((s) => items.push({ type: 'Vaardigheid', label: s.name, iconHtml: sym('chart', 17), run: () => os.open('portfolio', { initialPage: 'ontwikkeling' }) }));
+  CONFIG.projects.forEach((pr) => items.push({ type: 'Project', label: pr.title, sub: `${pr.subtitle} · ${pr.tags.join(', ')}`, iconHtml: sym(pr.kind === 'web' ? 'globe' : 'grid', 17), run: () => os.open('portfolio', { initialPage: `projecten/${pr.id}` }) }));
+  CONFIG.experience.forEach((e) => items.push({ type: 'Ervaring', label: `${e.role} — ${e.org}`, sub: `${e.period} · ${e.tags.join(', ')}`, iconHtml: sym('briefcase', 17), run: () => os.open('portfolio', { initialPage: 'ervaring' }) }));
+  CONFIG.education.forEach((e) => items.push({ type: 'Ervaring', label: `${e.title} — ${e.org}`, sub: e.period, iconHtml: sym('cap', 17), run: () => os.open('portfolio', { initialPage: 'opleiding' }) }));
+  CONFIG.skills.forEach((g) => items.push({ type: 'Vaardigheid', label: g.category, sub: g.items.join(', '), iconHtml: sym(g.icon, 17), run: () => os.open('portfolio', { initialPage: 'skills' }) }));
 
   // Instagram bewust níét: dat is de verstopte terminal-easter-egg.
   items.push({ type: 'Actie', label: 'Stuur e-mail', sub: p.email, iconHtml: sym('envelope', 17), run: () => os.open('contact') });
-  items.push({ type: 'Actie', label: 'Bekijk CV', sub: 'PDF', iconHtml: sym('doc', 17), run: () => os.openFile(p.cv) });
+  items.push({ type: 'Actie', label: 'Download CV', sub: 'PDF', iconHtml: sym('download', 17), run: () => os.openFile(p.cv) });
   items.push({ type: 'Actie', label: 'GitHub', sub: 'github.com', iconHtml: sym('external', 17), run: () => os.openExternal(p.github) });
   items.push({ type: 'Actie', label: 'LinkedIn', sub: 'linkedin.com', iconHtml: sym('external', 17), run: () => os.openExternal(p.linkedin) });
   items.push({ type: 'Actie', label: 'Weergave: licht', iconHtml: sym('sun', 17), run: () => os.setTheme('light') });
   items.push({ type: 'Actie', label: 'Weergave: donker', iconHtml: sym('moon', 17), run: () => os.setTheme('dark') });
   items.push({ type: 'Actie', label: 'Weergave: automatisch', iconHtml: sym('auto', 17), run: () => os.setTheme('auto') });
+  items.push({ type: 'Actie', label: 'Eenvoudige weergave (gewone pagina)', iconHtml: sym('list', 17), run: () => os.setView('simple') });
   items.push({ type: 'Actie', label: 'Sneltoetsen tonen', iconHtml: sym('keyboard', 17), run: () => os.open('settings', { initialPage: 'keyboard' }) });
   items.forEach((i) => { i.hay = norm(`${i.label} ${i.sub || ''} ${GROUP_LABEL[i.type]}`); i.nl = norm(i.label); });
   return items;
@@ -45,7 +46,7 @@ function search(q) {
   const terms = norm(q).split(/\s+/).filter(Boolean);
   if (!terms.length) {
     // Suggesties: alle apps + een paar handige acties
-    return index.filter((i) => i.type === 'App' || ['Stuur e-mail', 'Bekijk CV'].includes(i.label)).slice(0, 8);
+    return index.filter((i) => i.type === 'Pagina' || ['Stuur e-mail', 'Download CV'].includes(i.label)).slice(0, 9);
   }
   const scored = index
     .filter((i) => terms.every((t) => i.hay.includes(t)))

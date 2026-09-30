@@ -58,7 +58,7 @@ export function initDock(root, entries, { appIcon } = {}) {
     // Tijdgebaseerd (niet framegebaseerd): even snel op 30, 60 of 120 Hz.
     const dt = Math.min(64, last ? now - last : 16.7);
     last = now;
-    const k = prefersReducedMotion() ? 1 : 1 - Math.exp(-dt / 52);
+    const k = prefersReducedMotion() ? 1 : 1 - Math.exp(-dt / 85); // tijdconstante ~85ms: soepel, niet schrikachtig
     let need = false;
     icons.forEach((d) => {
       const diff = d.target - d.current;

@@ -36,5 +36,6 @@ export const listApps = () => APPS.filter((a) => !a.hidden).map((a) => ({ id: a.
 /** Haal de overige apps op zodra de browser niets te doen heeft (eerste opening voelt dan direct). */
 export function prefetchApps() {
   const run = () => { loadFinder(); loadTerminal(); loadSettings(); };
-  if ('requestIdleCallback' in window) requestIdleCallback(run, { timeout: 4000 }); else setTimeout(run, 2500);
+  // Kort na het tonen van het portfolio (niet 'ooit in idle'): anders voelt de eerste klik traag.
+  setTimeout(run, 500);
 }

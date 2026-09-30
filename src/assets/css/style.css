@@ -85,15 +85,18 @@ html.no-boot .desktop { opacity: 1; animation: none; }
 .win-border { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 50; box-shadow: inset 0 0 0 0.5px var(--win-ring), inset 0 0.5px 0 var(--specular); }
 .window:not(.focused) .win-border { box-shadow: inset 0 0 0 0.5px var(--hairline); }
 
-.window.win-opening { animation: winOpen var(--dur-window) var(--ease-window) both; }
-.window.closing { animation: winClose var(--dur-fast) var(--ease-in) forwards; pointer-events: none; }
-@keyframes winOpen { 0% { opacity: 0; transform: scale(0.6); } 55% { opacity: 1; } 100% { opacity: 1; transform: none; } }
-@keyframes winClose { to { opacity: 0; transform: scale(0.97); } }
-.window.minimized {
-  opacity: 0; visibility: hidden; pointer-events: none;
-  transition: transform var(--dur-slow) var(--ease-window), opacity var(--dur-base) var(--ease-in) 60ms, visibility 0s linear var(--dur-slow);
-}
-.window.restoring { transition: none !important; visibility: visible !important; opacity: 0; }
+.window.win-opening { animation: winOpen 320ms var(--ease-window) both; }
+.window.closing { animation: winClose 220ms var(--ease-in) forwards; pointer-events: none; }
+@keyframes winOpen { 0% { opacity: 0; transform: scale(0.5); } 45% { opacity: 1; } 100% { opacity: 1; transform: none; } }
+@keyframes winClose { to { opacity: 0; transform: scale(0.93); } }
+/* Tijdens minimaliseren/herstellen beweegt het venster boven het Dock, zoals op macOS */
+.window.to-dock { z-index: 8500 !important; pointer-events: none; will-change: transform, opacity; transform-origin: center !important; }
+.window.minimized { opacity: 0; visibility: hidden; pointer-events: none; }
+/* Verminder beweging: geen schalen of bewegen, wél een korte fade (Apple HIG) */
+:root.reduce-motion .window.win-opening { animation: winFadeIn 200ms ease-out both !important; animation-duration: 200ms !important; }
+:root.reduce-motion .window.closing { animation: winFadeOut 180ms ease-in forwards !important; animation-duration: 180ms !important; }
+@keyframes winFadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes winFadeOut { to { opacity: 0; } }
 .window.animating { transition: translate var(--dur-window) var(--ease-window), width var(--dur-window) var(--ease-window), height var(--dur-window) var(--ease-window), box-shadow var(--dur-base) var(--ease); }
 .window.dragging { will-change: translate; }
 .window.dragging, .window.dragging * { user-select: none; }

@@ -160,8 +160,7 @@ class WindowInstance {
 
   /** Open-animatie: het venster schaalt vanuit het Dock-icoon van de app. */
   _playOpen() {
-    if (prefersReducedMotion()) { this.el.classList.add('win-opening'); return; }
-    const t = getDockTarget(null, this.app.id);
+    const t = prefersReducedMotion() ? null : getDockTarget(null, this.app.id);
     if (t) this.el.style.transformOrigin = `${t.x - this.geo.x}px ${t.y - this.geo.y}px`;
     this.el.classList.add('win-opening');
     // Alleen het eigen animationend telt: animaties van de inhoud (bubbelend) mogen de
@@ -401,38 +400,57 @@ class WindowInstance {
   }
 
   // ---- Minimaliseren / herstellen (Dock) ------------------------------
-  /** Transform die het venster laat samenvallen met zijn Dock-tegel. */
-  _dockTransform() {
-    const t = getDockTarget(this.id, this.app.id);
+  /**
+   * Minimaliseren naar het Dock (macOS "Schaal"-effect met een vleugje genie):
+   * het venster krimpt zichtbaar en ondoorzichtig tot precies de grootte van zijn
+   * Dock-tegel en beweegt daarbij BOVEN het Dock. De breedte krimpt eerst iets
+   * sneller dan de hoogte, zodat het venster "naar beneden getrokken" oogt.
+   */
+  _genieFrames() {
     const r = this.el.getBoundingClientRect();
-    if (!t) return 'translate(0, 40px) scale(0.1)';
-    return `translate(${t.x - (r.left + r.width / 2)}px, ${t.y - (r.top + r.height / 2)}px) scale(0.1)`;
+    const S = 46;
+    const t = getDockTarget(this.id, this.app.id) || { x: r.left + r.width / 2, y: window.innerHeight - 40 };
+    const dx = t.x - (r.left + r.width / 2), dy = t.y - (r.top + r.height / 2);
+    const sx = S / r.width, sy = S / r.height;
+    const f = (k) => k.toFixed(4);
+    return [
+      { offset: 0, transform: 'translate(0px, 0px) scale(1, 1)', opacity: 1 },
+      { offset: 0.45, transform: `translate(${(dx * 0.3).toFixed(1)}px, ${(dy * 0.38).toFixed(1)}px) scale(${f(0.5 + sx * 0.5)}, ${f(0.72 + sy * 0.28)})`, opacity: 1 },
+      { offset: 0.85, transform: `translate(${(dx * 0.93).toFixed(1)}px, ${(dy * 0.95).toFixed(1)}px) scale(${f(sx * 1.4)}, ${f(sy * 1.6)})`, opacity: 1 },
+      { offset: 1, transform: `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px) scale(${f(sx)}, ${f(sy)})`, opacity: 0 },
+    ];
   }
+
+  _stopDockAnim() { this._dockAnim?.cancel(); this._dockAnim = null; this.el.classList.remove('to-dock'); }
 
   minimize() {
     if (this.minimized) return;
     this.minimized = true;
     this.el.inert = true;
-    syncStore();                       // Dock maakt zijn tegel aan
-    this.el.style.transformOrigin = 'center';
-    this.el.classList.add('minimized');
-    if (!prefersReducedMotion()) this.el.style.transform = this._dockTransform();
+    this._stopDockAnim();
+    syncStore();                       // Dock maakt eerst zijn tegel aan (animatiedoel)
     const next = topmost(this);
     if (next) next.focus(); else { store.set({ activeWindowId: null }); syncStore(); }
+    const hide = () => { this._stopDockAnim(); this.el.classList.add('minimized'); };
+    this.el.classList.add('to-dock');
+    this._dockAnim = prefersReducedMotion()
+      ? this.el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, easing: 'ease-out' })
+      : this.el.animate(this._genieFrames(), { duration: 520, easing: 'cubic-bezier(0.5, 0, 0.3, 1)' });
+    this._dockAnim.onfinish = hide;
   }
 
   restore() {
     if (!this.minimized) return;
-    if (!prefersReducedMotion()) {
-      // Startpunt = huidige Dock-tegel (die kan sinds het minimaliseren zijn verschoven).
-      this.el.classList.add('restoring');
-      this.el.style.transform = this._dockTransform();
-      void this.el.offsetWidth;        // reflow: begintoestand vastleggen zonder transitie
-    }
     this.minimized = false;
     this.el.inert = false;
-    this.el.classList.remove('minimized', 'restoring');
-    this.el.style.transform = '';
+    this._stopDockAnim();
+    this.el.classList.remove('minimized');
+    this.el.classList.add('to-dock');
+    // Omgekeerde genie vanaf de huidige Dock-tegel (die kan zijn verschoven).
+    this._dockAnim = prefersReducedMotion()
+      ? this.el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200, easing: 'ease-out' })
+      : this.el.animate(this._genieFrames().reverse().map((k) => ({ ...k, offset: 1 - k.offset })), { duration: 460, easing: 'cubic-bezier(0.2, 0.7, 0.3, 1)' });
+    this._dockAnim.onfinish = () => this._stopDockAnim();
     syncStore();
   }
 
@@ -450,8 +468,8 @@ class WindowInstance {
     syncStore();
     let done = false;
     const finish = () => { if (done) return; done = true; this.el.remove(); };
-    if (prefersReducedMotion()) finish();
-    else { this.el.addEventListener('animationend', (e) => { if (e.target === this.el) finish(); }); setTimeout(finish, 400); }
+    this.el.addEventListener('animationend', (e) => { if (e.target === this.el) finish(); });
+    setTimeout(finish, 450); // vangnet
   }
 }
 

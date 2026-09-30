@@ -121,7 +121,7 @@ function buildItem(entry) {
   ]);
   host.addEventListener('click', () => {
     if (entry.href) { os.openExternal(entry.href); return; }
-    const running = store.get('runningApps').includes(entry.id);
+    const running = store.get('runningApps').includes(entry.app || entry.id);
     if (!running) bounce(host);                 // alleen bij starten
     if (entry.action) entry.action(); else os.activate(entry.id);
   });

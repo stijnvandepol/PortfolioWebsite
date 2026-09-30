@@ -38,6 +38,10 @@ de navigatie, deep-links en de overige UX-verbeteringen zijn behouden.
   en een blauwe gloed; gebruikt in favicon, Dock, Over-venster en menubalk.
 - **macOS-look:** eigen golvend behang (donker en licht, 12–16 KB WebP) en doorschijnender vensterchrome,
   zodat titel- en zijbalken het behang laten doorschemeren; leesvlakken blijven effen.
+- **Dock met echte macOS-iconen** (Big Sur-set, zelfde bron als Finder/Terminal): Mail → Contact,
+  Foto's → Projecten, Agenda → Ervaring & opleiding (met de datum van vandaag, zoals het echte Dock),
+  GitHub met het Octocat-icoon. Volgorde zoals op een Mac: Finder, Launchpad, … Eigen tegels
+  (S-logo, LinkedIn) staan op hetzelfde Big Sur-raster (vorm = 80,5 % van het canvas), zodat alles even groot oogt.
 - **Sneller:** Finder, Terminal, Instellingen, Spotlight en Launchpad laden pas als ze nodig zijn
   (of stil na het openen van het portfolio). Tooltips hebben geen backdrop-filter meer.
 

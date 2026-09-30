@@ -19,7 +19,7 @@ const loadSettings = () => import('./settings.js');
 
 export const APPS = [
   { id: 'portfolio', title: 'Portfolio',            kind: 'portfolio', icon: APP_ICONS.portfolio, create: (o) => createPortfolioApp({ ...o, onPreview: quickLook }) },
-  { id: 'contact',   title: 'Contact',              kind: 'portfolio', icon: APP_ICONS.contact,   create: (o) => createContactApp(o) },
+  { id: 'contact',   title: 'Contact',              kind: 'portfolio', icon: iconImg('mail', 'Contact'),   create: (o) => createContactApp(o) },
   { id: 'finder',    title: 'Finder',               kind: 'system',    icon: iconImg('finder', 'Finder'),        create: lazy(loadFinder, 'createFinderApp') },
   { id: 'terminal',  title: 'Terminal',             kind: 'system',    icon: iconImg('terminal', 'Terminal'),   create: lazy(loadTerminal, 'createTerminalApp') },
   { id: 'settings',  title: 'Systeeminstellingen',  kind: 'system',    icon: iconImg('settings', 'Instellingen'), create: lazy(loadSettings, 'createSettingsApp') },

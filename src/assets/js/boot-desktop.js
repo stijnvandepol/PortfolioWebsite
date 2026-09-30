@@ -19,7 +19,7 @@ import { getApp, listApps, iconForApp, prefetchApps } from './apps/registry.js';
 const toggleSpotlight = async () => (await import('./os/spotlight.js')).toggleSpotlight();
 const toggleLaunchpadOverlay = async (apps) => (await import('./os/launchpad.js')).toggleLaunchpad(apps);
 import { CONFIG } from './data/config.js';
-import { APP_ICONS, iconImg } from './apps/icons.js';
+import { APP_ICONS, iconImg, calendarIcon } from './apps/icons.js';
 import { prefersReducedMotion } from './core/dom.js';
 import { setView } from './core/view.js';
 
@@ -81,15 +81,19 @@ export function boot() {
   initNotifications(desktop);
 
   const app = (id) => ({ id, label: getApp(id).title, icon: iconForApp(id), closable: true });
+  // Echte macOS-volgorde (Finder, Launchpad eerst) en echte app-iconen; elk icoon leidt naar echte inhoud.
+  const page = (initialPage) => () => os.open('portfolio', { initialPage });
   initDock(desktop, [
-    app('portfolio'),
     app('finder'),
-    app('terminal'),
-    app('contact'),
-    { id: 'settings', label: 'Instellingen', icon: iconForApp('settings'), closable: true },
     { id: 'launchpad', label: 'Launchpad', icon: iconImg('launchpad', 'Launchpad'), action: () => os.toggleLaunchpad(), noMenu: true },
+    app('portfolio'),
+    { id: 'photos', app: 'portfolio', label: 'Projecten', icon: iconImg('photos', 'Projecten'), action: page('projecten'), noMenu: true },
+    { id: 'calendar', app: 'portfolio', label: 'Ervaring & opleiding', icon: calendarIcon(), action: page('ervaring'), noMenu: true },
+    app('contact'),
+    app('terminal'),
+    { id: 'settings', label: 'Systeeminstellingen', icon: iconForApp('settings'), closable: true },
     { sep: true },
-    { id: 'github', label: 'GitHub', icon: APP_ICONS.github, href: CONFIG.profile.github },
+    { id: 'github', label: 'GitHub', icon: iconImg('github', 'GitHub'), href: CONFIG.profile.github },
     { id: 'linkedin', label: 'LinkedIn', icon: APP_ICONS.linkedin, href: CONFIG.profile.linkedin },
   ], { appIcon: iconForApp });
 

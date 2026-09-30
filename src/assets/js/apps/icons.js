@@ -89,10 +89,13 @@ export const ICONS = {
 };
 
 // ---- 2. Eigen app-tegels --------------------------------------------------
+// Big Sur-raster: de vorm is 824/1024 van het canvas (≈ 80,5 %), gecentreerd. Met deze viewBox
+// krijgen onze 64-tegels dezelfde optische grootte als de echte systeemiconen.
+const VB = '-7.8 -7.8 79.6 79.6';
 // Gelijke geometrie als de systeemiconen: 64-raster, hoek ≈ 22,5%, zachte
 // lichtval bovenin en een 0,5px binnenrand. Eigen apps = blauwe familie.
 function tile(id, [top, bottom], glyph) {
-  return `<svg viewBox="0 0 64 64" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  return `<svg viewBox="${VB}" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 <defs>
 <linearGradient id="t-${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${top}"/><stop offset="1" stop-color="${bottom}"/></linearGradient>
 <linearGradient id="h-${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient>
@@ -112,7 +115,7 @@ export const S_MARK = `<svg class="sym-s" width="13" height="15" viewBox="14.8 1
 
 /** App-/merktegel: donkere midnight-tegel met blauwe gloed en lichte S (zelfde als de favicon). */
 function logoTile(id) {
-  return `<svg viewBox="0 0 64 64" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  return `<svg viewBox="${VB}" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 <defs>
 <linearGradient id="lb-${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1f2a44"/><stop offset="1" stop-color="#0a0f1c"/></linearGradient>
 <radialGradient id="lg-${id}" cx=".5" cy="1.05" r=".75"><stop offset="0" stop-color="#0A84FF" stop-opacity=".55"/><stop offset="1" stop-color="#0A84FF" stop-opacity="0"/></radialGradient>
@@ -126,22 +129,18 @@ function logoTile(id) {
 }
 
 function brand(bg, glyph) {
-  return `<svg viewBox="0 0 64 64" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="64" height="64" rx="14.4" fill="${bg}"/>${glyph}<rect x=".4" y=".4" width="63.2" height="63.2" rx="14" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width=".8"/></svg>`;
+  return `<svg viewBox="${VB}" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="64" height="64" rx="14.4" fill="${bg}"/>${glyph}<rect x=".4" y=".4" width="63.2" height="63.2" rx="14" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width=".8"/></svg>`;
 }
 
 export const APP_ICONS = {
   // Portfolio-apps (eigen identiteit)
   portfolio: logoTile('pf'),
-  contact: tile('ct', ['#4DB1FF', '#0B72EC'],
-    '<rect x="13" y="18" width="38" height="28" rx="5.5" fill="#fff"/><path d="m15.5 22.5 16.5 12.5 16.5-12.5" fill="none" stroke="#0B72EC" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>'),
   cv: tile('cv', ['#5AB8FF', '#1C7BEA'],
     '<path d="M22 13h14l8 8v28a3 3 0 0 1-3 3H22a3 3 0 0 1-3-3V16a3 3 0 0 1 3-3z" fill="#fff"/><path d="M36 13v8h8" fill="none" stroke="#1C7BEA" stroke-opacity=".5" stroke-width="2.4" stroke-linejoin="round"/><path d="M25 30h14M25 36h14M25 42h9" stroke="#1C7BEA" stroke-width="2.6" stroke-linecap="round"/>'),
   about: logoTile('ab'),
   folder: tile('fo', ['#56B4FF', '#1479E6'],
     '<path d="M12 22a4 4 0 0 1 4-4h9.5l4 4.5H48a4 4 0 0 1 4 4V45a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4z" fill="#fff" fill-opacity=".95"/>'),
   // Externe diensten (merkkleuren)
-  github: brand('#161b22',
-    '<path transform="translate(12 12) scale(2.5)" fill="#fff" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>'),
   linkedin: brand('#0A66C2',
     '<path transform="translate(16 16) scale(1.33)" fill="#fff" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 11.001-4.124 2.062 2.062 0 01-.001 4.124zm1.782 13.019H3.555V9h3.564v11.452z"/>'),
 };
@@ -153,7 +152,23 @@ export const APP_ICON_IMG = {
   terminal:  `${ICON_BASE}terminal.webp`,
   settings:  `${ICON_BASE}settings.webp`,
   launchpad: `${ICON_BASE}launchpad.webp`,
+  mail:      `${ICON_BASE}mail.webp`,
+  photos:    `${ICON_BASE}photos.webp`,
+  github:    `${ICON_BASE}github.webp`,
 };
+
+const MONTHS_SHORT = ['JAN', 'FEB', 'MRT', 'APR', 'MEI', 'JUN', 'JUL', 'AUG', 'SEP', 'OKT', 'NOV', 'DEC'];
+/** Agenda-icoon in Big Sur-stijl met de datum van vandaag (zoals het echte Dock). */
+export function calendarIcon(date = new Date()) {
+  const m = MONTHS_SHORT[date.getMonth()], d = date.getDate();
+  return `<svg viewBox="${VB}" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<defs><linearGradient id="cal-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#ececef"/></linearGradient></defs>
+<rect width="64" height="64" rx="14.4" fill="url(#cal-bg)"/>
+<text x="32" y="18" text-anchor="middle" font-family="-apple-system, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="600" letter-spacing=".4" fill="#f5423a">${m}</text>
+<text x="32" y="51" text-anchor="middle" font-family="-apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif" font-size="33" font-weight="300" letter-spacing="-1" fill="#1d1d1f">${d}</text>
+<rect x=".4" y=".4" width="63.2" height="63.2" rx="14" fill="none" stroke="#000" stroke-opacity=".08" stroke-width=".8"/>
+</svg>`;
+}
 // Levert een <img>-string die dock/launchpad via `html:` renderen.
 export const iconImg = (key, label = '') =>
   `<img src="${APP_ICON_IMG[key]}" alt="${label}" width="160" height="160" draggable="false" decoding="async">`;

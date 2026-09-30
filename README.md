@@ -4,29 +4,34 @@ Een persoonlijke portfolio van Stijn van de Pol, gepresenteerd als een **interac
 
 ## Functionaliteiten
 
-- **Echt vensterbeheer** — meerdere vensters met focus/z-order, slepen, resizen (8 handles), minimaliseren naar het dock, maximaliseren en **window-snapping** (helften/kwarten).
-- **Apps** — Over Mij (Safari-stijl), **Finder** met gesimuleerd bestandssysteem, interactieve **Terminal** (`help`, `projects`, `neofetch`, …), **Systeeminstellingen**, en **Quick Look** preview.
-- **Spotlight** (`⌘Space`) — fuzzy zoeken over apps, pagina's, projecten en acties.
-- **Launchpad** (`F4`), dock-magnification, running-indicators en launch-bounce.
-- **Light / Dark / Auto** thema met accentkleuren en `prefers-reduced-motion`-ondersteuning (persistent).
-- **Toegankelijk** — toetsenbordbediening, focus-trapping in modals, ARIA-rollen, zichtbare focus-ring.
-- Veilige rendering (alle content escaped) en self-hosted iconen — geen externe UI-afhankelijkheden.
+- **Echt vensterbeheer** — meerdere vensters met focus/z-order, slepen, resizen (8 handles), dubbelklik = zoomen, tegelen (helften/kwarten), minimaliseren naar een eigen Dock-tegel en aanpassing aan kleine schermen.
+- **Apps** — **Portfolio** (zijbalk: Over mij, Ontwikkeling, Portfolio, Websites), **Contact** (contactkaart + nieuw bericht), **Finder** (zoeken, lijst/iconen, Quick Look), interactieve **Terminal** (Tab-aanvullen), **Systeeminstellingen** en **Over dit portfolio**.
+- **Menubalk** met Apple-menu, app-menu en Bestand/Bewerken/Weergave/Ga/Venster/Help, Bedieningspaneel en kalender; volledig met toetsenbord te bedienen.
+- **Zoeken** (`⌘K`) over apps, pagina's, projecten, ervaring en vaardigheden; **Launchpad** (`F4`); Dock met magnificatie en contextmenu.
+- **Weergave** — Licht / Donker / Automatisch, vijf accentkleuren (standaard **blauw**), verminder beweging en transparantie.
+- **Mobiel (≤ 768 px)** — een statische, snelle weergave met iOS-achtige tabbalk in plaats van de desktop.
+- **Toegankelijk** — volledig toetsenbord, ARIA-rollen, focus-ring, contrast per accent berekend, `prefers-reduced-motion/-transparency/-contrast`.
+- Veilige rendering (alle content escaped), self-hosted iconen en lettertype — geen externe afhankelijkheden.
 
 ## Architectuur
 
 ```
 src/assets/js/
-  main.js              bootstrap/compositie
-  core/                store (reactief), dom-helpers (escape/focus-trap), theme
-  os/                  windowManager, dock, menubar, spotlight, launchpad,
-                       desktop, notifications, contextmenu, quicklook, bridge
-  apps/                registry + portfolio, terminal, finder, settings, icons
+  main.js              kiest desktop of mobiel (dynamic import)
+  boot-desktop.js      compositie van de desktop-OS
+  preboot.js           klassiek script: boot/mobiel-vlaggen vóór eerste paint
+  core/                store (reactief), dom-helpers, theme (accent/contrast)
+  ui/                  gedeelde controls (segmented, switch, accent)
+  os/                  windowManager, dock, menubar, menu, contextmenu, spotlight,
+                       launchpad, desktop, notifications, quicklook, bridge, mobile
+  apps/                registry + portfolio, contact, finder, terminal, settings, about, icons
   data/config.js       content (single source of truth)
-src/assets/css/        tokens.css (thema's) · style.css (vensters/content) · os.css (chrome)
+src/assets/css/        tokens.css (design system) · style.css (venster/content)
+                       os.css (chrome) · apps.css · mobile.css
 ```
 
 Pas je content aan in **`src/assets/js/data/config.js`** — de UI rendert automatisch.
-Zie [`docs/AUDIT.md`](docs/AUDIT.md) voor de volledige architectuur- en kwaliteitsanalyse.
+Zie [`docs/DESIGN.md`](docs/DESIGN.md) voor ontwerpkeuzes, design system, metingen en testdekking.
 
 ## Lokaal draaien
 
@@ -45,8 +50,13 @@ docker run -d -p 8081:80 portfoliowebsite   # → http://localhost:8081
 
 | Toets | Actie |
 |-------|-------|
-| `⌘Space` | Spotlight |
+| `⌘K` / `Ctrl+K` | Zoeken |
 | `F4` | Launchpad |
 | `⌘,` | Systeeminstellingen |
-| `⌘W` / `⌘M` | Actief venster sluiten / minimaliseren |
-| `Esc` | Sluit overlay/menu |
+| `⌘W` / `⌘M` / `⌥⌘W` | Venster sluiten / minimaliseren / alles sluiten |
+| `⌘F` | Zoeken in de Finder |
+| `Spatie` | Voorvertoning (Finder) |
+| `⌘[` `⌘]` | Vorige / volgende pagina (Portfolio) |
+| `Esc` | Sluit overlay of menu |
+
+Sommige browsers houden `⌘W`/`⌘,` voor zichzelf; alle acties staan ook in de menu's.

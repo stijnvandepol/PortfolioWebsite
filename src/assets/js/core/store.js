@@ -47,6 +47,7 @@ export const store = createStore({
   theme: 'dark',        // 'light' | 'dark' | 'auto'
   accent: 'blue',
   reducedMotion: false,
+  reducedTransparency: false,
   activeWindowId: null, // id van het gefocuste venster
   windows: [],          // [{ id, appId, title, minimized }]
   runningApps: [],      // [appId]

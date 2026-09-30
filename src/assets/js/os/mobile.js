@@ -5,7 +5,7 @@
 // ============================================================
 import { el } from '../core/dom.js';
 import { CONFIG } from '../data/config.js';
-import { ICONS } from '../apps/icons.js';
+import { ICONS, sym } from '../apps/icons.js';
 
 const glyph = (markup) => el('span', { class: 'm-i', html: markup });
 
@@ -43,17 +43,12 @@ function skills(items) {
 export function initMobile() {
   document.documentElement.classList.add('mobile-mode');
   const p = CONFIG.profile;
-  const root = el('div', { class: 'm-portfolio' });
-
-  // 1) Notice-balk
-  root.append(el('div', { class: 'm-notice' }, [
-    el('span', { text: '💻 Voor de volledige interactieve macOS-ervaring, open deze site op desktop.' }),
-  ]));
+  const root = el('main', { class: 'm-portfolio' });
 
   // 2) Hero
   root.append(el('header', { class: 'm-hero' }, [
     el('figure', { class: 'm-avatar' }, [
-      el('img', { src: './assets/images/portret.png', alt: p.name, width: 120, height: 120, decoding: 'async' }),
+      el('img', { src: './assets/images/portret.webp', alt: p.name, width: 120, height: 120, decoding: 'async' }),
     ]),
     el('h1', { class: 'm-name', text: p.name }),
     el('p', { class: 'm-role', text: p.role }),
@@ -127,8 +122,38 @@ export function initMobile() {
       el('a', { class: 'm-social-btn', href: p.instagram, target: '_blank', rel: 'noopener noreferrer', text: 'Instagram' }),
     ]),
     el('a', { class: 'm-mail-link', href: `mailto:${p.email}`, text: p.email }),
+    el('p', { class: 'm-note', text: 'Open deze site op een groter scherm voor de interactieve macOS-desktop.' }),
     el('p', { class: 'm-copyright', text: `© ${p.name}` }),
   ]));
 
-  document.body.append(root);
+  document.body.append(root, tabBar());
+  spy();
+}
+
+// ---- iOS-achtige tabbalk onderaan (vaste navigatie, markeert de huidige sectie) ----
+const TABS = [
+  ['m-over', 'Over mij', 'person'],
+  ['m-projecten', 'Projecten', 'grid'],
+  ['m-cv', 'CV', 'briefcase'],
+  ['m-contact', 'Contact', 'envelope'],
+];
+
+function tabBar() {
+  return el('nav', { class: 'm-tabbar', 'aria-label': 'Secties' }, TABS.map(([id, label, ic]) =>
+    el('a', { class: 'm-tab', href: `#${id}`, dataset: { target: id } }, [
+      el('span', { class: 'm-tab-ic', html: sym(ic, 22) }), el('span', { class: 'm-tab-label', text: label }),
+    ])));
+}
+
+function spy() {
+  const tabs = [...document.querySelectorAll('.m-tab')];
+  const set = (id) => tabs.forEach((t) => { const on = t.dataset.target === id; t.classList.toggle('active', on); if (on) t.setAttribute('aria-current', 'true'); else t.removeAttribute('aria-current'); });
+  const targets = TABS.map(([id]) => document.getElementById(id)).filter(Boolean);
+  if (!('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver((entries) => {
+    const vis = entries.filter((e) => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (vis) set(vis.target.id);
+  }, { rootMargin: '-30% 0px -55% 0px', threshold: [0, 0.1, 0.5] });
+  targets.forEach((t) => io.observe(t));
+  set('m-over');
 }

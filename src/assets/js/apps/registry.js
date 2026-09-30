@@ -1,22 +1,30 @@
 // ============================================================
 // apps/registry.js — centrale app-definities
+//
+// kind: 'system'    — macOS-achtige systeem-apps (Finder, Terminal, Instellingen)
+//       'portfolio' — mijn eigen apps (blauwe app-tegels met eigen identiteit)
 // ============================================================
-import { iconImg } from './icons.js';
+import { iconImg, APP_ICONS } from './icons.js';
 import { createPortfolioApp } from './portfolio.js';
 import { createTerminalApp } from './terminal.js';
 import { createFinderApp } from './finder.js';
 import { createSettingsApp } from './settings.js';
+import { createContactApp } from './contact.js';
+import { createAboutApp } from './about.js';
 import { quickLook } from '../os/quicklook.js';
 
-// Elke app: id, title, icon (SVG-string) en een factory die een venster-definitie levert.
 export const APPS = [
-  { id: 'finder',    title: 'Finder',              icon: iconImg('finder', 'Finder'),     create: (o) => createFinderApp(o) },
-  { id: 'portfolio', title: 'Over Mij',            icon: iconImg('safari', 'Over Mij'),   create: (o) => createPortfolioApp({ ...o, onPreview: quickLook }) },
-  { id: 'terminal',  title: 'Terminal',            icon: iconImg('terminal', 'Terminal'), create: (o) => createTerminalApp(o) },
-  { id: 'settings',  title: 'Systeeminstellingen', icon: iconImg('settings', 'Instellingen'), create: (o) => createSettingsApp(o) },
+  { id: 'portfolio', title: 'Portfolio',            kind: 'portfolio', icon: APP_ICONS.portfolio, create: (o) => createPortfolioApp({ ...o, onPreview: quickLook }) },
+  { id: 'contact',   title: 'Contact',              kind: 'portfolio', icon: APP_ICONS.contact,   create: (o) => createContactApp(o) },
+  { id: 'finder',    title: 'Finder',               kind: 'system',    icon: iconImg('finder', 'Finder'),        create: (o) => createFinderApp(o) },
+  { id: 'terminal',  title: 'Terminal',             kind: 'system',    icon: iconImg('terminal', 'Terminal'),   create: (o) => createTerminalApp(o) },
+  { id: 'settings',  title: 'Systeeminstellingen',  kind: 'system',    icon: iconImg('settings', 'Instellingen'), create: (o) => createSettingsApp(o) },
+  // Geen eigen Dock-/Launchpad-icoon: bereikbaar via het Apple-menu.
+  { id: 'about',     title: 'Over dit portfolio',   kind: 'portfolio', icon: APP_ICONS.about, hidden: true, create: (o) => createAboutApp(o) },
 ];
 
 const byId = new Map(APPS.map((a) => [a.id, a]));
 
 export const getApp = (id) => byId.get(id);
-export const listApps = () => APPS.map((a) => ({ id: a.id, title: a.title, icon: a.icon }));
+export const iconForApp = (id) => byId.get(id)?.icon || '';
+export const listApps = () => APPS.filter((a) => !a.hidden).map((a) => ({ id: a.id, title: a.title, icon: a.icon, kind: a.kind }));

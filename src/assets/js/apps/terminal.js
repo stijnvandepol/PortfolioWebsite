@@ -3,7 +3,6 @@
 // ============================================================
 import { el, escapeHtml } from '../core/dom.js';
 import { CONFIG } from '../data/config.js';
-import { APP_ICONS } from './icons.js';
 import { os } from '../os/bridge.js';
 
 const FS = {
@@ -15,12 +14,15 @@ const FS = {
 export function createTerminalApp() {
   return {
     id: 'terminal',
-    title: 'Terminal — stijn@portfolio',
-    icon: APP_ICONS.terminal,
+    title: 'Terminal',
+    menuName: 'Terminal',
     width: 680, height: 440, minWidth: 380, minHeight: 240,
     singleton: false,
-    mount({ titlebar, body }) {
-      titlebar.append(el('span', { class: 'win-title', text: 'stijn — -zsh' }));
+    mount({ win, titlebar, body }) {
+      const titleEl = el('span', { class: 'win-title', text: 'stijn — -zsh' });
+      titlebar.append(titleEl);
+      win.bindTitle(titleEl);
+      win.setTitle('stijn — -zsh');
       body.classList.add('term-body');
 
       const out = el('div', { class: 'term-out' });
@@ -42,7 +44,7 @@ export function createTerminalApp() {
           '  about        korte bio', '  whoami       wie ben ik', '  projects     portfolio-projecten',
           '  skills       vaardigheden', '  experience   werkervaring', '  education    opleiding',
           '  contact      contactgegevens', '  social       sociale links', '  ls           bestanden',
-          '  cat <file>   toon bestand', '  open <app>   open een app (finder, portfolio, settings)',
+          '  cat <file>   toon bestand', '  open <app>   open een app (portfolio, finder, contact, settings)',
           '  theme <t>    light|dark|auto', '  neofetch     systeeminfo', '  clear        leeg scherm', '  help         deze lijst',
         ].map(escapeHtml).join('<br>')),
         about: () => print(escapeHtml(FS['about.txt']()).replace(/\n/g, '<br>')),
@@ -95,6 +97,15 @@ export function createTerminalApp() {
         else if (e.key === 'ArrowUp') { if (hIdx < history.length - 1) { hIdx++; input.value = history[hIdx]; } e.preventDefault(); }
         else if (e.key === 'ArrowDown') { if (hIdx > 0) { hIdx--; input.value = history[hIdx]; } else { hIdx = -1; input.value = ''; } e.preventDefault(); }
         else if (e.key === 'l' && (e.ctrlKey)) { commands.clear(); e.preventDefault(); }
+        else if (e.key === 'Tab') {
+          // Aanvullen van commando's (eerste woord) — zoals in een echte shell.
+          e.preventDefault();
+          const v = input.value;
+          if (v.includes(' ') || !v) return;
+          const hits = Object.keys(commands).filter((c) => c.startsWith(v.toLowerCase()) && !c.startsWith('--') && c !== 'instagram' && c !== 'insta');
+          if (hits.length === 1) input.value = `${hits[0]} `;
+          else if (hits.length > 1) { printPrompt(v); print(hits.map(escapeHtml).join('&nbsp;&nbsp;')); }
+        }
       });
 
       print('Welkom bij <span class="t-accent">portfolio-os</span> — typ <span class="t-accent">help</span> voor commando\'s.', 'term-welcome');

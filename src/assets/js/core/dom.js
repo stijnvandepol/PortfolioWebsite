@@ -65,7 +65,9 @@ export function on(target, type, handler, opts) {
   return () => target.removeEventListener(type, handler, opts);
 }
 
+/** Systeemvoorkeur of de eigen 'Verminder beweging'-schakelaar (html.reduce-motion). */
 export const prefersReducedMotion = () =>
+  document.documentElement.classList.contains('reduce-motion') ||
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /**
@@ -118,3 +120,14 @@ export function rafThrottle(fn) {
 }
 
 export const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+
+/** Tekst naar het klembord (met fallback voor niet-secure contexts). Geeft succes terug. */
+export async function copyText(text) {
+  try { await navigator.clipboard.writeText(text); return true; } catch { /* fallback */ }
+  try {
+    const ta = el('textarea', { value: text, readOnly: true, style: { position: 'fixed', opacity: '0', pointerEvents: 'none' } });
+    document.body.append(ta); ta.select();
+    const ok = document.execCommand('copy'); ta.remove();
+    return ok;
+  } catch { return false; }
+}

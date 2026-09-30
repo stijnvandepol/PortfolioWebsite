@@ -1,36 +1,55 @@
 // ============================================================
 // os/contextmenu.js — herbruikbaar rechtsklik-menu
+// Regels (Apple HIG): kort houden, onbeschikbare items weglaten (`hidden`),
+// geen sneltoetsen tonen, destructieve acties onderaan.
 // ============================================================
-import { el, clamp } from '../core/dom.js';
+import { clamp } from '../core/dom.js';
+import { buildMenu, moveFocus } from './menu.js';
 
-let menu = null;
+let current = null;
+let returnTo = null;
 
-function ensure() {
-  if (menu) return; // eenmalig; voorkomt dubbele listeners bij herhaalde showContextMenu-calls
-  menu = el('div', { class: 'ctx-menu', role: 'menu' });
-  document.body.append(menu);
-  document.addEventListener('click', hide);
-  // capture-phase: sluit een openstaand menu vóór een nieuw contextmenu-event elders zijn eigen handler bereikt.
-  document.addEventListener('contextmenu', (e) => { if (!e.target.closest('.ctx-menu')) hide(); }, true);
-  window.addEventListener('blur', hide);
+function onDocKey(e) {
+  if (!current) return;
+  if (e.key === 'Escape') { e.preventDefault(); hideContextMenu(); return; }
+  // Toetsenbord neemt het menu over zodra het wordt gebruikt.
+  if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key) && !current.contains(document.activeElement)) {
+    e.preventDefault();
+    moveFocus(current, e.key === 'ArrowUp' || e.key === 'End' ? 'last' : 'first');
+  }
 }
+function onOutside(e) { if (current && !current.contains(e.target)) hideContextMenu({ restoreFocus: false }); }
 
-export function hide() { if (menu) menu.classList.remove('visible'); }
+export function hideContextMenu({ restoreFocus = true } = {}) {
+  if (!current) return;
+  current.remove();
+  current = null;
+  document.removeEventListener('keydown', onDocKey, true);
+  document.removeEventListener('pointerdown', onOutside, true);
+  window.removeEventListener('blur', hideContextMenu);
+  window.removeEventListener('resize', hideContextMenu);
+  if (restoreFocus) returnTo?.focus?.({ preventScroll: true });
+  returnTo = null;
+}
+export const hide = hideContextMenu;
 
-/** items: [{ label, action, disabled, divider }] */
-export function showContextMenu(x, y, items) {
-  ensure();
-  menu.replaceChildren();
-  items.forEach((it) => {
-    if (it.divider) { menu.append(el('div', { class: 'ctx-divider' })); return; }
-    const row = el('button', { class: `ctx-item${it.disabled ? ' disabled' : ''}`, role: 'menuitem', text: it.label });
-    if (!it.disabled && it.action) row.addEventListener('click', (e) => { e.stopPropagation(); hide(); it.action(); });
-    menu.append(row);
-  });
+/** items: [{ label, action, disabled, hidden, divider, checked }] */
+export function showContextMenu(x, y, items, { placement } = {}) {
+  hideContextMenu({ restoreFocus: false });
+  returnTo = document.activeElement;
+  const menu = buildMenu(items, { label: 'Contextmenu', className: 'ctx-menu', onClose: () => hideContextMenu() });
   menu.style.visibility = 'hidden';
-  menu.classList.add('visible');
+  document.body.append(menu);
   const mw = menu.offsetWidth, mh = menu.offsetHeight;
-  menu.style.left = `${clamp(x, 8, window.innerWidth - mw - 8)}px`;
-  menu.style.top = `${clamp(y, 28, window.innerHeight - mh - 8)}px`;
-  menu.style.visibility = 'visible';
+  // 'above': het menu klapt omhoog vanaf (x, y), gecentreerd op x (Dock-menu's)
+  const left = placement === 'above' ? x - mw / 2 : x;
+  const top = placement === 'above' ? y - mh : y;
+  menu.style.left = `${clamp(left, 8, window.innerWidth - mw - 8)}px`;
+  menu.style.top = `${clamp(top, 30, window.innerHeight - mh - 8)}px`;
+  menu.style.visibility = '';
+  current = menu;
+  document.addEventListener('keydown', onDocKey, true);
+  document.addEventListener('pointerdown', onOutside, true);
+  window.addEventListener('blur', hideContextMenu);
+  window.addEventListener('resize', hideContextMenu);
 }

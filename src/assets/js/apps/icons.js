@@ -1,94 +1,143 @@
 // ============================================================
-// apps/icons.js — self-hosted inline SVG iconenset
-// Geen externe afhankelijkheden meer (sluit C6).
+// apps/icons.js — self-hosted iconen
+//
+//  1. SYM   — UI-symbolen in één taal (outline, 1.7 stroke, ronde uiteinden,
+//             24-raster). Bedoeld als SF-Symbols-achtige set: dezelfde lijndikte,
+//             optische grootte en uitlijning overal. Kleur = currentColor.
+//  2. APP_ICONS — eigen app-tegels (portfolio-apps, sociale links).
+//  3. iconImg   — Big Sur-systeemiconen (Finder, Terminal, …) als WebP.
 // ============================================================
 
-// ---- Kleine UI-glyphs (currentColor) ----
-export const ICONS = {
-  mail:  '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>',
-  pin:   '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1112 6a2.5 2.5 0 010 5.5z"/></svg>',
-  chevL: '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>',
-  chevR: '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>',
-  lock:  '<svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V10a2 2 0 00-2-2zm-6 9a2 2 0 110-4 2 2 0 010 4zm3.1-9H8.9V6a3.1 3.1 0 016.2 0v2z"/></svg>',
-  share: '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 100-6 3 3 0 00-3 3c0 .24.04.47.09.7L8.04 9.81A3 3 0 106 15c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65a2.92 2.92 0 102.92-2.92z"/></svg>',
-  eye:   '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17a5 5 0 110-10 5 5 0 010 10zm0-8a3 3 0 100 6 3 3 0 000-6z"/></svg>',
-  cap:   '<svg width="20" height="20" viewBox="0 0 24 24" fill="var(--accent)"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>',
-  work:  '<svg width="20" height="20" viewBox="0 0 24 24" fill="var(--accent)"><path d="M20 6h-4V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2H4a2 2 0 00-1.99 2L2 19a2 2 0 002 2h16a2 2 0 002-2V8a2 2 0 00-2-2zm-6 0h-4V4h4v2z"/></svg>',
-  medal: '<svg width="20" height="20" viewBox="0 0 24 24" fill="var(--accent)"><path d="M19.35 10.04A7.49 7.49 0 0012 4 7.49 7.49 0 005.35 8.04 5.994 5.994 0 006 20h13a5 5 0 00.35-9.96zM10 17l-3.5-3.5 1.41-1.41L10 14.17l4.59-4.58L16 11l-6 6z"/></svg>',
-  search:'<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-5-5zm-6 0A4.5 4.5 0 1114 9.5 4.5 4.5 0 019.5 14z"/></svg>',
-  wifi:  '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>',
-  sun:   '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 7a5 5 0 100 10 5 5 0 000-10zM2 13h2a1 1 0 100-2H2a1 1 0 100 2zm18 0h2a1 1 0 100-2h-2a1 1 0 100 2zM11 2v2a1 1 0 102 0V2a1 1 0 10-2 0zm0 18v2a1 1 0 102 0v-2a1 1 0 10-2 0zM5.6 4.2L4.2 5.6a1 1 0 101.4 1.4l1.4-1.4A1 1 0 105.6 4.2zm12.8 12.8l-1.4 1.4a1 1 0 101.4 1.4l1.4-1.4a1 1 0 10-1.4-1.4zM4.2 18.4l1.4 1.4a1 1 0 101.4-1.4l-1.4-1.4a1 1 0 10-1.4 1.4zM17 5.6l1.4-1.4a1 1 0 10-1.4-1.4l-1.4 1.4A1 1 0 1017 5.6z"/></svg>',
-  moon:  '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M9.37 5.51A7 7 0 0018.49 14.6 7.01 7.01 0 0112 19a7 7 0 01-2.63-13.49z"/></svg>',
-  folder:'<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M10 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V8a2 2 0 00-2-2h-8l-2-2z"/></svg>',
-  file:  '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 7V3.5L18.5 9H13z"/></svg>',
-  trashGlyph: '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19a2 2 0 002 2h8a2 2 0 002-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>',
-
-  faviconSafari: '<svg viewBox="0 0 24 24" width="14" height="14"><circle cx="12" cy="12" r="11" fill="#1f9cf0"/><path d="M12 5l2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5z" fill="#fff"/></svg>',
+// ---- 1. Symbolen ------------------------------------------------------
+// Sommige paden bevatten gevulde onderdelen (fill="currentColor" stroke="none").
+const PATHS = {
+  search: '<circle cx="10.5" cy="10.5" r="6.2"/><path d="m15.2 15.2 4.8 4.8"/>',
+  wifi: '<path d="M2.8 9.2a13 13 0 0 1 18.4 0"/><path d="M6 12.6a8.4 8.4 0 0 1 12 0"/><path d="M9.2 15.9a3.8 3.8 0 0 1 5.6 0"/><circle cx="12" cy="19.2" r="1.1" fill="currentColor" stroke="none"/>',
+  'wifi.slash': '<path d="M2.8 9.2a13 13 0 0 1 18.4 0" opacity=".45"/><path d="M6 12.6a8.4 8.4 0 0 1 12 0" opacity=".45"/><path d="M9.2 15.9a3.8 3.8 0 0 1 5.6 0" opacity=".45"/><path d="M4 4l16 16"/>',
+  control: '<rect x="2.5" y="4" width="19" height="7" rx="3.5"/><circle cx="7" cy="7.5" r="1.9" fill="currentColor" stroke="none"/><rect x="2.5" y="13" width="19" height="7" rx="3.5"/><circle cx="17" cy="16.5" r="1.9" fill="currentColor" stroke="none"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4"/>',
+  moon: '<path d="M20 14.3A8.2 8.2 0 0 1 9.7 4 8.2 8.2 0 1 0 20 14.3z"/>',
+  auto: '<circle cx="12" cy="12" r="8.6"/><path d="M12 3.4a8.6 8.6 0 0 0 0 17.2z" fill="currentColor"/>',
+  folder: '<path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H9l2 2.3h7.5A2.5 2.5 0 0 1 21 9.8v7.7a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/>',
+  doc: '<path d="M7 3.5h7l4 4v12a1.5 1.5 0 0 1-1.5 1.5h-9.5a1.5 1.5 0 0 1-1.5-1.5v-14A1.5 1.5 0 0 1 7 3.5z"/><path d="M14 3.5v4h4"/>',
+  'doc.text': '<path d="M7 3.5h7l4 4v12a1.5 1.5 0 0 1-1.5 1.5h-9.5a1.5 1.5 0 0 1-1.5-1.5v-14A1.5 1.5 0 0 1 7 3.5z"/><path d="M14 3.5v4h4M8.5 12h7M8.5 15.5h7"/>',
+  image: '<rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><circle cx="9" cy="10" r="1.7"/><path d="m4 17.5 5-4.5 3.5 3 3-2.5 4.5 4"/>',
+  envelope: '<rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="m3.8 7.5 8.2 6 8.2-6"/>',
+  mappin: '<path d="M12 21s6.5-5.6 6.5-11a6.5 6.5 0 0 0-13 0c0 5.4 6.5 11 6.5 11z"/><circle cx="12" cy="10" r="2.3"/>',
+  'chevron.left': '<path d="M14.5 5.5 8 12l6.5 6.5"/>',
+  'chevron.right': '<path d="M9.5 5.5 16 12l-6.5 6.5"/>',
+  lock: '<rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>',
+  share: '<path d="M12 15V3.5M8 7l4-3.5L16 7"/><path d="M8 10.5H6.5A1.5 1.5 0 0 0 5 12v7a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 19v-7a1.5 1.5 0 0 0-1.5-1.5H16"/>',
+  external: '<path d="M8 16 17 7M9.5 6.5h8v8"/>',
+  person: '<circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 20c.9-3.6 3.7-5.6 7.2-5.6s6.3 2 7.2 5.6"/>',
+  briefcase: '<rect x="3" y="7.5" width="18" height="12.5" rx="2.5"/><path d="M9 7.5V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.5M3 13h18"/>',
+  grid: '<rect x="4" y="4" width="7" height="7" rx="1.8"/><rect x="13" y="4" width="7" height="7" rx="1.8"/><rect x="4" y="13" width="7" height="7" rx="1.8"/><rect x="13" y="13" width="7" height="7" rx="1.8"/>',
+  list: '<path d="M9 7h11M9 12h11M9 17h11"/><circle cx="4.6" cy="7" r=".9" fill="currentColor" stroke="none"/><circle cx="4.6" cy="12" r=".9" fill="currentColor" stroke="none"/><circle cx="4.6" cy="17" r=".9" fill="currentColor" stroke="none"/>',
+  globe: '<circle cx="12" cy="12" r="8.6"/><path d="M3.4 12h17.2M12 3.4c2.6 2.4 3.8 5.4 3.8 8.6s-1.2 6.2-3.8 8.6c-2.6-2.4-3.8-5.4-3.8-8.6S9.4 5.8 12 3.4z"/>',
+  check: '<path d="m5.5 12.5 4.2 4.2 8.8-9.4"/>',
+  xmark: '<path d="M6 6l12 12M18 6 6 18"/>',
+  keyboard: '<rect x="2.5" y="6" width="19" height="12" rx="2.5"/><path d="M6.5 10h.01M10 10h.01M14 10h.01M17.5 10h.01M7.5 14h9"/>',
+  accessibility: '<circle cx="12" cy="5" r="1.8"/><path d="M4.5 8.5c2.4.8 5 1.2 7.5 1.2s5.1-.4 7.5-1.2M12 9.7V14m0 0-3 6.3m3-6.3 3 6.3"/>',
+  info: '<circle cx="12" cy="12" r="8.6"/><path d="M12 11v5.2M12 7.9v.01"/>',
+  terminal: '<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m7 10 3 2.5L7 15M12.5 15H17"/>',
+  download: '<path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14"/>',
+  copy: '<rect x="8.5" y="8.5" width="11" height="11" rx="2.2"/><path d="M15.5 8.5V6.7a2.2 2.2 0 0 0-2.2-2.2H6.7a2.2 2.2 0 0 0-2.2 2.2v6.6a2.2 2.2 0 0 0 2.2 2.2h1.8"/>',
+  eye: '<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/>',
+  network: '<rect x="9" y="3.5" width="6" height="5" rx="1.3"/><rect x="3" y="15.5" width="6" height="5" rx="1.3"/><rect x="15" y="15.5" width="6" height="5" rx="1.3"/><path d="M12 8.5V12m-6 3.5V12h12v3.5"/>',
+  bolt: '<path d="M13 3 5.5 13.2H11L10 21l8-10.5h-5.6z"/>',
+  shield: '<path d="M12 3.5 5 6v5.6c0 4.3 2.9 7.6 7 9 4.1-1.4 7-4.7 7-9V6z"/><path d="m9 12 2.2 2.2L15.2 10"/>',
+  cloud: '<path d="M7 18.5a4.2 4.2 0 0 1-.6-8.4 5.8 5.8 0 0 1 11.2 1.4A3.5 3.5 0 0 1 17.5 18.5z"/>',
+  cap: '<path d="M2.5 9.5 12 5l9.5 4.5L12 14z"/><path d="M6.5 11.8V16c0 1.2 2.5 2.5 5.5 2.5s5.5-1.3 5.5-2.5v-4.2M21.5 9.5v5"/>',
+  chart: '<path d="M5 20v-9M12 20V4M19 20v-6"/>',
+  power: '<path d="M12 3.5v8M7.2 6.6a7.6 7.6 0 1 0 9.6 0"/>',
 };
 
-// ---- App-iconen (squircle, gebruikt #squircle clip-path) ----
-function appIcon(bg, glyph) {
-  return `<svg viewBox="0 0 64 64" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">${bg}${glyph}</svg>`;
+/** SVG-string voor een symbool. `size` = px (optische grootte). */
+export function sym(name, size = 16) {
+  return `<svg class="sym" width="${size}" height="${size}" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${PATHS[name] || ''}</svg>`;
+}
+
+/** Batterij-symbool met vulniveau (0–1). */
+export function batterySym(level, charging = false) {
+  const w = Math.max(1.2, 12.8 * level);
+  return `<svg class="sym" width="20" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="7" width="17.5" height="10" rx="2.8"/><path d="M21.5 10.5v3"/><rect x="4.3" y="9.3" width="${w.toFixed(1)}" height="5.4" rx="1.3" fill="currentColor" stroke="none"/>${charging ? '<path d="M11.5 8.5 8.8 12.6h2.7l-.6 3 2.9-4.2h-2.7z" fill="var(--material-chrome-solid, #000)" stroke="none"/>' : ''}</svg>`;
+}
+
+// Compat-laag: bestaande code verwijst naar ICONS.<naam>.
+export const ICONS = {
+  mail: sym('envelope', 14),
+  pin: sym('mappin', 14),
+  chevL: sym('chevron.left', 15),
+  chevR: sym('chevron.right', 15),
+  lock: sym('lock', 12),
+  share: sym('share', 15),
+  eye: sym('eye', 22),
+  cap: sym('cap', 19),
+  work: sym('briefcase', 19),
+  medal: sym('chart', 19),
+  search: sym('search', 16),
+  wifi: sym('wifi', 16),
+  sun: sym('sun', 15),
+  moon: sym('moon', 15),
+  auto: sym('auto', 15),
+  folder: sym('folder', 15),
+  file: sym('doc', 15),
+  network: sym('network', 22),
+  bolt: sym('bolt', 22),
+  shield: sym('shield', 22),
+  cloud: sym('cloud', 22),
+};
+
+// ---- 2. Eigen app-tegels --------------------------------------------------
+// Gelijke geometrie als de systeemiconen: 64-raster, hoek ≈ 22,5%, zachte
+// lichtval bovenin en een 0,5px binnenrand. Eigen apps = blauwe familie.
+function tile(id, [top, bottom], glyph) {
+  return `<svg viewBox="0 0 64 64" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<defs>
+<linearGradient id="t-${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${top}"/><stop offset="1" stop-color="${bottom}"/></linearGradient>
+<linearGradient id="h-${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient>
+</defs>
+<rect width="64" height="64" rx="14.4" fill="url(#t-${id})"/>
+<rect width="64" height="64" rx="14.4" fill="url(#h-${id})"/>
+${glyph}
+<rect x=".4" y=".4" width="63.2" height="63.2" rx="14" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width=".8"/>
+</svg>`;
+}
+
+const S_GLYPH = '<path d="M43.5 21.5C41 18 36.5 16.5 32 16.5c-6.5 0-10.5 3.2-10.5 7.6 0 4.6 4.2 6.2 10.9 7.9 6.9 1.7 10.6 3.4 10.6 8.2 0 4.6-4 7.7-10.8 7.7-5 0-9.3-1.6-12.2-5" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>';
+
+/** Los S-merkteken (voor menubalk/About), kleur via currentColor. */
+export const S_MARK = `<svg class="sym-s" width="15" height="15" viewBox="14 10 36 44" aria-hidden="true" focusable="false"><path d="${S_GLYPH.match(/d="([^"]+)"/)[1]}" fill="none" stroke="currentColor" stroke-width="7.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+function brand(bg, glyph) {
+  return `<svg viewBox="0 0 64 64" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="64" height="64" rx="14.4" fill="${bg}"/>${glyph}<rect x=".4" y=".4" width="63.2" height="63.2" rx="14" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width=".8"/></svg>`;
 }
 
 export const APP_ICONS = {
-  finder: appIcon(
-    '<defs><linearGradient id="fg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3aa9ff"/><stop offset="1" stop-color="#1574e0"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#fg)"/>',
-    '<path d="M33 16v32c9 0 15-6 15-16s-6-16-15-16z" fill="#fff"/><path d="M31 16v32c-9 0-15-6-15-16s6-16 15-16z" fill="#dfeeff"/><path d="M24 27l4 5-4 5M40 27l-4 5 4 5" stroke="#1574e0" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'),
-  safari: appIcon(
-    '<defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6f9fc"/><stop offset="1" stop-color="#d8e6f5"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#sg)"/><circle cx="32" cy="32" r="22" fill="#1f9cf0"/><circle cx="32" cy="32" r="22" fill="none" stroke="#0a6fc2" stroke-width="2"/>',
-    '<path d="M32 14l6 18 18 6-18 6-6 18-6-18-18-6 18-6 6-18z" fill="#fff"/><path d="M32 22l3.5 6.5L42 32l-6.5 3.5L32 42l-3.5-6.5L22 32l6.5-3.5L32 22z" fill="#ff4b4b"/>'),
-  terminal: appIcon(
-    '<defs><linearGradient id="tg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3a3c"/><stop offset="1" stop-color="#101012"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#tg)"/><rect x="8" y="12" width="48" height="40" rx="6" fill="#0c0c0e"/>',
-    '<path d="M16 24l8 6-8 6" stroke="#37d67a" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 38h14" stroke="#37d67a" stroke-width="3" stroke-linecap="round"/>'),
-  settings: appIcon(
-    '<defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9aa0a6"/><stop offset="1" stop-color="#5f656b"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#cg)"/>',
-    '<circle cx="32" cy="32" r="9" fill="none" stroke="#fff" stroke-width="3.2"/><g stroke="#fff" stroke-width="3.2" stroke-linecap="round"><path d="M32 12v6M32 46v6M12 32h6M46 32h6M18 18l4 4M42 42l4 4M46 18l-4 4M22 42l-4 4"/></g>'),
-  mail: appIcon(
-    '<defs><linearGradient id="mg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3aa9ff"/><stop offset="1" stop-color="#0a72e6"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#mg)"/>',
-    '<rect x="12" y="18" width="40" height="28" rx="5" fill="#fff"/><path d="M14 21l18 14 18-14" fill="none" stroke="#0a72e6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'),
-  notes: appIcon(
-    '<rect width="64" height="64" rx="14" fill="#fff"/><rect width="64" height="16" rx="0" fill="#ffd34e"/><rect width="64" height="14" y="0" rx="0" fill="#ffd60a"/>',
-    '<g stroke="#c9a227" stroke-width="2.4" stroke-linecap="round"><path d="M18 28h28M18 36h28M18 44h18"/></g>'),
-  photos: appIcon(
-    '<rect width="64" height="64" rx="14" fill="#fdfdfd"/>',
-    '<g><circle cx="32" cy="20" r="5" fill="#ff5a5f"/><circle cx="44" cy="28" r="5" fill="#ffb400"/><circle cx="44" cy="40" r="5" fill="#37d67a"/><circle cx="32" cy="48" r="5" fill="#1f9cf0"/><circle cx="20" cy="40" r="5" fill="#7d5fff"/><circle cx="20" cy="28" r="5" fill="#ff7ac4"/></g>'),
-  calendar: appIcon(
-    '<rect width="64" height="64" rx="14" fill="#fff"/><rect width="64" height="16" fill="#ff4b4b"/>',
-    '<text x="32" y="50" font-family="-apple-system,Helvetica,Arial" font-size="30" font-weight="600" fill="#1c1c1e" text-anchor="middle">15</text><text x="32" y="13" font-family="-apple-system,Helvetica,Arial" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">JUN</text>'),
-  github: appIcon(
-    '<rect width="64" height="64" rx="14" fill="#161b22"/>',
+  // Portfolio-apps (eigen identiteit)
+  portfolio: tile('pf', ['#3DA2FF', '#0A6FE8'], S_GLYPH),
+  contact: tile('ct', ['#4DB1FF', '#0B72EC'],
+    '<rect x="13" y="18" width="38" height="28" rx="5.5" fill="#fff"/><path d="m15.5 22.5 16.5 12.5 16.5-12.5" fill="none" stroke="#0B72EC" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>'),
+  cv: tile('cv', ['#5AB8FF', '#1C7BEA'],
+    '<path d="M22 13h14l8 8v28a3 3 0 0 1-3 3H22a3 3 0 0 1-3-3V16a3 3 0 0 1 3-3z" fill="#fff"/><path d="M36 13v8h8" fill="none" stroke="#1C7BEA" stroke-opacity=".5" stroke-width="2.4" stroke-linejoin="round"/><path d="M25 30h14M25 36h14M25 42h9" stroke="#1C7BEA" stroke-width="2.6" stroke-linecap="round"/>'),
+  about: tile('ab', ['#3DA2FF', '#0A6FE8'], S_GLYPH),
+  folder: tile('fo', ['#56B4FF', '#1479E6'],
+    '<path d="M12 22a4 4 0 0 1 4-4h9.5l4 4.5H48a4 4 0 0 1 4 4V45a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4z" fill="#fff" fill-opacity=".95"/>'),
+  // Externe diensten (merkkleuren)
+  github: brand('#161b22',
     '<path transform="translate(12 12) scale(2.5)" fill="#fff" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>'),
-  linkedin: appIcon(
-    '<rect width="64" height="64" rx="14" fill="#0A66C2"/>',
+  linkedin: brand('#0A66C2',
     '<path transform="translate(16 16) scale(1.33)" fill="#fff" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 11.001-4.124 2.062 2.062 0 01-.001 4.124zm1.782 13.019H3.555V9h3.564v11.452z"/>'),
-  instagram: appIcon(
-    '<defs><radialGradient id="ig" cx="0.3" cy="1.07" r="1.2"><stop offset="0" stop-color="#fdf497"/><stop offset="0.45" stop-color="#fd5949"/><stop offset="0.6" stop-color="#d6249f"/><stop offset="0.9" stop-color="#285AEB"/></radialGradient></defs><rect width="64" height="64" rx="14" fill="url(#ig)"/>',
-    '<rect x="18" y="18" width="28" height="28" rx="9" fill="none" stroke="#fff" stroke-width="3.2"/><circle cx="32" cy="32" r="7" fill="none" stroke="#fff" stroke-width="3.2"/><circle cx="42" cy="22" r="2.2" fill="#fff"/>'),
-  trash: appIcon(
-    '<defs><linearGradient id="trg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8edf2"/><stop offset="1" stop-color="#c2ccd6"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#trg)"/>',
-    '<path d="M22 26h20l-2 22a3 3 0 01-3 3H27a3 3 0 01-3-3l-2-22z" fill="#7c8794"/><path d="M20 24h24M27 24l1-3h8l1 3" stroke="#5f6a75" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><g stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M28 31v15M32 31v15M36 31v15"/></g>'),
-  launchpad: appIcon(
-    '<defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b7480"/><stop offset="1" stop-color="#3a4049"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#lg)"/>',
-    '<g fill="#fff"><rect x="16" y="16" width="9" height="9" rx="2.5"/><rect x="28" y="16" width="9" height="9" rx="2.5"/><rect x="40" y="16" width="9" height="9" rx="2.5"/><rect x="16" y="28" width="9" height="9" rx="2.5"/><rect x="28" y="28" width="9" height="9" rx="2.5"/><rect x="40" y="28" width="9" height="9" rx="2.5"/><rect x="16" y="40" width="9" height="9" rx="2.5"/><rect x="28" y="40" width="9" height="9" rx="2.5"/><rect x="40" y="40" width="9" height="9" rx="2.5"/></g>'),
 };
 
-ICONS.dockSafari = APP_ICONS.safari;
-ICONS.dev = '<img src="./assets/images/icon-dev.svg" alt="" width="24">';
-ICONS.app = '<img src="./assets/images/icon-app.svg" alt="" width="24">';
-ICONS.photo = '<img src="./assets/images/icon-photo.svg" alt="" width="24">';
-ICONS.design = '<img src="./assets/images/icon-design.svg" alt="" width="24">';
-
-// ---- Realistische dock/launchpad-iconen (self-hosted PNG, Big Sur-set) ----
+// ---- 3. Systeemiconen (Big Sur-set, WebP 160px) ----------------------------
 const ICON_BASE = './assets/images/icons/';
 export const APP_ICON_IMG = {
-  finder:    `${ICON_BASE}finder.png`,
-  safari:    `${ICON_BASE}safari.png`,
-  terminal:  `${ICON_BASE}terminal.png`,
-  settings:  `${ICON_BASE}settings.png`,
-  photos:    `${ICON_BASE}photos.png`,
-  launchpad: `${ICON_BASE}launchpad.png`,
+  finder:    `${ICON_BASE}finder.webp`,
+  terminal:  `${ICON_BASE}terminal.webp`,
+  settings:  `${ICON_BASE}settings.webp`,
+  launchpad: `${ICON_BASE}launchpad.webp`,
 };
-// Levert een <img>-string die dock.js/launchpad via `html:` renderen.
+// Levert een <img>-string die dock/launchpad via `html:` renderen.
 export const iconImg = (key, label = '') =>
-  `<img src="${APP_ICON_IMG[key]}" alt="${label}" draggable="false">`;
+  `<img src="${APP_ICON_IMG[key]}" alt="${label}" width="160" height="160" draggable="false" decoding="async">`;

@@ -3,7 +3,9 @@
   Geen macOS-chrome: schoon, leesbaar, één kolom.
 \*-----------------------------------*/
 
-/* Schakel de OS-laag uit en zet normaal scrollen aan. */
+/* Schakel de OS-laag uit en zet normaal scrollen aan. `is-mobile` (preboot.js) voorkomt een flits van het bootscherm. */
+html.is-mobile .boot-screen, html.is-mobile .desktop { display: none !important; }
+html.is-mobile, html.is-mobile body { height: auto; overflow: visible; overflow-x: hidden; }
 :root.mobile-mode,
 :root.mobile-mode body {
   height: auto !important;
@@ -20,27 +22,28 @@
 .m-portfolio {
   max-width: 680px;
   margin: 0 auto;
-  padding: 0 20px 64px;
+  padding: 0 20px 112px;
   color: var(--text-primary);
   font-family: var(--ff);
   -webkit-font-smoothing: antialiased;
 }
 
-.m-i { display: inline-flex; color: var(--accent); }
+.m-i { display: inline-flex; color: var(--accent-text); }
 .m-i svg { width: 15px; height: 15px; }
 
-/* ---- Notice ---- */
-.m-notice {
-  position: sticky; top: 0; z-index: 10;
-  margin: 0 -20px 28px;
-  padding: 11px 20px;
-  background: var(--glass-strong);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  border-bottom: 0.5px solid var(--glass-border);
-  color: var(--text-secondary);
-  font-size: var(--text-sm);
-  text-align: center;
+/* ---- Tabbalk (iOS-patroon): zwevend glas onderaan, markeert de huidige sectie ---- */
+.m-tabbar {
+  position: fixed; left: 50%; bottom: max(12px, env(safe-area-inset-bottom)); z-index: 50;
+  transform: translateX(-50%); width: min(420px, calc(100vw - 24px));
+  display: flex; padding: 5px; border-radius: 26px;
+  background: var(--material-chrome);
+  -webkit-backdrop-filter: blur(var(--blur-chrome)) saturate(var(--saturate)); backdrop-filter: blur(var(--blur-chrome)) saturate(var(--saturate));
+  box-shadow: 0 0 0 0.5px var(--edge), inset 0 0.5px 0 var(--specular), var(--shadow-popover);
 }
+.m-tab { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 7px 4px 6px; border-radius: 21px; color: var(--text-secondary); font-size: 11px; font-weight: var(--fw-medium); min-height: 48px; }
+.m-tab.active { color: var(--accent-text); background: var(--accent-dim); }
+.m-tab:active { background: var(--surface-hover); }
+.m-portfolio { scroll-padding-bottom: 96px; }
 
 /* ---- Hero ---- */
 .m-hero { text-align: center; padding: 18px 0 8px; }
@@ -55,7 +58,7 @@
 .m-role {
   display: inline-block; margin-top: 8px; padding: 5px 14px;
   border-radius: 999px; background: var(--gold-dim);
-  color: var(--accent); font-size: var(--text-sm); font-weight: 600;
+  color: var(--accent-text); font-size: var(--text-sm); font-weight: 600;
 }
 .m-contact {
   display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 18px;
@@ -71,7 +74,7 @@
   border: 1px solid transparent; transition: transform 0.12s var(--ease), filter 0.15s var(--ease), background 0.15s var(--ease);
 }
 .m-btn:active { transform: translateY(1px); }
-.m-btn-primary { background: var(--accent); color: #fff; }
+.m-btn-primary { background: var(--accent-fill); color: var(--on-accent); }
 .m-btn-primary:hover { filter: brightness(1.08); }
 .m-btn-secondary { background: var(--surface); color: var(--text-primary); border-color: var(--glass-border); }
 .m-btn-secondary:hover { background: var(--surface-hover); }
@@ -83,8 +86,8 @@
   padding-bottom: 10px; margin-bottom: 18px;
   border-bottom: 0.5px solid var(--separator);
 }
-.m-subtitle { font-size: var(--text-md); font-weight: 600; color: var(--accent); margin: 22px 0 12px; }
-.m-text { color: var(--text-secondary); font-size: var(--text-md); line-height: 1.65; margin-bottom: 12px; }
+.m-subtitle { font-size: var(--text-md); font-weight: 600; color: var(--accent-text); margin: 22px 0 12px; }
+.m-text { color: var(--text-secondary); font-size: 16px; line-height: 1.55; margin-bottom: 12px; }
 
 /* ---- Projecten ---- */
 .m-projects { display: grid; gap: 16px; }
@@ -97,7 +100,7 @@
 .m-project-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .m-project-body { padding: 14px 16px 18px; }
 .m-project-title { font-size: var(--text-lg); font-weight: 600; }
-.m-project-text { margin-top: 6px; color: var(--text-secondary); font-size: var(--text-base); line-height: 1.6; }
+.m-project-text { margin-top: 6px; color: var(--text-secondary); font-size: 15px; line-height: 1.55; }
 .m-project-tags { margin-top: 8px; color: var(--text-tertiary); font-size: var(--text-sm); line-height: 1.5; }
 
 /* ---- Timeline ---- */
@@ -145,5 +148,11 @@
   border: 0.5px solid var(--glass-border); transition: background 0.15s var(--ease);
 }
 .m-social-btn:hover { background: var(--surface-hover); }
-.m-mail-link { display: inline-block; margin-top: 6px; color: var(--accent); text-decoration: none; font-size: var(--text-md); }
+.m-mail-link { display: inline-block; margin-top: 6px; color: var(--accent-text); text-decoration: none; font-size: var(--text-md); }
 .m-copyright { margin-top: 18px; color: var(--text-tertiary); font-size: var(--text-sm); }
+
+.m-note { margin-top: 20px; color: var(--text-tertiary); font-size: var(--text-sm); }
+.m-blog-title, .m-project-title { letter-spacing: -0.02em; }
+.m-blog-card, .m-project { transition: transform var(--dur-fast) var(--ease); }
+.m-blog-card:active { transform: scale(0.99); }
+@media (max-width: 380px) { .m-tab-label { font-size: 10px; } }

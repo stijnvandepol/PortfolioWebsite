@@ -140,6 +140,9 @@ export const APP_ICONS = {
   about: logoTile('ab'),
   folder: tile('fo', ['#56B4FF', '#1479E6'],
     '<path d="M12 22a4 4 0 0 1 4-4h9.5l4 4.5H48a4 4 0 0 1 4 4V45a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4z" fill="#fff" fill-opacity=".95"/>'),
+  // Verborgen spelletje (Launchpad)
+  snake: tile('sn', ['#3ddc6f', '#15803d'],
+    '<path d="M17 45h13V31h15V20" fill="none" stroke="#fff" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="45" cy="19" r="1.4" fill="#15803d"/><circle cx="46" cy="44" r="5.2" fill="#ff453a" stroke="#fff" stroke-width="1.6"/>'),
   // Externe diensten (merkkleuren)
   linkedin: brand('#0A66C2',
     '<path transform="translate(16 16) scale(1.33)" fill="#fff" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 11.001-4.124 2.062 2.062 0 01-.001 4.124zm1.782 13.019H3.555V9h3.564v11.452z"/>'),
@@ -155,6 +158,7 @@ export const APP_ICON_IMG = {
   mail:      `${ICON_BASE}mail.webp`,
   photos:    `${ICON_BASE}photos.webp`,
   github:    `${ICON_BASE}github.webp`,
+  calculator: `${ICON_BASE}calculator.webp`,
 };
 
 const MONTHS_SHORT = ['JAN', 'FEB', 'MRT', 'APR', 'MEI', 'JUN', 'JUL', 'AUG', 'SEP', 'OKT', 'NOV', 'DEC'];

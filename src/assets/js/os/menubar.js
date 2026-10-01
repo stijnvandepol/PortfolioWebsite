@@ -42,6 +42,7 @@ export function initMenubar(root) {
     m.wrap.classList.remove('open');
     m.trigger.setAttribute('aria-expanded', 'false');
     m.panel.replaceChildren();
+    bar.classList.remove('menu-open');
     if (returnFocus) m.trigger.focus({ preventScroll: true });
   }
 
@@ -58,6 +59,7 @@ export function initMenubar(root) {
       m.panel.append(content);
     }
     m.wrap.classList.add('open');
+    bar.classList.add('menu-open');   // tilt de hele menubalk boven meldingen (eigen stacking context)
     m.trigger.setAttribute('aria-expanded', 'true');
     openM = m;
   }
@@ -228,17 +230,42 @@ export function initMenubar(root) {
   store.on('activeWindowId', () => { nameTrigger.textContent = menuName(activeApp()); });
 
   // ---- Rechterkant: status -----------------------------------------------
-  // Netwerk (echte online-status)
-  const netIcon = el('span', { class: 'mb-status-icon', role: 'img' });
+  // Netwerk: echte online-status; klik toont een Wi-Fi-paneel met de verbindingsgegevens die de browser kent.
+  const netTrigger = el('button', { class: 'mb-item mb-icon-btn', type: 'button' });
   const setNet = () => {
     const on = navigator.onLine;
-    netIcon.innerHTML = sym(on ? 'wifi' : 'wifi.slash', 16);
-    netIcon.setAttribute('aria-label', on ? 'Netwerk: verbonden' : 'Netwerk: offline');
-    netIcon.title = on ? 'Verbonden' : 'Geen verbinding';
+    netTrigger.innerHTML = sym(on ? 'wifi' : 'wifi.slash', 16);
+    netTrigger.setAttribute('aria-label', on ? 'Wi-Fi: verbonden' : 'Wi-Fi: geen verbinding');
+    if (openM?.key === 'net') openM.panel.replaceChildren(openM.render());
   };
+  register({
+    key: 'net', trigger: netTrigger, status: true, popover: true, align: 'right',
+    render: () => {
+      const on = navigator.onLine;
+      const c = navigator.connection;
+      const facts = [];
+      if (on && c?.downlink) facts.push(['Snelheid', `± ${c.downlink >= 10 ? Math.round(c.downlink) : c.downlink.toLocaleString('nl-NL')} Mbit/s`]);
+      if (on && c?.rtt) facts.push(['Vertraging', `${c.rtt} ms`]);
+      if (on && c?.effectiveType) facts.push(['Kwaliteit', c.effectiveType.toUpperCase()]);
+      const host = location.hostname && !/^(127\.|localhost$)/.test(location.hostname) ? location.hostname : 'Lokaal netwerk';
+      return el('div', { class: 'cc wifi', role: 'dialog', 'aria-label': 'Wi-Fi' }, [
+        el('div', { class: 'wifi-head' }, [
+          el('span', { class: 'wifi-title', text: 'Wi-Fi' }),
+          el('span', { class: `wifi-state${on ? ' on' : ''}`, text: on ? 'Verbonden' : 'Geen verbinding' }),
+        ]),
+        el('div', { class: 'cc-divider' }),
+        el('div', { class: 'cc-title', text: on ? 'Bekend netwerk' : 'Netwerk' }),
+        el('div', { class: `wifi-net${on ? ' on' : ''}` }, [
+          el('span', { class: 'wifi-net-ic', html: sym(on ? 'wifi' : 'wifi.slash', 14) }),
+          el('span', { class: 'wifi-net-name', text: on ? host : 'Niet verbonden' }),
+          on ? el('span', { class: 'wifi-net-lock', html: sym('lock', 12) }) : null,
+        ]),
+        facts.length ? el('dl', { class: 'wifi-facts' }, facts.flatMap(([k, v]) => [el('dt', { text: k }), el('dd', { text: v })])) : null,
+      ]);
+    },
+  }, right);
   setNet();
   window.addEventListener('online', setNet); window.addEventListener('offline', setNet);
-  right.append(netIcon);
 
   // Batterij: alleen tonen wanneer de browser het echt kan melden
   const battery = el('span', { class: 'mb-status-icon mb-battery', role: 'img', hidden: true });

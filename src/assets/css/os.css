@@ -13,6 +13,7 @@
   padding: 0 6px; font-size: var(--text-base); font-weight: var(--fw-medium);
   color: var(--menubar-fg); user-select: none;
 }
+.menubar.menu-open { z-index: var(--z-menu); }
 .menubar::before {
   content: ''; position: absolute; inset: 0; z-index: -1;
   background: var(--material-chrome);
@@ -93,6 +94,18 @@
 .cc-link { text-align: left; font-size: var(--text-base); padding: 5px 4px; border-radius: 5px; color: var(--text-primary); }
 .cc-link:hover, .cc-link:focus-visible { background: var(--accent-fill); color: var(--on-accent); outline: none; }
 
+.wifi { width: 248px; }
+.wifi-head { display: flex; align-items: baseline; justify-content: space-between; padding: 4px 2px 0; }
+.wifi-title { font-size: var(--text-md); font-weight: var(--fw-semibold); }
+.wifi-state { font-size: var(--text-sm); color: var(--text-secondary); }
+.wifi-net { display: flex; align-items: center; gap: 10px; padding: 4px 2px; font-size: var(--text-base); }
+.wifi-net-ic { width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--surface-hover); color: var(--text-secondary); flex-shrink: 0; }
+.wifi-net.on .wifi-net-ic { background: var(--accent-fill); color: var(--on-accent); }
+.wifi-net-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wifi-net-lock { color: var(--text-secondary); display: inline-flex; }
+.wifi-facts { display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; padding: 4px 2px 2px 38px; font-size: var(--text-sm); }
+.wifi-facts dt { color: var(--text-secondary); }
+.wifi-facts dd { font-variant-numeric: tabular-nums; }
 .cal { padding: 6px 8px 10px; width: 244px; }
 .cal-head { display: flex; align-items: center; justify-content: space-between; padding: 2px 0 6px; }
 .cal-title { font-size: var(--text-base); font-weight: var(--fw-semibold); text-transform: capitalize; }
@@ -247,9 +260,3 @@ kbd, .kbd { display: inline-block; min-width: 18px; padding: 1px 5px; margin-rig
 @media (max-width: 768px) {
   .desktop-icons { display: none; }
 }
-
-/* ============================== LEEG BUREAUBLAD (escape-route) ============================== */
-.desk-hint { position: absolute; left: 50%; top: 42%; z-index: var(--z-desktop-icons); transform: translate(-50%, -50%); text-align: center; padding: var(--sp-6) var(--sp-8); border-radius: 18px; background: var(--material-popover); -webkit-backdrop-filter: blur(var(--blur-popover)) saturate(var(--saturate)); backdrop-filter: blur(var(--blur-popover)) saturate(var(--saturate)); box-shadow: 0 0 0 0.5px var(--edge), var(--shadow-popover); }
-.desk-hint[hidden] { display: none; }
-.desk-hint-title { font-size: var(--text-lg); font-weight: var(--fw-semibold); margin-bottom: var(--sp-4); }
-.desk-hint-actions { display: flex; gap: var(--sp-2); justify-content: center; }

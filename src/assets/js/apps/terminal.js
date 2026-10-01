@@ -75,6 +75,10 @@ export function createTerminalApp() {
           print(`📸 Easter egg gevonden! Instagram: <a class="t-accent" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(url)}</a>`);
           os.openExternal(url);
         },
+        // Ook verstopt: de extra's uit Launchpad.
+        games: () => print('Verstopt in Launchpad: <span class="t-accent">open snake</span> · <span class="t-accent">open calculator</span>'),
+        snake: () => { os.open('snake'); print('Veel plezier 🐍  (pijltjes/WASD, spatie = pauze)'); },
+        bc: () => { os.open('calculator'); print('Rekenmachine geopend.'); },
       };
       commands['--help'] = commands.help;
       commands.insta = commands.instagram;

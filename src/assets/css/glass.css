@@ -11,7 +11,7 @@
 /* Lichtrand: 1px verloopranden, helder linksboven en zwakker rechtsonder */
 .dock-el::after, .menu::after, .mb-popover::after, .sl-panel::after, .notif::after,
 .has-sidebar .pf-sidebar::after, .has-sidebar .finder-sidebar::after, .has-sidebar .set-sidebar::after,
-.titlebar .tb-nav::after, .titlebar .lg-cap::after, .desk-hint::after {
+.titlebar .tb-nav::after, .titlebar .lg-cap::after {
   content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none;
   background:
     radial-gradient(120px 60px at var(--mx, 30%) 0%, var(--lg-rim-hi), transparent 70%),
@@ -19,7 +19,8 @@
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude;
 }
-.menu, .mb-popover, .sl-panel, .notif, .titlebar .tb-nav, .titlebar .lg-cap, .desk-hint { position: relative; }
+/* Alleen elementen die anders 'static' zijn; menu's/popovers zijn al absolute/fixed (dat mag niet overschreven worden). */
+.titlebar .tb-nav, .titlebar .lg-cap { position: relative; }
 
 /* ---------- Menubalk: volledig doorzichtig ---------- */
 .menubar::before { background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: none; }

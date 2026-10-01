@@ -16,6 +16,8 @@ const lazy = (load, name) => async (o) => (await load())[name](o);
 const loadFinder = () => import('./finder.js');
 const loadTerminal = () => import('./terminal.js');
 const loadSettings = () => import('./settings.js');
+const loadCalculator = () => import('./calculator.js');
+const loadSnake = () => import('./snake.js');
 
 export const APPS = [
   { id: 'portfolio', title: 'Portfolio',            kind: 'portfolio', icon: APP_ICONS.portfolio, create: (o) => createPortfolioApp({ ...o, onPreview: quickLook }) },
@@ -24,6 +26,9 @@ export const APPS = [
   { id: 'terminal',  title: 'Terminal',             kind: 'system',    icon: iconImg('terminal', 'Terminal'),   create: lazy(loadTerminal, 'createTerminalApp') },
   { id: 'settings',  title: 'Systeeminstellingen',  kind: 'system',    icon: iconImg('settings', 'Instellingen'), create: lazy(loadSettings, 'createSettingsApp') },
   // Geen eigen Dock-/Launchpad-icoon: bereikbaar via het Apple-menu.
+  // Extra's: alleen via Launchpad (en Terminal), niet in het Dock of Spotlight.
+  { id: 'calculator', title: 'Rekenmachine', kind: 'extra', icon: iconImg('calculator', 'Rekenmachine'), create: lazy(loadCalculator, 'createCalculatorApp') },
+  { id: 'snake', title: 'Snake', kind: 'extra', icon: APP_ICONS.snake, create: lazy(loadSnake, 'createSnakeApp') },
   { id: 'about',     title: 'Over dit portfolio',   kind: 'portfolio', icon: APP_ICONS.about, hidden: true, create: (o) => createAboutApp(o) },
 ];
 

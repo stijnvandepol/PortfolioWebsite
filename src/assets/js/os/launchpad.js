@@ -12,6 +12,7 @@ function appTile(a) {
     el('div', { class: 'lp-icon', html: a.icon }),
     el('span', { class: 'lp-label', text: a.title }),
   ]);
+  tile.querySelector('.lp-icon img')?.setAttribute('alt', ''); // knop heeft al een naam: icoon is decoratief
   tile.addEventListener('click', () => { close(); os.activate(a.id); });
   return tile;
 }

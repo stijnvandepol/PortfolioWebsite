@@ -161,7 +161,7 @@ de eerste viewport beantwoord, zonder klik (7/7 op elk formaat).
 "Bezoek website" zichtbaar; terug via kruimelpad, Esc of de terugknop; Ervaring, Skills, Opleiding,
 Contact en CV = elk 1 klik; deelbare deep-links; Spotlight, Ga-menu en Finder leiden naar dezelfde pagina's.
 
-**Overig:** zonder JavaScript (naam, alle 10 projecten, ervaring, skills, contact crawlbaar; één `h1`,
+**Overig:** zonder JavaScript (naam, alle projecten, ervaring, skills, contact crawlbaar; één `h1`,
 logische `h2`'s; JSON-LD Person + ItemList), eenvoudige weergave (aan/uit, onthouden), leeg bureaublad
 (heropenen via Dock), opstart overslaan, scrollgedrag, kleine schermen, smal venster, reduced motion,
 toetsenbord, axe-core op alle pagina's in donker/licht/mobiel (0 schendingen), Lighthouse.

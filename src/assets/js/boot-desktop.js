@@ -115,8 +115,8 @@ export function boot() {
 
   store.set({ booted: true });
 
-  // Opstartscherm eenmaal per sessie; daarna direct naar het bureaublad.
-  try { sessionStorage.setItem('svdp.booted', '1'); } catch { /* opslag geblokkeerd */ }
+  // Opstartscherm alleen bij het allereerste bezoek; daarna altijd direct naar het bureaublad.
+  try { localStorage.setItem('svdp.booted', '1'); } catch { /* opslag geblokkeerd */ }
   const delay = noBoot || prefersReducedMotion() ? 0 : BOOT_MS;
   const bootEl = document.getElementById('boot');
   if (bootEl) { if (delay) setTimeout(() => bootEl.remove(), delay + 600); else bootEl.remove(); }

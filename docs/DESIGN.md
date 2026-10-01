@@ -22,7 +22,7 @@ Botst een macOS-effect met een hoger punt, dan wordt het effect aangepast of ver
 | Opstartscherm 1,1 s, content verscheen gefaseerd (reveal-animaties) | 0,65 s, één keer per sessie, elke toets/klik slaat over; content is direct zichtbaar |
 | Venster 980×620 op elk scherm; smal venster = onleesbare iconen-zijbalk | Venster groeit mee op grote schermen en vult het scherm op laptops/tablets; smal venster → horizontale tabbalk mét labels |
 | Geen crawlbare inhoud (lege `<body>` tot JS klaar was), geen OG/JSON-LD | Statische, semantische HTML met alle inhoud + title/description/canonical/OG/Twitter/JSON-LD, `robots.txt`, `sitemap.xml` |
-| Geen weg terug als je alle vensters sloot; geen manier om de desktop te vermijden | Hint op leeg bureaublad ("Open Portfolio"); **Eenvoudige weergave** (gewone pagina) via zijbalk, S-menu, Help en Spotlight |
+| Geen weg terug als je alle vensters sloot; geen manier om de desktop te vermijden | Dock (Portfolio, Foto's, Agenda, Mail), bureaubladiconen en Spotlight openen het portfolio altijd weer; **Eenvoudige weergave** (gewone pagina) via zijbalk, S-menu, Help en Spotlight |
 | Mobiel bouwde de pagina met JS | Mobiel = statische HTML (direct leesbaar), tabbalk, geen desktop-JS |
 
 ## Tweede ronde: warmer, meer macOS, sneller
@@ -66,6 +66,15 @@ voor navigatie en bediening, nooit voor de leesinhoud.
 ## Informatiearchitectuur
 
 `Over mij · Projecten (+ projectpagina) · Ervaring (incl. opleiding) · Skills · Contact · CV`
+
+**Extra's in Launchpad (easter eggs):** *Rekenmachine* (echt macOS-icoon, ronde toetsen zoals
+Sequoia, kettingberekening, AC/C, ±, %, herhaald `=`, Nederlandse notatie, volledig toetsenbord,
+`⌘C` kopieert) en *Snake* (pijltjes/WASD, spatie = pauze, record wordt onthouden, pauzeert vanzelf bij
+een ander venster, minimaliseren of een verborgen tabblad). Ze staan bewust niet in het Dock en niet
+in Spotlight; in Terminal vertelt `games` waar ze zitten. Beide laden pas bij het openen.
+
+**Menubalk-status:** Wi-Fi is een echt paneel (online-status, en waar de browser het kent snelheid,
+vertraging en kwaliteit). Panelen uit de menubalk liggen altijd boven meldingen.
 
 Contact is een contactkaart (e-mail kopiëren/mailen, LinkedIn, GitHub, CV) — bewust geen formulier:
 zonder backend kon dat alleen de mail-app van de bezoeker openen en werkte het vaak niet.
@@ -154,7 +163,7 @@ Contact en CV = elk 1 klik; deelbare deep-links; Spotlight, Ga-menu en Finder le
 
 **Overig:** zonder JavaScript (naam, alle 10 projecten, ervaring, skills, contact crawlbaar; één `h1`,
 logische `h2`'s; JSON-LD Person + ItemList), eenvoudige weergave (aan/uit, onthouden), leeg bureaublad
-(escape-route), opstart overslaan, scrollgedrag, kleine schermen, smal venster, reduced motion,
+(heropenen via Dock), opstart overslaan, scrollgedrag, kleine schermen, smal venster, reduced motion,
 toetsenbord, axe-core op alle pagina's in donker/licht/mobiel (0 schendingen), Lighthouse.
 
 **Niet getest:** Firefox en Safari (niet beschikbaar in de testomgeving), echte GPU-framerates,

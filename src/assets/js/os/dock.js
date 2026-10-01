@@ -143,6 +143,7 @@ function buildItem(entry) {
       ], { placement: 'above' });
     });
   }
+  icon.querySelector('img')?.setAttribute('alt', ''); // de knop draagt de naam; anders leest een schermlezer hem dubbel
   icons.push({ el: icon, host, current: BASE, target: BASE });
   return host;
 }

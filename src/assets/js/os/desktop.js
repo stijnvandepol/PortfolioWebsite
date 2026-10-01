@@ -6,8 +6,6 @@ import { os } from './bridge.js';
 import { APP_ICONS } from '../apps/icons.js';
 import { showContextMenu } from './contextmenu.js';
 import { CONFIG } from '../data/config.js';
-import { store } from '../core/store.js';
-import { setView } from '../core/view.js';
 
 const DESKTOP_ICONS = [
   { id: 'projecten', label: 'Projecten', icon: APP_ICONS.folder, open: () => os.open('portfolio', { initialPage: 'projecten' }) },
@@ -56,16 +54,6 @@ export function initDesktop(root) {
       { label: 'Over dit portfolio', action: () => os.open('about') },
     ]);
   });
-  // Escape-route: zonder vensters blijft het bureaublad nooit leeg en ratelloos.
-  const hint = el('div', { class: 'desk-hint', hidden: true, role: 'status' }, [
-    el('p', { class: 'desk-hint-title', text: 'Alle vensters zijn gesloten' }),
-    el('div', { class: 'desk-hint-actions' }, [
-      el('button', { class: 'btn btn-primary', type: 'button', text: 'Open Portfolio', onclick: () => os.open('portfolio', { initialPage: 'home' }) }),
-      el('button', { class: 'btn', type: 'button', text: 'Eenvoudige weergave', onclick: () => setView('simple') }),
-    ]),
-  ]);
-  root.append(hint);
-  store.on('windows', (list) => { hint.hidden = list.length > 0 || !store.get('booted'); });
 
   return layer;
 }

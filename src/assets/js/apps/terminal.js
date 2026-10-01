@@ -3,7 +3,6 @@
 // ============================================================
 import { el, escapeHtml } from '../core/dom.js';
 import { CONFIG } from '../data/config.js';
-import { APP_ICONS } from './icons.js';
 import { os } from '../os/bridge.js';
 
 const FS = {
@@ -15,12 +14,15 @@ const FS = {
 export function createTerminalApp() {
   return {
     id: 'terminal',
-    title: 'Terminal — stijn@portfolio',
-    icon: APP_ICONS.terminal,
+    title: 'Terminal',
+    menuName: 'Terminal',
     width: 680, height: 440, minWidth: 380, minHeight: 240,
     singleton: false,
-    mount({ titlebar, body }) {
-      titlebar.append(el('span', { class: 'win-title', text: 'stijn — -zsh' }));
+    mount({ win, titlebar, body }) {
+      const titleEl = el('span', { class: 'win-title', text: 'stijn — -zsh' });
+      titlebar.append(titleEl);
+      win.bindTitle(titleEl);
+      win.setTitle('stijn — -zsh');
       body.classList.add('term-body');
 
       const out = el('div', { class: 'term-out' });
@@ -42,22 +44,20 @@ export function createTerminalApp() {
           '  about        korte bio', '  whoami       wie ben ik', '  projects     portfolio-projecten',
           '  skills       vaardigheden', '  experience   werkervaring', '  education    opleiding',
           '  contact      contactgegevens', '  social       sociale links', '  ls           bestanden',
-          '  cat <file>   toon bestand', '  open <app>   open een app (finder, portfolio, settings)',
+          '  cat <file>   toon bestand', '  open <app>   open een app (portfolio, finder, contact, settings)',
+          '  Alle informatie staat ook overzichtelijk in de Portfolio-app.',
           '  theme <t>    light|dark|auto', '  neofetch     systeeminfo', '  clear        leeg scherm', '  help         deze lijst',
         ].map(escapeHtml).join('<br>')),
         about: () => print(escapeHtml(FS['about.txt']()).replace(/\n/g, '<br>')),
         whoami: () => print('stijn'),
-        projects: () => print(CONFIG.projects.map((p) => `• <span class="t-accent">${escapeHtml(p.title)}</span> — ${escapeHtml(p.tags)}`).join('<br>')),
+        projects: () => print(CONFIG.projects.map((p) => `• <span class="t-accent">${escapeHtml(p.title)}</span> — ${escapeHtml(p.tags.join(' · '))}`).join('<br>')),
         skills: () => print([
-          ...CONFIG.vaardigheden.map((s) => {
-            const filled = Math.round(s.value / 5);
-            return `${escapeHtml(s.name).padEnd(20)} <span class="t-accent">${'█'.repeat(filled)}</span>${'░'.repeat(20 - filled)} ${s.value}%`;
-          }),
+          ...CONFIG.skills.map((g) => `<span class="t-accent">${escapeHtml(g.category)}</span><br>  ${escapeHtml(g.items.join(' · '))}`),
           '',
           `Soft skills: ${CONFIG.softskills.map(escapeHtml).join(', ')}`,
         ].join('<br>')),
-        experience: () => print(CONFIG.ervaring.map((e) => `<span class="t-accent">${escapeHtml(e.title)}</span><br>  ${escapeHtml(e.date)}`).join('<br>')),
-        education: () => print(CONFIG.opleiding.map((e) => `<span class="t-accent">${escapeHtml(e.title)}</span><br>  ${escapeHtml(e.date)}`).join('<br>')),
+        experience: () => print(CONFIG.experience.map((e) => `<span class="t-accent">${escapeHtml(e.role)} — ${escapeHtml(e.org)}</span><br>  ${escapeHtml(e.period)}`).join('<br>')),
+        education: () => print(CONFIG.education.map((e) => `<span class="t-accent">${escapeHtml(e.title)} — ${escapeHtml(e.org)}</span><br>  ${escapeHtml(e.period)}`).join('<br>')),
         contact: () => print(escapeHtml(FS['contact.txt']()).replace(/\n/g, '<br>')),
         social: () => { print('GitHub · LinkedIn — link geopend.'); os.openExternal(CONFIG.profile.github); },
         ls: () => print(Object.keys(FS).map((f) => `<span class="t-file">${escapeHtml(f)}</span>`).join('&nbsp;&nbsp;')),
@@ -95,6 +95,15 @@ export function createTerminalApp() {
         else if (e.key === 'ArrowUp') { if (hIdx < history.length - 1) { hIdx++; input.value = history[hIdx]; } e.preventDefault(); }
         else if (e.key === 'ArrowDown') { if (hIdx > 0) { hIdx--; input.value = history[hIdx]; } else { hIdx = -1; input.value = ''; } e.preventDefault(); }
         else if (e.key === 'l' && (e.ctrlKey)) { commands.clear(); e.preventDefault(); }
+        else if (e.key === 'Tab') {
+          // Aanvullen van commando's (eerste woord) — zoals in een echte shell.
+          e.preventDefault();
+          const v = input.value;
+          if (v.includes(' ') || !v) return;
+          const hits = Object.keys(commands).filter((c) => c.startsWith(v.toLowerCase()) && !c.startsWith('--') && c !== 'instagram' && c !== 'insta');
+          if (hits.length === 1) input.value = `${hits[0]} `;
+          else if (hits.length > 1) { printPrompt(v); print(hits.map(escapeHtml).join('&nbsp;&nbsp;')); }
+        }
       });
 
       print('Welkom bij <span class="t-accent">portfolio-os</span> — typ <span class="t-accent">help</span> voor commando\'s.', 'term-welcome');

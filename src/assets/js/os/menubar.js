@@ -1,145 +1,332 @@
 // ============================================================
-// os/menubar.js — dynamische menubar + control center + klok
+// os/menubar.js — menubalk (Apple-menu, app-menu, standaardmenu's, status)
+//
+// Standaardmenu's volgen de macOS-volgorde: Apple · App · Bestand · Bewerken
+// · Weergave · Ga · Venster · Help. Dropdowns worden pas bij het openen
+// gevuld, zodat vensterlijst en disabled-states altijd actueel zijn.
+// Toetsenbord: ←/→ wisselt van menu, ↓/Enter opent, Esc sluit.
 // ============================================================
-import { el, qsa, prefersReducedMotion } from '../core/dom.js';
+import { el, qsa } from '../core/dom.js';
 import { store } from '../core/store.js';
-import { setTheme } from '../core/theme.js';
-import { getActiveApp, getActiveAppMenus, closeActive } from './windowManager.js';
+import {
+  getActiveApp, getActiveAppMenus, getActiveWindow, getActiveBody,
+  closeActive, closeAll, minimizeActive, toggleMaximizeActive, snapActive, bringAllToFront, focusWindowById,
+} from './windowManager.js';
+import { buildMenu, moveFocus } from './menu.js';
 import { os } from './bridge.js';
-import { ICONS } from '../apps/icons.js';
+import { sym, batterySym, S_MARK } from '../apps/icons.js';
 import { CONFIG } from '../data/config.js';
+import { setView } from '../core/view.js';
+import { appearanceControl, accentPicker, motionSwitch, transparencySwitch } from '../ui/controls.js';
 
 const DAYS = ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'];
 const MONTHS = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+const MONTHS_LONG = ['januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december'];
+
+const menuName = (app) => app?.menuName || app?.title || 'Finder';
 
 export function initMenubar(root) {
-  const logo = el('span', { class: 'mb-logo', text: 'SvdP', 'aria-hidden': 'true' });
-  const left = el('div', { class: 'mb-left' }, [logo]);
-
-  const clockLabel = el('span', { class: 'mb-clock-label' });
-  const clock = el('button', { class: 'mb-right-item mb-clock', 'aria-label': 'Datum en tijd' }, [clockLabel]);
-  const ccBtn = el('button', { class: 'mb-right-item', 'aria-label': 'Bedieningspaneel', html: ccIcon() });
-  const spot = el('button', { class: 'mb-right-item', 'aria-label': 'Spotlight', html: ICONS.search });
-  const wifi = el('span', { class: 'mb-right-item', 'aria-hidden': 'true', html: ICONS.wifi });
-  const right = el('div', { class: 'mb-right' }, [wifi, ccBtn, spot, clock]);
-
-  const bar = el('header', { class: 'menubar', role: 'menubar' }, [left, right]);
+  const bar = el('header', { class: 'menubar' });
+  const left = el('div', { class: 'mb-left', role: 'menubar', 'aria-label': 'Menubalk' });
+  const right = el('div', { class: 'mb-right', role: 'group', 'aria-label': 'Status' });
+  bar.append(left, right);
   root.append(bar);
 
-  spot.addEventListener('click', (e) => { e.stopPropagation(); os.toggleSpotlight(); });
+  const menus = [];            // { key, wrap, trigger, panel, items() | render() }
+  let openM = null;
 
-  // ---- Dropdown infrastructuur ----
-  let openMenu = null;
-  function closeMenus() { qsa('.mb-menu.open', bar).forEach((m) => m.classList.remove('open')); ccPop.classList.remove('open'); clockPop.classList.remove('open'); openMenu = null; }
-  document.addEventListener('click', closeMenus);
+  // ---- Infrastructuur ------------------------------------------------------
+  function closeMenus({ returnFocus = false } = {}) {
+    if (!openM) return;
+    const m = openM; openM = null;
+    m.wrap.classList.remove('open');
+    m.trigger.setAttribute('aria-expanded', 'false');
+    m.panel.replaceChildren();
+    if (returnFocus) m.trigger.focus({ preventScroll: true });
+  }
 
-  function menu(label, items, { bold } = {}) {
-    const trigger = el('span', { class: `mb-item${bold ? ' mb-bold' : ''}`, text: label, tabindex: '0', role: 'menuitem' });
-    const dd = el('div', { class: 'mb-dropdown' }, items.map(renderItem));
-    const wrap = el('div', { class: 'mb-menu' }, [trigger, dd]);
-    trigger.addEventListener('click', (e) => { e.stopPropagation(); const wasOpen = wrap.classList.contains('open'); closeMenus(); if (!wasOpen) { wrap.classList.add('open'); openMenu = wrap; } });
-    trigger.addEventListener('mouseenter', () => { if (openMenu && openMenu !== wrap) { closeMenus(); wrap.classList.add('open'); openMenu = wrap; } });
+  function openMenu(m, { focusFirst = false } = {}) {
+    if (openM === m) return;
+    closeMenus();
+    m.panel.replaceChildren();
+    if (m.items) {
+      const menu = buildMenu(m.items(), { label: m.label, onClose: (o) => closeMenus({ returnFocus: !!o?.escape }), onKey: (e) => onMenuKey(e, m) });
+      m.panel.append(menu);
+      if (focusFirst) moveFocus(menu, 'first');
+    } else {
+      const content = m.render();
+      m.panel.append(content);
+    }
+    m.wrap.classList.add('open');
+    m.trigger.setAttribute('aria-expanded', 'true');
+    openM = m;
+  }
+
+  function neighbour(m, dir) {
+    const list = menus.filter((x) => x.items); // alleen echte menu's, geen status-popovers
+    const i = list.indexOf(m);
+    return list[(i + dir + list.length) % list.length];
+  }
+  function onMenuKey(e, m) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      openMenu(neighbour(m, e.key === 'ArrowRight' ? 1 : -1), { focusFirst: true });
+    }
+  }
+
+  function register(m, host) {
+    m.wrap = el('div', { class: `mb-menu${m.status ? ' mb-status' : ''}`, role: 'none' });
+    m.panel = el('div', { class: `mb-dropdown${m.align === 'right' ? ' align-right' : ''}${m.popover ? ' mb-popover' : ''}` });
+    m.wrap.append(m.trigger, m.panel);
+    m.trigger.setAttribute('aria-haspopup', m.items ? 'menu' : 'dialog');
+    m.trigger.setAttribute('aria-expanded', 'false');
+    m.trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (openM === m) closeMenus(); else openMenu(m);
+    });
+    // Zodra één menu open is, opent hover over een andere titel dat menu direct.
+    m.trigger.addEventListener('pointerenter', () => { if (openM && openM !== m && m.items && openM.items) openMenu(m); });
+    m.trigger.addEventListener('keydown', (e) => {
+      if (!m.items) { if (e.key === 'Escape') closeMenus({ returnFocus: true }); return; }
+      if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); openMenu(m, { focusFirst: true }); }
+      else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        const n = neighbour(m, e.key === 'ArrowRight' ? 1 : -1);
+        n.trigger.focus();
+        if (openM) openMenu(n);
+      } else if (e.key === 'Escape') closeMenus({ returnFocus: true });
+    });
+    menus.push(m);
+    host.append(m.wrap);
+  }
+
+  document.addEventListener('pointerdown', (e) => { if (openM && !bar.contains(e.target)) closeMenus(); }, true);
+  window.addEventListener('blur', () => closeMenus());
+  // Esc vanuit een popover (waar geen menu-toetsenbord actief is)
+  bar.addEventListener('keydown', (e) => { if (e.key === 'Escape' && openM) { e.stopPropagation(); closeMenus({ returnFocus: true }); } });
+
+  const trigger = (label, cls = '') => el('button', { class: `mb-item ${cls}`.trim(), type: 'button', role: 'menuitem', text: label });
+
+  // ---- Items ------------------------------------------------------------
+  const activeApp = () => getActiveApp();
+  const hasWin = () => !!getActiveWindow();
+
+  const appleItems = () => [
+    { label: 'Over dit portfolio', action: () => os.open('about') },
+    { divider: true },
+    { label: 'Systeeminstellingen…', key: '⌘,', action: () => os.open('settings') },
+    { divider: true },
+    { label: 'Eenvoudige weergave (gewone pagina)', action: () => setView('simple') },
+    { label: 'Broncode op GitHub', action: () => os.openExternal(`${CONFIG.profile.github}/PortfolioWebsite`) },
+    { divider: true },
+    { label: 'Sluit alle vensters', key: '⌥⌘W', action: () => closeAll(), disabled: !store.get('windows').length },
+  ];
+
+  const appItems = () => {
+    const app = activeApp();
+    const name = menuName(app);
+    return [
+      { label: `Over ${name}`, action: () => os.open('about') },
+      { divider: true },
+      { label: 'Instellingen…', key: '⌘,', action: () => os.open('settings') },
+      { divider: true },
+      { label: `Stop ${name}`, action: () => (app ? os.closeApp(app.id) : null), disabled: !app },
+    ];
+  };
+
+  const fileItems = () => {
+    const ctx = getActiveAppMenus();
+    const items = [...(ctx.file || [])];
+    if (!items.length) items.push({ label: 'Nieuw Finder-venster', action: () => os.open('finder', { fresh: true }) });
+    items.push({ divider: true }, { label: 'Sluit venster', key: '⌘W', action: () => closeActive(), disabled: !hasWin() });
+    return items;
+  };
+
+  const copySelection = async () => {
+    const text = String(getSelection());
+    if (!text) return;
+    try { await navigator.clipboard.writeText(text); } catch { document.execCommand?.('copy'); }
+  };
+  const selectAll = () => {
+    const body = getActiveBody();
+    if (!body) return;
+    const r = document.createRange(); r.selectNodeContents(body);
+    const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+  };
+  const editItems = () => {
+    const ctx = getActiveAppMenus();
+    return [
+      { label: 'Kopieer', key: '⌘C', action: copySelection, disabled: !String(getSelection()) },
+      { label: 'Selecteer alles', key: '⌘A', action: selectAll, disabled: !hasWin() },
+      { divider: true },
+      { label: 'Zoek…', key: '⌘F', action: () => (ctx.find ? ctx.find() : os.toggleSpotlight()) },
+    ];
+  };
+
+  const viewItems = () => {
+    const ctx = getActiveAppMenus();
+    const w = getActiveWindow();
+    const items = [...(ctx.view || [])];
+    if (items.length) items.push({ divider: true });
+    items.push({ label: w?.maximized ? 'Herstel venstergrootte' : 'Vul scherm', action: () => toggleMaximizeActive(), disabled: !w || !w.zoomable });
+    return items;
+  };
+
+  const goItems = () => [
+    { label: 'Home', action: () => os.open('portfolio', { initialPage: 'home' }) },
+    { label: 'Projecten', action: () => os.open('portfolio', { initialPage: 'projecten' }) },
+    { label: 'Ervaring', action: () => os.open('portfolio', { initialPage: 'ervaring' }) },
+    { label: 'Skills', action: () => os.open('portfolio', { initialPage: 'skills' }) },
+    { label: 'Contact', action: () => os.open('portfolio', { initialPage: 'contact' }) },
+    { label: 'CV', action: () => os.open('portfolio', { initialPage: 'cv' }) },
+    { divider: true },
+    { label: 'GitHub', action: () => os.openExternal(CONFIG.profile.github) },
+    { label: 'LinkedIn', action: () => os.openExternal(CONFIG.profile.linkedin) },
+  ];
+
+  const windowItems = () => {
+    const w = getActiveWindow();
+    const list = store.get('windows');
+    const items = [
+      { label: 'Minimaliseer', key: '⌘M', action: () => minimizeActive(), disabled: !w },
+      { label: 'Zoom', action: () => toggleMaximizeActive(), disabled: !w || !w.zoomable },
+      { divider: true },
+      { label: 'Vul scherm', action: () => snapActive('max'), disabled: !w || !w.zoomable },
+      { label: 'Links', action: () => snapActive('left'), disabled: !w || !w.zoomable },
+      { label: 'Rechts', action: () => snapActive('right'), disabled: !w || !w.zoomable },
+      { label: 'Herstel', action: () => snapActive(null), disabled: !w || !(w.maximized || w.snapState) },
+      { divider: true },
+      { label: 'Breng alles naar voren', action: () => bringAllToFront(), disabled: !list.length },
+    ];
+    if (list.length) {
+      items.push({ divider: true });
+      [...list].sort((a, b) => a.title.localeCompare(b.title, 'nl')).forEach((x) =>
+        items.push({ label: x.minimized ? `${x.title} (geminimaliseerd)` : x.title, checked: x.focused, action: () => focusWindowById(x.id) }));
+    }
+    return items;
+  };
+
+  const helpItems = () => [
+    { label: 'Zoek…', key: '⌘K', action: () => os.toggleSpotlight() },
+    { label: 'Sneltoetsen', action: () => os.open('settings', { initialPage: 'keyboard' }) },
+    { label: 'Eenvoudige weergave', action: () => setView('simple') },
+    { divider: true },
+    { label: 'Launchpad', key: 'F4', action: () => os.toggleLaunchpad() },
+  ];
+
+  // ---- Linkerkant --------------------------------------------------------
+  const logo = el('button', { class: 'mb-item mb-logo', type: 'button', role: 'menuitem', 'aria-label': 'Portfolio-menu', html: S_MARK });
+  register({ key: 'apple', label: 'Portfolio-menu', trigger: logo, items: appleItems }, left);
+
+  const nameTrigger = trigger(menuName(null), 'mb-bold');
+  register({ key: 'app', label: 'App-menu', trigger: nameTrigger, items: appItems }, left);
+
+  [['file', 'Bestand', fileItems], ['edit', 'Bewerken', editItems], ['view', 'Weergave', viewItems],
+   ['go', 'Ga', goItems], ['window', 'Venster', windowItems], ['help', 'Help', helpItems]]
+    .forEach(([key, label, items]) => register({ key, label, trigger: trigger(label), items }, left));
+
+  store.on('activeWindowId', () => { nameTrigger.textContent = menuName(activeApp()); });
+
+  // ---- Rechterkant: status -----------------------------------------------
+  // Netwerk (echte online-status)
+  const netIcon = el('span', { class: 'mb-status-icon', role: 'img' });
+  const setNet = () => {
+    const on = navigator.onLine;
+    netIcon.innerHTML = sym(on ? 'wifi' : 'wifi.slash', 16);
+    netIcon.setAttribute('aria-label', on ? 'Netwerk: verbonden' : 'Netwerk: offline');
+    netIcon.title = on ? 'Verbonden' : 'Geen verbinding';
+  };
+  setNet();
+  window.addEventListener('online', setNet); window.addEventListener('offline', setNet);
+  right.append(netIcon);
+
+  // Batterij: alleen tonen wanneer de browser het echt kan melden
+  const battery = el('span', { class: 'mb-status-icon mb-battery', role: 'img', hidden: true });
+  right.append(battery);
+  navigator.getBattery?.().then((b) => {
+    const paint = () => {
+      battery.hidden = false;
+      battery.innerHTML = batterySym(b.level, b.charging);
+      const pct = Math.round(b.level * 100);
+      battery.setAttribute('aria-label', `Batterij ${pct}%${b.charging ? ', laadt op' : ''}`);
+      battery.title = `${pct}%${b.charging ? ' — laadt op' : ''}`;
+    };
+    paint();
+    ['levelchange', 'chargingchange'].forEach((t) => b.addEventListener(t, paint));
+  }).catch(() => {});
+
+  // Bedieningspaneel
+  const ccTrigger = el('button', { class: 'mb-item mb-icon-btn', type: 'button', 'aria-label': 'Bedieningspaneel', html: sym('control', 16) });
+  register({
+    key: 'cc', trigger: ccTrigger, status: true, popover: true, align: 'right',
+    render: () => {
+      const motionId = 'cc-motion', transId = 'cc-trans';
+      const row = (label, id, control) => el('div', { class: 'cc-row' }, [el('span', { id, class: 'cc-row-label', text: label }), control]);
+      const settings = el('button', { class: 'cc-link', type: 'button', text: 'Systeeminstellingen…' });
+      settings.addEventListener('click', () => { closeMenus(); os.open('settings'); });
+      return el('div', { class: 'cc', role: 'dialog', 'aria-label': 'Bedieningspaneel' }, [
+        el('div', { class: 'cc-title', text: 'Weergave' }), appearanceControl(),
+        el('div', { class: 'cc-title', text: 'Accentkleur' }), accentPicker(),
+        el('div', { class: 'cc-divider' }),
+        row('Verminder beweging', motionId, motionSwitch(motionId)),
+        row('Verminder transparantie', transId, transparencySwitch(transId)),
+        el('div', { class: 'cc-divider' }),
+        settings,
+      ]);
+    },
+  }, right);
+
+  // Spotlight
+  const spot = el('button', { class: 'mb-item mb-icon-btn', type: 'button', 'aria-label': 'Zoeken (⌘K)', title: 'Zoeken (⌘K)', html: sym('search', 16) });
+  spot.addEventListener('click', (e) => { e.stopPropagation(); closeMenus(); os.toggleSpotlight(); });
+  right.append(spot);
+
+  // Klok + kalender
+  const clockLabel = el('span', { class: 'mb-clock-label' });
+  const clock = el('button', { class: 'mb-item mb-clock', type: 'button' }, [clockLabel]);
+  let calMonth = null;
+  register({
+    key: 'clock', trigger: clock, status: true, popover: true, align: 'right',
+    render: () => { calMonth = new Date(); calMonth.setDate(1); return calendar(); },
+  }, right);
+
+  function calendar() {
+    const wrap = el('div', { class: 'cal', role: 'dialog', 'aria-label': 'Kalender' });
+    const paint = () => {
+      const now = new Date();
+      const y = calMonth.getFullYear(), m = calMonth.getMonth();
+      const first = (new Date(y, m, 1).getDay() + 6) % 7; // maandag = 0
+      const days = new Date(y, m + 1, 0).getDate();
+      const prev = el('button', { class: 'cal-nav', type: 'button', 'aria-label': 'Vorige maand', html: sym('chevron.left', 14) });
+      const next = el('button', { class: 'cal-nav', type: 'button', 'aria-label': 'Volgende maand', html: sym('chevron.right', 14) });
+      prev.addEventListener('click', () => { calMonth.setMonth(m - 1); paint(); });
+      next.addEventListener('click', () => { calMonth.setMonth(m + 1); paint(); });
+      const grid = el('div', { class: 'cal-grid' });
+      ['M', 'D', 'W', 'D', 'V', 'Z', 'Z'].forEach((d) => grid.append(el('span', { class: 'cal-dow', 'aria-hidden': 'true', text: d })));
+      for (let i = 0; i < first; i++) grid.append(el('span'));
+      for (let d = 1; d <= days; d++) {
+        const today = d === now.getDate() && m === now.getMonth() && y === now.getFullYear();
+        grid.append(el('span', { class: `cal-day${today ? ' today' : ''}`, 'aria-current': today ? 'date' : null, text: String(d) }));
+      }
+      wrap.replaceChildren(
+        el('div', { class: 'cal-head' }, [el('span', { class: 'cal-title', text: `${MONTHS_LONG[m]} ${y}` }), el('span', { class: 'cal-navs' }, [prev, next])]),
+        grid,
+      );
+    };
+    paint();
     return wrap;
   }
-  function renderItem(it) {
-    if (it.divider) return el('div', { class: 'dd-divider' });
-    const row = el('div', { class: `dd-item${it.disabled ? ' disabled' : ''}` }, [
-      el('span', { text: it.label }),
-      it.key ? el('span', { class: 'dd-key', html: it.key }) : null,
-    ].filter(Boolean));
-    if (!it.disabled && it.action) row.addEventListener('click', (e) => { e.stopPropagation(); closeMenus(); it.action(); });
-    return row;
-  }
-
-  // ---- Menubar opnieuw opbouwen per actieve app ----
-  function rebuild() {
-    const app = getActiveApp();
-    const name = app ? appShortName(app) : 'Finder';
-    // verwijder bestaande dynamische menus
-    qsa('.mb-menu', bar).forEach((m) => m.remove());
-
-    const ordered = [
-      menu(name, [
-        { label: `Over ${name}`, action: () => os.openExternal(CONFIG.profile.github) },
-        { divider: true },
-        { label: 'Voorkeuren…', key: '&#8984;,', action: () => os.open('settings') },
-        { divider: true },
-        { label: 'Sluit venster', key: '&#8984;W', action: () => closeActive(), disabled: !app },
-      ], { bold: true }),
-      ...(getActiveAppMenus() || []).map((m) =>
-        menu(m.label, m.items.map((i) => ({ label: i.label, key: i.key, action: i.action, disabled: i.disabled })))),
-      menu('Ga', [
-        { label: 'GitHub', key: '&#8679;&#8984;G', action: () => os.openExternal(CONFIG.profile.github) },
-        { label: 'LinkedIn', key: '&#8679;&#8984;L', action: () => os.openExternal(CONFIG.profile.linkedin) },
-        { label: 'Instagram', action: () => os.openExternal(CONFIG.profile.instagram) },
-        { divider: true },
-        { label: 'Stuur e-mail', action: () => os.openExternal(`mailto:${CONFIG.profile.email}`) },
-      ]),
-      menu('Help', [
-        { label: 'Spotlight', key: '&#8984;␣', action: () => os.toggleSpotlight() },
-        { label: 'Launchpad', key: 'F4', action: () => os.toggleLaunchpad() },
-        { divider: true },
-        { label: 'Broncode op GitHub', action: () => os.openExternal(`${CONFIG.profile.github}/PortfolioWebsite`) },
-      ]),
-    ];
-
-    let anchor = logo;
-    ordered.forEach((m) => { anchor.after(m); anchor = m; });
-  }
-
-  store.on('activeWindowId', rebuild);
-  store.on('windows', rebuild);
-
-  // ---- Control Center popover ----
-  const ccPop = el('div', { class: 'mb-dropdown cc-pop' });
-  buildControlCenter(ccPop);
-  ccBtn.append(ccPop);
-  ccBtn.addEventListener('click', (e) => { e.stopPropagation(); const w = ccPop.classList.contains('open'); closeMenus(); if (!w) ccPop.classList.add('open'); });
-
-  // ---- Klok + kalender popover ----
-  const clockPop = el('div', { class: 'mb-dropdown clock-pop' });
-  clock.append(clockPop);
-  clock.addEventListener('click', (e) => { e.stopPropagation(); const w = clockPop.classList.contains('open'); closeMenus(); if (!w) { renderCalendar(clockPop); clockPop.classList.add('open'); } });
 
   function tick() {
     const now = new Date();
-    clockLabel.textContent = `${DAYS[now.getDay()]} ${now.getDate()} ${MONTHS[now.getMonth()]}  ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    const hh = String(now.getHours()).padStart(2, '0'), mm = String(now.getMinutes()).padStart(2, '0');
+    clockLabel.textContent = `${DAYS[now.getDay()]} ${now.getDate()} ${MONTHS[now.getMonth()]}  ${hh}:${mm}`;
+    // Zichtbare tekst blijft de toegankelijke naam (WCAG 2.5.3); de volledige datum staat in de tooltip.
+    clock.title = `${now.toLocaleDateString('nl-NL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}, ${hh}:${mm}`;
   }
-  tick(); setInterval(tick, 10000);
+  tick();
+  // Klok tikt op de minuutgrens i.p.v. een vast interval te laten driften.
+  (function schedule() { setTimeout(() => { tick(); schedule(); }, 60000 - (Date.now() % 60000) + 50); })();
 
-  rebuild();
   return bar;
-}
-
-function appShortName(app) {
-  return ({ portfolio: 'Safari', finder: 'Finder', terminal: 'Terminal', settings: 'Instellingen' })[app.id] || app.title;
-}
-
-function ccIcon() {
-  return '<svg width="16" height="15" viewBox="0 0 24 22" fill="currentColor"><rect x="1" y="1" width="22" height="9" rx="4.5" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="6.5" cy="5.5" r="2.4"/><rect x="1" y="12" width="22" height="9" rx="4.5" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="17.5" cy="16.5" r="2.4"/></svg>';
-}
-
-function buildControlCenter(pop) {
-  const seg = el('div', { class: 'cc-theme' }, [
-    el('button', { class: 'cc-seg', dataset: { t: 'light' }, html: `${ICONS.sun} <span>Licht</span>` }),
-    el('button', { class: 'cc-seg', dataset: { t: 'dark' }, html: `${ICONS.moon} <span>Donker</span>` }),
-    el('button', { class: 'cc-seg', dataset: { t: 'auto' }, text: 'Auto' }),
-  ]);
-  function sync() { seg.querySelectorAll('.cc-seg').forEach((b) => b.classList.toggle('active', b.dataset.t === store.get('theme'))); }
-  seg.addEventListener('click', (e) => { const b = e.target.closest('.cc-seg'); if (!b) return; setTheme(b.dataset.t); sync(); });
-  store.on('theme', sync); sync();
-  pop.append(el('div', { class: 'cc-title', text: 'Weergave' }), seg);
-}
-
-function renderCalendar(pop) {
-  const now = new Date();
-  const y = now.getFullYear(), m = now.getMonth();
-  const first = (new Date(y, m, 1).getDay() + 6) % 7; // ma=0
-  const days = new Date(y, m + 1, 0).getDate();
-  const head = el('div', { class: 'cal-head', text: `${['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'][m]} ${y}` });
-  const grid = el('div', { class: 'cal-grid' });
-  ['M','D','W','D','V','Z','Z'].forEach((d) => grid.append(el('span', { class: 'cal-dow', text: d })));
-  for (let i = 0; i < first; i++) grid.append(el('span', {}));
-  for (let d = 1; d <= days; d++) grid.append(el('span', { class: `cal-day${d === now.getDate() ? ' today' : ''}`, text: String(d) }));
-  pop.replaceChildren(head, grid);
 }

@@ -4,35 +4,46 @@ Een persoonlijke portfolio van Stijn van de Pol, gepresenteerd als een **interac
 
 ## Functionaliteiten
 
-- **Echt vensterbeheer** — meerdere vensters met focus/z-order, slepen, resizen (8 handles), minimaliseren naar het dock, maximaliseren en **window-snapping** (helften/kwarten).
-- **Apps** — Over Mij (Safari-stijl), **Finder** met gesimuleerd bestandssysteem, interactieve **Terminal** (`help`, `projects`, `neofetch`, …), **Systeeminstellingen**, en **Quick Look** preview.
-- **Spotlight** (`⌘Space`) — fuzzy zoeken over apps, pagina's, projecten en acties.
-- **Launchpad** (`F4`), dock-magnification, running-indicators en launch-bounce.
-- **Light / Dark / Auto** thema met accentkleuren en `prefers-reduced-motion`-ondersteuning (persistent).
-- **Toegankelijk** — toetsenbordbediening, focus-trapping in modals, ARIA-rollen, zichtbare focus-ring.
-- Veilige rendering (alle content escaped) en self-hosted iconen — geen externe UI-afhankelijkheden.
+- **Portfolio eerst.** De Portfolio-app opent direct en heeft een zijbalk met labels: **Over mij · Projecten · Ervaring (incl. opleiding) · Skills · Contact · CV**. Elke pagina heeft een deelbare URL (`#projecten/snackspot`).
+- **Home** toont naam, rol, specialisaties, vier duidelijke knoppen (contact, CV, projecten, GitHub), uitgelichte projecten, skills en ervaring.
+- **Projecten** zijn scanbaar (titel, ondertitel, tags) met een projectpagina, kruimelpad en vorige/volgende.
+- **Eenvoudige weergave** — het portfolio als gewone, snelle pagina zonder desktop (S-menu, zijbalk, Help of Spotlight). Mobiel (≤ 768 px) gebruikt dit automatisch.
+- **macOS-desktop** — vensterbeheer (slepen, resizen, zoomen, tegelen, minimaliseren naar het Dock), menubalk met toetsenbordnavigatie, Dock, Spotlight (`⌘K`), Launchpad, Finder, Terminal, Systeeminstellingen, Contact — in Liquid Glass-stijl (doorzichtige menubalk, zwevende zijbalken, lichtranden, breking in het Dock).
+- **Weergave** — Licht / Donker / Automatisch, vijf accentkleuren (standaard **blauw**), verminder beweging en transparantie.
+- **SEO** — statische, semantische HTML met alle inhoud, canonical, Open Graph, JSON-LD, `robots.txt`, `sitemap.xml`; werkt ook zonder JavaScript.
+- **Toegankelijk** — volledig toetsenbord, ARIA, focus-ring, contrast per accent berekend, `prefers-reduced-motion/-transparency/-contrast`.
+- Veilige rendering (alle content escaped), self-hosted iconen en lettertype — geen externe afhankelijkheden.
 
 ## Architectuur
 
 ```
+src/index.html         shell + GEGENEREERDE statische portfolio-HTML en SEO-tags
 src/assets/js/
-  main.js              bootstrap/compositie
-  core/                store (reactief), dom-helpers (escape/focus-trap), theme
-  os/                  windowManager, dock, menubar, spotlight, launchpad,
-                       desktop, notifications, contextmenu, quicklook, bridge
-  apps/                registry + portfolio, terminal, finder, settings, icons
+  main.js              kiest desktop of eenvoudige weergave (dynamic import)
+  boot-desktop.js      compositie van de desktop-OS
+  preboot.js           klassiek script: weergave/boot-vlaggen vóór eerste paint
+  core/                store, dom-helpers, theme (accent/contrast), view (weergavekeuze)
+  ui/                  gedeelde controls (segmented, switch, accent)
+  os/                  windowManager, dock, menubar, menu, contextmenu, spotlight,
+                       launchpad, desktop, notifications, quicklook, simple, bridge
+  apps/                registry + portfolio, contact, finder, terminal, settings, about, icons
   data/config.js       content (single source of truth)
-src/assets/css/        tokens.css (thema's) · style.css (vensters/content) · os.css (chrome)
+src/assets/css/        tokens.css (design system) · style.css · os.css · apps.css · mobile.css
+scripts/generate-static.mjs   genereert de statische HTML + SEO uit config.js
 ```
 
-Pas je content aan in **`src/assets/js/data/config.js`** — de UI rendert automatisch.
-Zie [`docs/AUDIT.md`](docs/AUDIT.md) voor de volledige architectuur- en kwaliteitsanalyse.
+**Content aanpassen:** pas alleen **`src/assets/js/data/config.js`** aan (projecten, ervaring, skills, contact).
+Draai daarna `npm run generate` (of `node scripts/generate-static.mjs`) om `index.html` bij te werken;
+`npm run check` controleert of die actueel is. De Docker-build doet dit automatisch.
+Projecten kennen optionele velden (`role`, `result`, `details`, `links`) die vanzelf verschijnen.
+
+Zie [`docs/DESIGN.md`](docs/DESIGN.md) voor de UX-review, ontwerpkeuzes, metingen en testdekking.
 
 ## Lokaal draaien
 
 ### Snel (statische server)
 ```sh
-cd src && python3 -m http.server 8080   # → http://localhost:8080
+cd src && python3 -m http.server 8080   # → http://localhost:8080  (?view=simple voor de gewone pagina)
 ```
 
 ### Docker (zoals productie)
@@ -45,8 +56,13 @@ docker run -d -p 8081:80 portfoliowebsite   # → http://localhost:8081
 
 | Toets | Actie |
 |-------|-------|
-| `⌘Space` | Spotlight |
+| `⌘K` / `Ctrl+K` | Zoeken (projecten, ervaring, skills, acties) |
 | `F4` | Launchpad |
 | `⌘,` | Systeeminstellingen |
-| `⌘W` / `⌘M` | Actief venster sluiten / minimaliseren |
-| `Esc` | Sluit overlay/menu |
+| `⌘W` / `⌘M` / `⌥⌘W` | Venster sluiten / minimaliseren / alles sluiten |
+| `⌘F` | Zoeken in de Finder |
+| `Spatie` | Voorvertoning (Finder) |
+| `⌘[` `⌘]` | Vorige / volgende pagina (Portfolio) |
+| `Esc` | Sluit overlay of menu; in een projectpagina: terug naar de lijst |
+
+Sommige browsers houden `⌘W`/`⌘,` voor zichzelf; alle acties staan ook in de menu's.

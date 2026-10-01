@@ -19,7 +19,7 @@ Botst een macOS-effect met een hoger punt, dan wordt het effect aangepast of ver
 | Projecten: alleen plaatje + Quick Look; live websites stonden op een andere pagina | Eén scanbare lijst (kaart: titel, ondertitel, tags, "Bekijk project") + projectpagina met kruimelpad, links en vorige/volgende |
 | Ervaring als samengevoegd tijdlijn-blok | Aparte pagina: functie, organisatie, periode, duur, plaats, werkzaamheden, technologieën |
 | Bureaubladicoon vereiste dubbelklik | Eén klik opent |
-| Opstartscherm 1,1 s, content verscheen gefaseerd (reveal-animaties) | 0,65 s, één keer per sessie, elke toets/klik slaat over; content is direct zichtbaar |
+| Opstartscherm 1,1 s, content verscheen gefaseerd (reveal-animaties) | 0,65 s, alleen bij het eerste bezoek, elke toets/klik slaat over; content is direct zichtbaar |
 | Venster 980×620 op elk scherm; smal venster = onleesbare iconen-zijbalk | Venster groeit mee op grote schermen en vult het scherm op laptops/tablets; smal venster → horizontale tabbalk mét labels |
 | Geen crawlbare inhoud (lege `<body>` tot JS klaar was), geen OG/JSON-LD | Statische, semantische HTML met alle inhoud + title/description/canonical/OG/Twitter/JSON-LD, `robots.txt`, `sitemap.xml` |
 | Geen weg terug als je alle vensters sloot; geen manier om de desktop te vermijden | Dock (Portfolio, Foto's, Agenda, Mail), bureaubladiconen en Spotlight openen het portfolio altijd weer; **Eenvoudige weergave** (gewone pagina) via zijbalk, S-menu, Help en Spotlight |
@@ -161,7 +161,7 @@ de eerste viewport beantwoord, zonder klik (7/7 op elk formaat).
 "Bezoek website" zichtbaar; terug via kruimelpad, Esc of de terugknop; Ervaring, Skills, Opleiding,
 Contact en CV = elk 1 klik; deelbare deep-links; Spotlight, Ga-menu en Finder leiden naar dezelfde pagina's.
 
-**Overig:** zonder JavaScript (naam, alle 10 projecten, ervaring, skills, contact crawlbaar; één `h1`,
+**Overig:** zonder JavaScript (naam, alle projecten, ervaring, skills, contact crawlbaar; één `h1`,
 logische `h2`'s; JSON-LD Person + ItemList), eenvoudige weergave (aan/uit, onthouden), leeg bureaublad
 (heropenen via Dock), opstart overslaan, scrollgedrag, kleine schermen, smal venster, reduced motion,
 toetsenbord, axe-core op alle pagina's in donker/licht/mobiel (0 schendingen), Lighthouse.

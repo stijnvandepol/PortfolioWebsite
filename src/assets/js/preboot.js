@@ -17,8 +17,8 @@
     var prefs = {};
     try { prefs = JSON.parse(localStorage.getItem('svdp.prefs') || '{}'); } catch (e) { /* kapotte JSON */ }
     var booted = false;
-    try { booted = !!sessionStorage.getItem('svdp.booted'); } catch (e) { /* opslag geblokkeerd */ }
-    // Opstartscherm alleen bij het eerste bezoek van een sessie, nooit bij diepe links.
+    try { booted = !!localStorage.getItem('svdp.booted'); } catch (e) { /* opslag geblokkeerd */ }
+    // Opstartscherm alleen bij het allereerste bezoek (onthouden), nooit bij diepe links.
     if (reduce || prefs.reducedMotion === true || booted || location.hash.length > 1) r.classList.add('no-boot');
   } catch (e) { r.classList.add('is-desktop'); }
 })();

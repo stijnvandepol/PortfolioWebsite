@@ -90,17 +90,10 @@ export const CONFIG = {
 
   // kind: 'web' = live website (heeft url/status) · 'lab' = homelab/opdracht
   projects: [
-    { id: 'superscout', kind: 'web', category: 'websites', featured: true, title: 'SuperScout', subtitle: 'Alle supermarktaanbiedingen van deze week op één plek',
+    { id: 'superscout', kind: 'web', category: 'websites', featured: true, title: 'SuperScout', subtitle: 'Alle supermarktaanbiedingen op één plek',
       image: './assets/images/blog-4.webp', thumb: './assets/images/blog-4-thumb.webp', url: 'https://superscout.nl', status: 'online', date: '2026', datetime: '2026-07-01',
-      tags: ['Next.js', 'TypeScript', 'Web scraping', 'SQLite', 'Docker', 'GitHub Workflows'],
-      text: 'Een webapp die elke ochtend de weekaanbiedingen van tien Nederlandse supermarkten ophaalt en in één doorzoekbare lijst zet. Je typt "koffie" en ziet in één keer wat elke keten er deze week voor vraagt. Bewust zonder account, tracking of advertenties: er is gewoon geen plek waar gegevens van bezoekers terecht kunnen.',
-      role: 'Ik heb alles zelf gebouwd: het ontwerp, de Next.js-webapp, de scrapers per keten en de deployment op mijn eigen server met Docker en GitHub Workflows.',
-      result: 'Live op superscout.nl met ruim 1.000 aanbiedingen per week. Sinds kort leg ik ook elke dag alle actieprijzen vast. Die prijsgeschiedenis wordt pas echt waardevol na een paar maanden data, dus dat deel groeit nog.',
-      details: [
-        { title: 'Hoe de data binnenkomt', text: 'Elke keten heeft een eigen module: een adapter, een normalisatie naar één gedeeld formaat en tests op opgeslagen responses. De scrapers volgen robots.txt, maken zich bekend als SuperScoutBot en houden minstens 3 seconden tussen verzoeken. Weigert een keten, dan stopt SuperScout voor die keten in plaats van het te omzeilen. Daarom doen Albert Heijn en Jan Linders op dit moment niet mee.' },
-        { title: 'Techniek', text: 'Een pnpm-monorepo in TypeScript met een Next.js-webapp, een aparte ingestion-worker en een productcatalogus in SQLite. Beide draaien in Docker en delen één volume. Valt een keten een dag weg of levert hij ineens veel minder, dan houdt de worker de vorige aanbiedingen vast en meldt hij dat op een statuspagina.' },
-      ],
-      links: [{ label: 'Broncode op GitHub', url: 'https://github.com/stijnvandepol/SuperScout' }] },
+      tags: ['Next.js', 'TypeScript', 'Web scraping', 'SQLite', 'Docker'],
+      text: 'Een webapp die de weekaanbiedingen van tien Nederlandse supermarkten in één doorzoekbare lijst zet. Elke ochtend haalt een eigen scraper per keten de acties op, met respect voor robots.txt. Met zoeken, filters per winkel en categorie en een boodschappenlijstje, zonder account, tracking of advertenties.' },
     { id: 'bunk-hosting', kind: 'web', category: 'websites', featured: true, title: 'Bunk Hosting', subtitle: 'Hostingplatform voor een Nederlandse VPS-provider',
       image: './assets/images/blog-3.webp', thumb: './assets/images/blog-3-thumb.webp', url: 'https://bunkhosting.nl', status: 'online', date: '2026', datetime: '2026-06-01',
       tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Eigen API', 'Cloudflare', 'Security'],

@@ -93,7 +93,7 @@ export const CONFIG = {
     { id: 'superscout', kind: 'web', category: 'websites', featured: true, title: 'SuperScout', subtitle: 'Alle supermarktaanbiedingen op één plek',
       image: './assets/images/blog-4.webp', thumb: './assets/images/blog-4-thumb.webp', url: 'https://superscout.nl', status: 'online', date: '2026', datetime: '2026-07-01',
       tags: ['Next.js', 'TypeScript', 'Web scraping', 'SQLite', 'Docker'],
-      text: 'Een webapp die de weekaanbiedingen van tien Nederlandse supermarkten in één doorzoekbare lijst zet. Elke ochtend haalt een eigen scraper per keten de acties op, met respect voor robots.txt. Met zoeken, filters per winkel en categorie en een boodschappenlijstje, zonder account, tracking of advertenties.' },
+      text: 'Een webapp die de weekaanbiedingen van tien Nederlandse supermarkten in één doorzoekbare lijst zet. Met zoeken, filters per winkel en categorie en een boodschappenlijstje, zonder account of tracking.' },
     { id: 'bunk-hosting', kind: 'web', category: 'websites', featured: true, title: 'Bunk Hosting', subtitle: 'Hostingplatform voor een Nederlandse VPS-provider',
       image: './assets/images/blog-3.webp', thumb: './assets/images/blog-3-thumb.webp', url: 'https://bunkhosting.nl', status: 'online', date: '2026', datetime: '2026-06-01',
       tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Eigen API', 'Cloudflare', 'Security'],

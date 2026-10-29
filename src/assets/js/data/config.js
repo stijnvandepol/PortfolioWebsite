@@ -88,8 +88,12 @@ export const CONFIG = {
     { id: 'cybersecurity', label: 'Cybersecurity' },   // wordt verborgen zolang er geen projecten in staan
   ],
 
-  // kind: 'web' = live website (heeft url/status) · 'lab' = homelab/opdracht
+  // kind: 'web' = live website (heeft url/status) · 'app' = iOS-app · 'lab' = homelab/opdracht
   projects: [
+    { id: 'dashwise', kind: 'app', category: 'applicaties', featured: true, title: 'Dashwise', subtitle: 'Live motordata van je auto op je iPhone',
+      image: './assets/images/blog-5.webp', thumb: './assets/images/blog-5-thumb.webp', url: 'https://getdashwise.nl', status: 'online', date: '2026', datetime: '2026-10-01',
+      tags: ['Swift 6', 'SwiftUI', 'CoreBluetooth', 'OBD-II / ELM327'],
+      text: 'Een native iPhone-app die live motordata uitleest via een ELM327 OBD-II-adapter over Bluetooth of wifi. Met live dashboard, foutcodes, rittenlogboek en rondetijden, volledig privé op het toestel.' },
     { id: 'superscout', kind: 'web', category: 'websites', featured: true, title: 'SuperScout', subtitle: 'Alle supermarktaanbiedingen op één plek',
       image: './assets/images/blog-4.webp', thumb: './assets/images/blog-4-thumb.webp', url: 'https://superscout.nl', status: 'online', date: '2026', datetime: '2026-07-01',
       tags: ['Next.js', 'TypeScript', 'Web scraping', 'SQLite', 'Docker'],

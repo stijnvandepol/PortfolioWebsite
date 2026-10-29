@@ -79,9 +79,9 @@ const head = `<!-- head:start (gegenereerd door scripts/generate-static.mjs — 
 // ---------------------------------------------------------------- body
 const project = (pr) => `
       <article class="m-project" id="projecten/${esc(pr.id)}">
-        <figure class="m-project-img"><img src="${esc(pr.thumb || pr.image)}" alt="Screenshot van ${esc(pr.title)}" width="600" height="${pr.kind === 'web' ? 300 : 450}" loading="lazy" decoding="async"></figure>
+        <figure class="m-project-img"><img src="${esc(pr.thumb || pr.image)}" alt="Screenshot van ${esc(pr.title)}" width="600" height="${pr.kind === 'lab' ? 450 : 300}" loading="lazy" decoding="async"></figure>
         <div class="m-project-body">
-          <p class="m-kind">${pr.kind === 'web' ? 'Website' : 'Homelab &amp; opdracht'}${pr.status ? ` · <span class="m-status ${esc(pr.status)}">${pr.status === 'online' ? 'Online' : 'Offline'}</span>` : ''}${pr.date ? ` · ${esc(pr.date)}` : ''}</p>
+          <p class="m-kind">${{ web: 'Website', app: 'iOS-app', lab: 'Homelab &amp; opdracht' }[pr.kind]}${pr.status ? ` · <span class="m-status ${esc(pr.status)}">${pr.status === 'online' ? 'Online' : 'Offline'}</span>` : ''}${pr.date ? ` · ${esc(pr.date)}` : ''}</p>
           <h3 class="m-project-title">${esc(pr.title)}</h3>
           <p class="m-project-sub">${esc(pr.subtitle)}</p>
           ${tags(pr.tags)}

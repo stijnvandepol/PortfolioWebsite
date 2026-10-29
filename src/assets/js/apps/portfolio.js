@@ -49,14 +49,15 @@ const chips = (list, cls = 'chips', max) => {
   ]);
 };
 const statusBadge = (s) => (s ? el('span', { class: `status ${s}`, text: s === 'online' ? 'Online' : 'Offline' }) : null);
-const kindLabel = (pr) => (pr.kind === 'web' ? 'Website' : 'Homelab & opdracht');
+const KIND_LABEL = { web: 'Website', app: 'iOS-app', lab: 'Homelab & opdracht' };
+const kindLabel = (pr) => KIND_LABEL[pr.kind];
 /** Link binnen de app: echte <a href="#route"> (deelbaar/middelklik) + zachte navigatie. */
 const routeLink = (route, className, children) => el('a', { class: className, href: `#${route}`, dataset: { route } }, children);
 
 // ---------------------------------------------------------------- pagina's
 function projectCard(pr) {
   return routeLink(`projecten/${pr.id}`, 'pcard', [
-    el('figure', { class: 'pcard-img' }, [el('img', { src: pr.thumb || pr.image, alt: '', width: 600, height: pr.kind === 'web' ? 300 : 450, loading: 'lazy', decoding: 'async' })]),
+    el('figure', { class: 'pcard-img' }, [el('img', { src: pr.thumb || pr.image, alt: '', width: 600, height: pr.kind === 'lab' ? 450 : 300, loading: 'lazy', decoding: 'async' })]),
     el('div', { class: 'pcard-body' }, [
       el('p', { class: 'pcard-kind' }, [kindLabel(pr), statusBadge(pr.status)]),
       el('h3', { class: 'pcard-title', text: pr.title }),
@@ -160,7 +161,7 @@ function pageProject(pr, onPreview) {
   const prev = list[i - 1], next = list[i + 1];
   const optional = (title, node) => (node ? el('section', { class: 'pd-sec' }, [el('h3', { class: 'pd-h', text: title }), node]) : null);
   const img = el('button', { class: 'pd-img', type: 'button', 'aria-label': `Vergroot afbeelding van ${pr.title}` }, [
-    el('img', { src: pr.image, alt: `Screenshot van ${pr.title}`, width: 900, height: pr.kind === 'web' ? 450 : 675, decoding: 'async' }),
+    el('img', { src: pr.image, alt: `Screenshot van ${pr.title}`, width: 900, height: pr.kind === 'lab' ? 675 : 450, decoding: 'async' }),
   ]);
   img.addEventListener('click', () => onPreview?.({ src: pr.image, title: pr.title, desc: pr.subtitle }));
   return el('article', { class: 'page', dataset: { page: 'project' } }, [

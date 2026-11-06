@@ -7,6 +7,7 @@
 // ============================================================
 import { el, prefersReducedMotion } from '../core/dom.js';
 import { store } from '../core/store.js';
+import { t } from '../core/i18n.js';
 
 const COLS = 20, ROWS = 16, CELL = 22;
 const HS_KEY = 'pf-snake-best';
@@ -42,7 +43,7 @@ export function createSnakeApp() {
       body.append(
         el('div', { class: 'snake-hud' }, [
           el('div', { class: 'snake-stat' }, [el('span', { class: 'snake-lbl', text: 'Score' }), scoreEl]),
-          el('div', { class: 'snake-stat' }, [el('span', { class: 'snake-lbl', text: 'Record' }), bestEl]),
+          el('div', { class: 'snake-stat' }, [el('span', { class: 'snake-lbl', text: t('Record') }), bestEl]),
         ]),
         el('div', { class: 'snake-board' }, [canvas, msg]),
         status,
@@ -76,9 +77,9 @@ export function createSnakeApp() {
         state = s;
         clearInterval(timer); timer = null;
         if (s === 'playing') { msg.hidden = true; status.textContent = ''; timer = setInterval(step, stepMs); }
-        else if (s === 'ready') showMsg('Snake', 'Druk op spatie of een pijltje om te starten');
-        else if (s === 'paused') showMsg('Gepauzeerd', 'Spatie om verder te spelen');
-        else if (s === 'over') showMsg(`Game over · ${score}`, score && score >= best ? 'Nieuw record! Spatie om opnieuw te spelen' : 'Spatie om opnieuw te spelen');
+        else if (s === 'ready') showMsg('Snake', t('Druk op spatie of een pijltje om te starten'));
+        else if (s === 'paused') showMsg(t('Gepauzeerd'), t('Spatie om verder te spelen'));
+        else if (s === 'over') showMsg(`Game over · ${score}`, score && score >= best ? t('Nieuw record! Spatie om opnieuw te spelen') : t('Spatie om opnieuw te spelen'));
         draw();
       }
 

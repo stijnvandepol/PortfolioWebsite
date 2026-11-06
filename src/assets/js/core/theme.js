@@ -3,6 +3,7 @@
 // Persisteert via localStorage; reageert op systeemvoorkeur.
 // ============================================================
 import { store } from './store.js';
+import { t } from './i18n.js';
 
 const STORAGE = 'svdp.prefs';
 const DEFAULT_ACCENT = 'blue';
@@ -86,7 +87,7 @@ export function setTheme(theme)   { store.set({ theme }); applyTheme(); persist(
 export function setAccent(accent) { store.set({ accent }); applyTheme(); persist({ accent }); }
 export function setReducedMotion(on) { store.set({ reducedMotion: !!on }); applyTheme(); persist({ reducedMotion: !!on }); }
 export function setReducedTransparency(on) { store.set({ reducedTransparency: !!on }); applyTheme(); persist({ reducedTransparency: !!on }); }
-export const ACCENT_LABELS = { blue: 'Blauw', green: 'Groen', purple: 'Paars', pink: 'Roze', orange: 'Oranje' };
+export const ACCENT_LABELS = { blue: t('Blauw'), green: t('Groen'), purple: t('Paars'), pink: t('Roze'), orange: t('Oranje') };
 export const accentHex = (name) => (ACCENTS[name] || ACCENTS[DEFAULT_ACCENT]).base;
 export const accentList = () => Object.keys(ACCENTS);
 

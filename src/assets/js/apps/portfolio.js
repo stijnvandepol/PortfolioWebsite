@@ -14,11 +14,12 @@ import { segmented } from '../ui/controls.js';
 import { mountContributions } from '../ui/contributions.js';
 import { contactView } from './contact.js';
 import { setView } from '../core/view.js';
+import { t } from '../core/i18n.js';
 
 const PAGES = [
-  { id: 'home', label: 'Over mij', icon: 'person' },
-  { id: 'projecten', label: 'Projecten', icon: 'grid' },
-  { id: 'ervaring', label: 'Ervaring', icon: 'briefcase' },
+  { id: 'home', label: t('Over mij'), icon: 'person' },
+  { id: 'projecten', label: t('Projecten'), icon: 'grid' },
+  { id: 'ervaring', label: t('Ervaring'), icon: 'briefcase' },
   { id: 'skills', label: 'Skills', icon: 'chart' },
   { id: 'contact', label: 'Contact', icon: 'envelope' },
   { id: 'cv', label: 'CV', icon: 'doc' },
@@ -50,7 +51,7 @@ const chips = (list, cls = 'chips', max) => {
   ]);
 };
 const statusBadge = (s) => (s ? el('span', { class: `status ${s}`, text: s === 'online' ? 'Online' : 'Offline' }) : null);
-const KIND_LABEL = { web: 'Website', app: 'iOS-app', lab: 'Homelab & opdracht' };
+const KIND_LABEL = { web: 'Website', app: t('iOS-app'), lab: t('Homelab & opdracht') };
 const kindLabel = (pr) => KIND_LABEL[pr.kind];
 /** Link binnen de app: echte <a href="#route"> (deelbaar/middelklik) + zachte navigatie. */
 const routeLink = (route, className, children) => el('a', { class: className, href: `#${route}`, dataset: { route } }, children);
@@ -64,7 +65,7 @@ function projectCard(pr) {
       el('h3', { class: 'pcard-title', text: pr.title }),
       el('p', { class: 'pcard-sub', text: pr.subtitle }),
       chips(pr.tags, 'chips chips-sm', 4),
-      el('span', { class: 'pcard-more' }, ['Bekijk project', icon('chevron.right', 13)]),
+      el('span', { class: 'pcard-more' }, [t('Bekijk project'), icon('chevron.right', 13)]),
     ]),
   ]);
 }
@@ -100,7 +101,7 @@ function pageHome() {
     el('header', { class: 'hero' }, [
       el('div', { class: 'avatar-wrap' }, [
         el('div', { class: 'avatar-glow', 'aria-hidden': 'true' }),
-        el('figure', { class: 'avatar-box' }, [el('img', { src: './assets/images/portret.webp', alt: `Portret van ${p.name}`, width: 116, height: 116, decoding: 'async' })]),
+        el('figure', { class: 'avatar-box' }, [el('img', { src: './assets/images/portret.webp', alt: t('Portret van {name}', { name: p.name }), width: 116, height: 116, decoding: 'async' })]),
       ]),
       el('div', { class: 'hero-text' }, [
         el('h1', { class: 'profile-name', text: p.name }),
@@ -110,16 +111,16 @@ function pageHome() {
           el('span', { class: 'meta-item' }, [icon('mappin', 14), p.location]),
         ]),
         el('div', { class: 'hero-cta' }, [
-          routeLink('contact', 'btn btn-primary', ['Neem contact op']),
+          routeLink('contact', 'btn btn-primary', [t('Neem contact op')]),
           el('a', { class: 'btn', href: p.cv, download: p.cvName }, [icon('download', 15), 'Download CV']),
-          routeLink('projecten', 'btn', ['Bekijk projecten']),
+          routeLink('projecten', 'btn', [t('Bekijk projecten')]),
           el('a', { class: 'btn', href: p.github, target: '_blank', rel: 'noopener noreferrer' }, ['GitHub', icon('external', 13)]),
         ]),
       ]),
     ]),
-    el('section', { class: 'about-text', 'aria-label': 'Over mij' }, CONFIG.about.map((t) => el('p', { text: t }))),
-    el('section', { class: 'home-sec', 'aria-label': 'Wat ik doe' }, [
-      el('h2', { class: 'section-heading', text: 'Wat ik doe' }),
+    el('section', { class: 'about-text', 'aria-label': t('Over mij') }, CONFIG.about.map((t) => el('p', { text: t }))),
+    el('section', { class: 'home-sec', 'aria-label': t('Wat ik doe') }, [
+      el('h2', { class: 'section-heading', text: t('Wat ik doe') }),
       el('div', { class: 'bento-grid' }, CONFIG.focus.map((f) =>
         el('div', { class: 'bento-card' }, [
           el('div', { class: 'bento-icon', html: sym(f.icon, 20) }),
@@ -127,12 +128,12 @@ function pageHome() {
           el('p', { text: f.text }),
         ]))),
     ]),
-    el('section', { class: 'home-sec', 'aria-label': 'Uitgelichte projecten' }, [
-      sectionHead('Uitgelichte projecten', { route: 'projecten', label: 'Alle projecten' }),
+    el('section', { class: 'home-sec', 'aria-label': t('Uitgelichte projecten') }, [
+      sectionHead(t('Uitgelichte projecten'), { route: 'projecten', label: t('Alle projecten') }),
       el('div', { class: 'pgrid' }, featured.map(projectCard)),
     ]),
-    el('section', { class: 'home-sec', 'aria-label': 'Ervaring in het kort' }, [
-      sectionHead('Ervaring', { route: 'ervaring', label: 'Ervaring & opleiding' }),
+    el('section', { class: 'home-sec', 'aria-label': t('Ervaring in het kort') }, [
+      sectionHead(t('Ervaring'), { route: 'ervaring', label: t('Ervaring & opleiding') }),
       el('ul', { class: 'exp-glance' }, CONFIG.experience.slice(0, 3).map((e) =>
         el('li', {}, [
           el('span', { class: 'eg-main' }, [el('strong', { text: e.role }), ` · ${e.org}`]),
@@ -144,11 +145,11 @@ function pageHome() {
 
 function pageProjecten() {
   const cats = CONFIG.projectCategories.filter((c) => c.id === 'all' || CONFIG.projects.some((p) => p.category === c.id));
-  const bar = segmented({ label: 'Filter projecten', variant: 'seg-filter', value: 'all', options: cats.map((c) => ({ value: c.id, label: c.label })) });
+  const bar = segmented({ label: t('Filter projecten'), variant: 'seg-filter', value: 'all', options: cats.map((c) => ({ value: c.id, label: c.label })) });
   bar.dataset.role = 'filter';
   return el('article', { class: 'page', dataset: { page: 'projecten' } }, [
-    el('h2', { class: 'section-heading', text: 'Projecten' }),
-    el('p', { class: 'lead', text: 'Live websites en projecten uit mijn homelab en stages. Klik op een project voor de details.' }),
+    el('h2', { class: 'section-heading', text: t('Projecten') }),
+    el('p', { class: 'lead', text: t('Live websites en projecten uit mijn homelab en stages. Klik op een project voor de details.') }),
     bar,
     el('div', { class: 'pgrid', dataset: { role: 'grid' } }, CONFIG.projects.map((pr) => {
       const c = projectCard(pr); c.dataset.category = pr.category; return c;
@@ -161,13 +162,13 @@ function pageProject(pr, onPreview) {
   const i = list.indexOf(pr);
   const prev = list[i - 1], next = list[i + 1];
   const optional = (title, node) => (node ? el('section', { class: 'pd-sec' }, [el('h3', { class: 'pd-h', text: title }), node]) : null);
-  const img = el('button', { class: 'pd-img', type: 'button', 'aria-label': `Vergroot afbeelding van ${pr.title}` }, [
-    el('img', { src: pr.image, alt: `Screenshot van ${pr.title}`, width: 900, height: pr.kind === 'lab' ? 675 : 450, decoding: 'async' }),
+  const img = el('button', { class: 'pd-img', type: 'button', 'aria-label': t('Vergroot afbeelding van {title}', { title: pr.title }) }, [
+    el('img', { src: pr.image, alt: t('Screenshot van {title}', { title: pr.title }), width: 900, height: pr.kind === 'lab' ? 675 : 450, decoding: 'async' }),
   ]);
   img.addEventListener('click', () => onPreview?.({ src: pr.image, title: pr.title, desc: pr.subtitle }));
   return el('article', { class: 'page', dataset: { page: 'project' } }, [
-    el('nav', { class: 'crumbs', 'aria-label': 'Kruimelpad' }, [
-      routeLink('projecten', 'crumb-link', [icon('chevron.left', 13), 'Projecten']),
+    el('nav', { class: 'crumbs', 'aria-label': t('Kruimelpad') }, [
+      routeLink('projecten', 'crumb-link', [icon('chevron.left', 13), t('Projecten')]),
       el('span', { class: 'crumb-sep', 'aria-hidden': 'true', text: '›' }),
       el('span', { class: 'crumb-here', 'aria-current': 'page', text: pr.title }),
     ]),
@@ -176,20 +177,20 @@ function pageProject(pr, onPreview) {
       el('h2', { class: 'pd-title', text: pr.title }),
       el('p', { class: 'pd-sub', text: pr.subtitle }),
       el('div', { class: 'hero-cta' }, [
-        pr.url ? el('a', { class: 'btn btn-primary', href: pr.url, target: '_blank', rel: 'noopener noreferrer' }, ['Bezoek website', icon('external', 13)]) : null,
+        pr.url ? el('a', { class: 'btn btn-primary', href: pr.url, target: '_blank', rel: 'noopener noreferrer' }, [t('Bezoek website'), icon('external', 13)]) : null,
         ...(pr.links || []).map((l) => el('a', { class: 'btn', href: l.url, target: '_blank', rel: 'noopener noreferrer' }, [l.label, icon('external', 13)])),
-        routeLink('contact', 'btn', ['Vraag erover']),
+        routeLink('contact', 'btn', [t('Vraag erover')]),
       ]),
     ]),
     img,
-    optional('Over dit project', el('p', { class: 'prose', text: pr.text })),
-    optional('Technologieën & kenmerken', chips(pr.tags)),
-    optional('Mijn rol', pr.role ? el('p', { class: 'prose', text: pr.role }) : null),
-    optional('Resultaat', pr.result ? el('p', { class: 'prose', text: pr.result }) : null),
+    optional(t('Over dit project'), el('p', { class: 'prose', text: pr.text })),
+    optional(t('Technologieën & kenmerken'), chips(pr.tags)),
+    optional(t('Mijn rol'), pr.role ? el('p', { class: 'prose', text: pr.role }) : null),
+    optional(t('Resultaat'), pr.result ? el('p', { class: 'prose', text: pr.result }) : null),
     ...(pr.details || []).map((d) => optional(d.title, el('p', { class: 'prose', text: d.text }))),
-    el('nav', { class: 'pd-pager', 'aria-label': 'Andere projecten' }, [
-      prev ? routeLink(`projecten/${prev.id}`, 'pager-link', [icon('chevron.left', 14), el('span', {}, [el('small', { text: 'Vorig project' }), prev.title])]) : el('span'),
-      next ? routeLink(`projecten/${next.id}`, 'pager-link pager-next', [el('span', {}, [el('small', { text: 'Volgend project' }), next.title]), icon('chevron.right', 14)]) : el('span'),
+    el('nav', { class: 'pd-pager', 'aria-label': t('Andere projecten') }, [
+      prev ? routeLink(`projecten/${prev.id}`, 'pager-link', [icon('chevron.left', 14), el('span', {}, [el('small', { text: t('Vorig project') }), prev.title])]) : el('span'),
+      next ? routeLink(`projecten/${next.id}`, 'pager-link pager-next', [el('span', {}, [el('small', { text: t('Volgend project') }), next.title]), icon('chevron.right', 14)]) : el('span'),
     ]),
   ]);
 }
@@ -198,10 +199,10 @@ const bigHead = (ic, text, id) => el('h2', { class: 'section-heading big', id },
 
 function pageErvaring() {
   return el('article', { class: 'page', dataset: { page: 'ervaring' } }, [
-    bigHead('briefcase', 'Ervaring'),
+    bigHead('briefcase', t('Ervaring')),
     timelineList(CONFIG.experience, expItem),
     el('div', { class: 'tl-section', dataset: { anchor: 'opleiding' } }, [
-      bigHead('cap', 'Opleiding'),
+      bigHead('cap', t('Opleiding')),
       timelineList(CONFIG.education, (e) => [
         el('h3', { class: 'tl-title' }, [e.title, el('span', { class: 'tl-org', text: ` · ${e.org}` })]),
         el('p', { class: 'tl-date', text: e.period }),
@@ -214,11 +215,11 @@ function pageErvaring() {
 function pageSkills() {
   return el('article', { class: 'page', dataset: { page: 'skills' } }, [
     bigHead('chart', 'Skills'),
-    el('p', { class: 'lead', text: 'Waar ik mee werk, gegroepeerd per vakgebied.' }),
+    el('p', { class: 'lead', text: t('Waar ik mee werk, gegroepeerd per vakgebied.') }),
     el('div', { class: 'skgrid' }, CONFIG.skills.map(skillGroup)),
     el('h3', { class: 'pd-h', text: 'Soft skills' }),
     chips(CONFIG.softskills, 'chips chips-pill'),
-    mountContributions(el('section', { class: 'gh' }, [el('h3', { class: 'pd-h', text: 'GitHub-activiteit' })])),
+    mountContributions(el('section', { class: 'gh' }, [el('h3', { class: 'pd-h', text: t('GitHub-activiteit') })])),
   ]);
 }
 
@@ -226,12 +227,12 @@ function pageCV() {
   const p = CONFIG.profile;
   return el('article', { class: 'page', dataset: { page: 'cv' } }, [
     el('h2', { class: 'section-heading', text: 'CV' }),
-    el('p', { class: 'lead', text: 'Mijn actuele cv als PDF: opleiding, ervaring en vaardigheden op één pagina.' }),
+    el('p', { class: 'lead', text: t('Mijn actuele cv als PDF: opleiding, ervaring en vaardigheden op één pagina.') }),
     el('div', { class: 'hero-cta' }, [
       el('a', { class: 'btn btn-primary', href: p.cv, download: p.cvName }, [icon('download', 15), 'Download CV (PDF)']),
-      el('a', { class: 'btn', href: p.cv, target: '_blank', rel: 'noopener noreferrer' }, ['Open in nieuw tabblad', icon('external', 13)]),
+      el('a', { class: 'btn', href: p.cv, target: '_blank', rel: 'noopener noreferrer' }, [t('Open in nieuw tabblad'), icon('external', 13)]),
     ]),
-    el('p', { class: 'prose muted', text: 'Liever eerst een overzicht? Bekijk Ervaring (incl. opleiding) en Skills in de zijbalk.' }),
+    el('p', { class: 'prose muted', text: t('Liever eerst een overzicht? Bekijk Ervaring (incl. opleiding) en Skills in de zijbalk.') }),
   ]);
 }
 
@@ -248,8 +249,8 @@ export function createPortfolioApp({ initialPage = 'home', onPreview } = {}) {
     singleton: true,
     mount({ win, titlebar, body }) {
       // ---- Toolbar ----
-      const back = el('button', { class: 'tb-btn no-drag', type: 'button', 'aria-label': 'Terug', html: sym('chevron.left', 15) });
-      const fwd = el('button', { class: 'tb-btn no-drag', type: 'button', 'aria-label': 'Vooruit', html: sym('chevron.right', 15) });
+      const back = el('button', { class: 'tb-btn no-drag', type: 'button', 'aria-label': t('Terug'), html: sym('chevron.left', 15) });
+      const fwd = el('button', { class: 'tb-btn no-drag', type: 'button', 'aria-label': t('Vooruit'), html: sym('chevron.right', 15) });
       const subtitle = el('span', { class: 'tb-subtitle' });
       const titleWrap = el('div', { class: 'tb-title' }, [el('span', { class: 'tb-title-main', text: 'Portfolio' }), subtitle]);
       const contactBtn = el('a', { class: 'tb-btn tb-text no-drag', href: '#contact', dataset: { route: 'contact' }, title: 'Contact', html: `${sym('envelope', 15)}<span>Contact</span>` });
@@ -257,8 +258,8 @@ export function createPortfolioApp({ initialPage = 'home', onPreview } = {}) {
       titlebar.append(el('div', { class: 'tb-nav' }, [back, fwd]), titleWrap, el('div', { class: 'tb-actions lg-cap' }, [contactBtn, cvBtn]));
 
       // ---- Zijbalk + pagina's ----
-      const simpleBtn = el('button', { class: 'pf-item pf-simple', type: 'button', title: 'Toon het portfolio als gewone pagina, zonder desktop' }, [
-        el('span', { class: 'pf-item-ic', html: sym('list', 17) }), el('span', { class: 'pf-item-label', text: 'Eenvoudige weergave' }),
+      const simpleBtn = el('button', { class: 'pf-item pf-simple', type: 'button', title: t('Toon het portfolio als gewone pagina, zonder desktop') }, [
+        el('span', { class: 'pf-item-ic', html: sym('list', 17) }), el('span', { class: 'pf-item-label', text: t('Eenvoudige weergave') }),
       ]);
       simpleBtn.addEventListener('click', () => setView('simple'));
       const sidebar = el('nav', { class: 'pf-sidebar', 'aria-label': 'Portfolio' }, [
@@ -268,7 +269,7 @@ export function createPortfolioApp({ initialPage = 'home', onPreview } = {}) {
         simpleBtn,
       ]);
       const projectHost = el('div', { class: 'project-host' });
-      const pages = el('div', { class: 'win-pages', tabindex: '0', role: 'region', 'aria-label': 'Inhoud' }, [
+      const pages = el('div', { class: 'win-pages', tabindex: '0', role: 'region', 'aria-label': t('Inhoud') }, [
         pageHome(), pageProjecten(), pageErvaring(), pageSkills(),
         el('article', { class: 'page', dataset: { page: 'contact' } }, [el('h2', { class: 'section-heading', text: 'Contact' }), contactView().view]),
         pageCV(), projectHost,
@@ -290,7 +291,7 @@ export function createPortfolioApp({ initialPage = 'home', onPreview } = {}) {
         if (r.project) {
           projectHost.replaceChildren(pageProject(r.project, onPreview));
           projectHost.firstElementChild.classList.add('active');
-          crumb = `Projecten › ${r.project.title}`;
+          crumb = `${t('Projecten')} › ${r.project.title}`;
         } else {
           pages.querySelector(`.page[data-page="${r.page}"]`)?.classList.add('active');
         }
@@ -366,8 +367,8 @@ export function createPortfolioApp({ initialPage = 'home', onPreview } = {}) {
           view: [
             ...PAGES.map((pg) => ({ label: pg.label, checked: current.page === pg.id, action: () => navigate(pg.id) })),
             { divider: true },
-            { label: 'Vorige pagina', key: '⌘[', action: goBack, disabled: idx <= 0 },
-            { label: 'Volgende pagina', key: '⌘]', action: goFwd, disabled: idx >= history.length - 1 },
+            { label: t('Vorige pagina'), key: '⌘[', action: goBack, disabled: idx <= 0 },
+            { label: t('Volgende pagina'), key: '⌘]', action: goFwd, disabled: idx >= history.length - 1 },
           ],
         }),
       };

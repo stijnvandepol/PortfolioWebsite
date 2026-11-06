@@ -18,7 +18,8 @@ import { dirname, join } from 'node:path';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const src = (p) => join(root, 'src', p);
-const { CONFIG, categoryLabel } = await import(pathToFileURL(src('assets/js/data/config.js')).href);
+const { CONFIG, CONTENT } = await import(pathToFileURL(src('assets/js/data/config.js')).href);
+const { localize, translate } = await import(pathToFileURL(src('assets/js/core/i18n.js')).href);
 const { sym } = await import(pathToFileURL(src('assets/js/apps/icons.js')).href);
 
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -77,24 +78,33 @@ const head = `<!-- head:start (gegenereerd door scripts/generate-static.mjs — 
   <!-- head:end -->`;
 
 // ---------------------------------------------------------------- body
-const project = (pr) => `
+// De statische pagina bestaat in twee talen: Nederlands staat direct in de HTML (ook zonder
+// JavaScript), Engels in <template id="static-en">. os/simple.js wisselt die in als de taal Engels is.
+function staticPortfolio(L) {
+  const C = localize(CONTENT, L);
+  const p = C.profile;
+  const tr = (s, v) => translate(s, v, L);
+  const kind = { web: tr('Website'), app: tr('iOS-app'), lab: tr('Homelab & opdracht') };
+  const other = L === 'nl' ? 'en' : 'nl';
+
+  const project = (pr) => `
       <article class="m-project" id="projecten/${esc(pr.id)}">
-        <figure class="m-project-img"><img src="${esc(pr.thumb || pr.image)}" alt="Screenshot van ${esc(pr.title)}" width="600" height="${pr.kind === 'lab' ? 450 : 300}" loading="lazy" decoding="async"></figure>
+        <figure class="m-project-img"><img src="${esc(pr.thumb || pr.image)}" alt="${esc(tr('Screenshot van {title}', { title: pr.title }))}" width="600" height="${pr.kind === 'lab' ? 450 : 300}" loading="lazy" decoding="async"></figure>
         <div class="m-project-body">
-          <p class="m-kind">${{ web: 'Website', app: 'iOS-app', lab: 'Homelab &amp; opdracht' }[pr.kind]}${pr.status ? ` · <span class="m-status ${esc(pr.status)}">${pr.status === 'online' ? 'Online' : 'Offline'}</span>` : ''}${pr.date ? ` · ${esc(pr.date)}` : ''}</p>
+          <p class="m-kind">${esc(kind[pr.kind])}${pr.status ? ` · <span class="m-status ${esc(pr.status)}">${pr.status === 'online' ? 'Online' : 'Offline'}</span>` : ''}${pr.date ? ` · ${esc(pr.date)}` : ''}</p>
           <h3 class="m-project-title">${esc(pr.title)}</h3>
           <p class="m-project-sub">${esc(pr.subtitle)}</p>
           ${tags(pr.tags)}
           <p class="m-project-text">${esc(pr.text)}</p>
-          ${pr.role ? `<p class="m-project-text"><strong>Rol:</strong> ${esc(pr.role)}</p>` : ''}
-          ${pr.result ? `<p class="m-project-text"><strong>Resultaat:</strong> ${esc(pr.result)}</p>` : ''}
+          ${pr.role ? `<p class="m-project-text"><strong>${esc(tr('Rol'))}:</strong> ${esc(pr.role)}</p>` : ''}
+          ${pr.result ? `<p class="m-project-text"><strong>${esc(tr('Resultaat'))}:</strong> ${esc(pr.result)}</p>` : ''}
           ${(pr.details || []).map((d) => `<p class="m-project-text"><strong>${esc(d.title)}:</strong> ${esc(d.text)}</p>`).join('')}
-          ${pr.url ? `<a class="m-link" href="${esc(pr.url)}" ${ext}>Bezoek ${esc(pr.title)} <span aria-hidden="true">↗</span></a>` : ''}
+          ${pr.url ? `<a class="m-link" href="${esc(pr.url)}" ${ext}>${esc(tr('Bezoek {title}', { title: pr.title }))} <span aria-hidden="true">↗</span></a>` : ''}
           ${(pr.links || []).map((l) => `<a class="m-link" href="${esc(l.url)}" ${ext}>${esc(l.label)} <span aria-hidden="true">↗</span></a>`).join('')}
         </div>
       </article>`;
 
-const experience = (e) => `
+  const experience = (e) => `
       <li class="m-tl-item">
         <h3 class="m-tl-title">${esc(e.role)} <span class="m-tl-org">· ${esc(e.org)}</span></h3>
         <p class="m-tl-date">${esc([e.period, e.duration, e.location].filter(Boolean).join(' · '))}</p>
@@ -102,74 +112,78 @@ const experience = (e) => `
         ${tags(e.tags)}
       </li>`;
 
-const tabs = [['home', 'Home', 'person'], ['projecten', 'Projecten', 'grid'], ['ervaring', 'Ervaring', 'briefcase'], ['skills', 'Skills', 'chart'], ['contact', 'Contact', 'envelope']];
+  const tabs = [['home', 'Home', 'person'], ['projecten', tr('Projecten'), 'grid'], ['ervaring', tr('Ervaring'), 'briefcase'], ['skills', 'Skills', 'chart'], ['contact', 'Contact', 'envelope']];
 
-const body = `<!-- static:start (gegenereerd door scripts/generate-static.mjs — niet handmatig wijzigen) -->
-  <div class="m-root" id="static-portfolio">
+  return `<div class="m-root" id="static-portfolio" data-lang="${L}">
     <main class="m-portfolio" id="main">
       <header class="m-hero" id="home">
-        <figure class="m-avatar"><img src="./assets/images/portret.webp" alt="Portret van ${esc(p.name)}" width="120" height="120" fetchpriority="high" decoding="async"></figure>
+        <figure class="m-avatar"><img src="./assets/images/portret.webp" alt="${esc(tr('Portret van {name}', { name: p.name }))}" width="120" height="120" fetchpriority="high" decoding="async"></figure>
         <h1 class="m-name">${esc(p.name)}</h1>
         <p class="m-role">${esc(p.role)}</p>
         <p class="m-intro">${esc(p.intro)}</p>
-        <ul class="m-chips" aria-label="Specialisaties">${CONFIG.focus.map((f) => `<li class="m-chip">${esc(f.title)}</li>`).join('')}</ul>
+        <ul class="m-chips" aria-label="${esc(tr('Specialisaties'))}">${C.focus.map((f) => `<li class="m-chip">${esc(f.title)}</li>`).join('')}</ul>
         <div class="m-cta">
-          <a class="m-btn m-btn-primary" href="#contact">Neem contact op</a>
-          <a class="m-btn" href="${esc(p.cv)}" download="${esc(p.cvName)}">Download CV</a>
-          <a class="m-btn" href="#projecten">Bekijk projecten</a>
+          <a class="m-btn m-btn-primary" href="#contact">${esc(tr('Neem contact op'))}</a>
+          <a class="m-btn" href="${esc(p.cv)}" download="${esc(p.cvName)}">${esc(tr('Download CV'))}</a>
+          <a class="m-btn" href="#projecten">${esc(tr('Bekijk projecten'))}</a>
           <a class="m-btn" href="${esc(p.github)}" ${ext}>GitHub</a>
         </div>
       </header>
 
       <section class="m-section" id="projecten" aria-labelledby="h-projecten">
-        <h2 class="m-section-title" id="h-projecten">Projecten</h2>
-        <div class="m-projects">${CONFIG.projects.map(project).join('')}
+        <h2 class="m-section-title" id="h-projecten">${esc(tr('Projecten'))}</h2>
+        <div class="m-projects">${C.projects.map(project).join('')}
         </div>
       </section>
 
       <section class="m-section" id="ervaring" aria-labelledby="h-ervaring">
-        <h2 class="m-section-title" id="h-ervaring">Ervaring</h2>
-        <ol class="m-timeline">${CONFIG.experience.map(experience).join('')}
+        <h2 class="m-section-title" id="h-ervaring">${esc(tr('Ervaring'))}</h2>
+        <ol class="m-timeline">${C.experience.map(experience).join('')}
         </ol>
-        <h3 class="m-subtitle" id="opleiding">Opleiding</h3>
-        <ol class="m-timeline">${CONFIG.education.map((e) => `
+        <h3 class="m-subtitle" id="opleiding">${esc(tr('Opleiding'))}</h3>
+        <ol class="m-timeline">${C.education.map((e) => `
           <li class="m-tl-item"><h3 class="m-tl-title">${esc(e.title)} <span class="m-tl-org">· ${esc(e.org)}</span></h3><p class="m-tl-date">${esc(e.period)}</p><p class="m-text">${esc(e.text)}</p></li>`).join('')}
         </ol>
       </section>
 
       <section class="m-section" id="skills" aria-labelledby="h-skills">
         <h2 class="m-section-title" id="h-skills">Skills</h2>
-        <div class="m-skill-groups">${CONFIG.skills.map((s) => `
+        <div class="m-skill-groups">${C.skills.map((s) => `
           <div class="m-skill-group"><h3 class="m-skill-title">${esc(s.category)}</h3>${tags(s.items)}</div>`).join('')}
         </div>
         <h3 class="m-subtitle">Soft skills</h3>
-        ${tags(CONFIG.softskills)}
-        <div class="gh" data-gh hidden><h3 class="m-subtitle">GitHub-activiteit</h3></div>
+        ${tags(C.softskills)}
+        <div class="gh" data-gh hidden><h3 class="m-subtitle">${esc(tr('GitHub-activiteit'))}</h3></div>
       </section>
 
       <section class="m-section" id="over" aria-labelledby="h-over">
-        <h2 class="m-section-title" id="h-over">Over mij</h2>
-        ${CONFIG.about.map((t) => `<p class="m-text">${esc(t)}</p>`).join('\n        ')}
+        <h2 class="m-section-title" id="h-over">${esc(tr('Over mij'))}</h2>
+        ${C.about.map((t) => `<p class="m-text">${esc(t)}</p>`).join('\n        ')}
       </section>
 
       <footer class="m-footer" id="contact">
         <h2 class="m-section-title" id="h-contact">Contact</h2>
-        <p class="m-text">Ik denk graag mee over stages, opdrachten en samenwerking. Stuur me gerust een bericht.</p>
+        <p class="m-text">${esc(tr('Ik denk graag mee over stages, opdrachten en samenwerking. Stuur me gerust een bericht.'))}</p>
         <div class="m-social">
           <a class="m-btn m-btn-primary" href="mailto:${esc(p.email)}">${sym('envelope', 16)} ${esc(p.email)}</a>
           <a class="m-btn" href="${esc(p.linkedin)}" ${ext}>LinkedIn</a>
           <a class="m-btn" href="${esc(p.github)}" ${ext}>GitHub</a>
-          <a class="m-btn" href="${esc(p.cv)}" download="${esc(p.cvName)}">Download CV</a>
+          <a class="m-btn" href="${esc(p.cv)}" download="${esc(p.cvName)}">${esc(tr('Download CV'))}</a>
         </div>
         <p class="m-location">${sym('mappin', 14)} ${esc(p.location)}</p>
-        <p class="m-note"><button class="m-view-toggle" id="view-desktop" type="button" hidden>Bekijk als macOS-desktop</button></p>
+        <p class="m-note"><button class="m-view-toggle" id="view-lang" type="button" lang="${other}" data-lang="${other}" hidden>${other === 'en' ? 'English' : 'Nederlands'}</button> <button class="m-view-toggle" id="view-desktop" type="button" hidden>${esc(tr('Bekijk als macOS-desktop'))}</button></p>
         <p class="m-copyright">© ${esc(p.name)}</p>
       </footer>
     </main>
-    <nav class="m-tabbar" aria-label="Secties">${tabs.map(([id, label, ic]) => `
-      <a class="m-tab" href="#${id}" data-target="${id}"><span class="m-tab-ic">${sym(ic, 22)}</span><span class="m-tab-label">${label}</span></a>`).join('')}
+    <nav class="m-tabbar" aria-label="${esc(tr('Secties'))}">${tabs.map(([id, label, ic]) => `
+      <a class="m-tab" href="#${id}" data-target="${id}"><span class="m-tab-ic">${sym(ic, 22)}</span><span class="m-tab-label">${esc(label)}</span></a>`).join('')}
     </nav>
-  </div>
+  </div>`;
+}
+
+const body = `<!-- static:start (gegenereerd door scripts/generate-static.mjs, niet handmatig wijzigen) -->
+  ${staticPortfolio('nl')}
+  <template id="static-en">${staticPortfolio('en')}</template>
   <!-- static:end -->`;
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

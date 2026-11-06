@@ -9,9 +9,10 @@ import {
   accentList, accentHex, ACCENT_LABELS,
 } from '../core/theme.js';
 import { sym } from '../apps/icons.js';
+import { t, tc, languagePref, setLanguage } from '../core/i18n.js';
 
 /** Segmented control (radiogroup) met pijltoets-navigatie. */
-export function segmented({ label, options, value, onChange, variant = '' }) {
+export function segmented({ label, options, value, onChange, variant = '', arrowsSelect = true }) {
   const wrap = el('div', { class: `seg ${variant}`.trim(), role: 'radiogroup', 'aria-label': label });
   const buttons = options.map((o) => {
     const b = el('button', { class: 'seg-btn', type: 'button', role: 'radio', 'aria-label': o.label, dataset: { value: o.value } }, [
@@ -35,9 +36,9 @@ export function segmented({ label, options, value, onChange, variant = '' }) {
     const dir = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
     if (!dir) return;
     e.preventDefault();
-    const i = buttons.findIndex((b) => b.classList.contains('active'));
+    const i = arrowsSelect ? buttons.findIndex((b) => b.classList.contains('active')) : Math.max(0, buttons.indexOf(document.activeElement));
     const next = buttons[(i + dir + buttons.length) % buttons.length];
-    next.focus(); next.click();
+    next.focus(); if (arrowsSelect) next.click();
   });
   set(value);
   wrap.setValue = set;
@@ -55,7 +56,7 @@ export function switchControl({ label, checked, onChange, labelledBy }) {
 
 /** Accentkleur-kiezer (radiogroup van kleurstippen). */
 export function accentPicker() {
-  const wrap = el('div', { class: 'accent-row', role: 'radiogroup', 'aria-label': 'Accentkleur' });
+  const wrap = el('div', { class: 'accent-row', role: 'radiogroup', 'aria-label': t('Accentkleur') });
   const dots = accentList().map((name) => {
     const d = el('button', { class: 'accent-dot', type: 'button', role: 'radio', title: ACCENT_LABELS[name] || name, 'aria-label': ACCENT_LABELS[name] || name, dataset: { accent: name }, style: { '--dot': accentHex(name) } }, [
       el('span', { class: 'accent-dot-check', html: sym('check', 12) }),
@@ -83,12 +84,12 @@ export function accentPicker() {
 /** Weergave-keuze (Licht/Donker/Auto), gesynchroniseerd met de store. */
 export function appearanceControl() {
   const seg = segmented({
-    label: 'Weergave',
+    label: tc('thema', 'Weergave'),
     value: store.get('theme'),
     options: [
-      { value: 'light', label: 'Licht', icon: sym('sun', 15) },
-      { value: 'dark', label: 'Donker', icon: sym('moon', 15) },
-      { value: 'auto', label: 'Automatisch', icon: sym('auto', 15) },
+      { value: 'light', label: t('Licht'), icon: sym('sun', 15) },
+      { value: 'dark', label: t('Donker'), icon: sym('moon', 15) },
+      { value: 'auto', label: t('Automatisch'), icon: sym('auto', 15) },
     ],
     onChange: setTheme,
   });
@@ -96,13 +97,29 @@ export function appearanceControl() {
   return seg;
 }
 
+/** Taal: automatisch (browser), Nederlands of English. Wisselen laadt de pagina opnieuw en opent Instellingen weer. */
+export function languageControl() {
+  return segmented({
+    label: t('Taal'),
+    value: languagePref(),
+    options: [
+      { value: 'auto', label: t('Automatisch') },
+      { value: 'nl', label: 'Nederlands' },
+      { value: 'en', label: 'English' },
+    ],
+    // Wisselen herlaadt de pagina: pijltjes verplaatsen alleen de focus, Enter of klik kiest.
+    arrowsSelect: false,
+    onChange: (v) => { if (v !== languagePref()) setLanguage(v, { app: 'settings', page: 'appearance' }); },
+  });
+}
+
 export function motionSwitch(labelledBy) {
-  const sw = switchControl({ label: 'Verminder beweging', labelledBy, checked: store.get('reducedMotion'), onChange: setReducedMotion });
+  const sw = switchControl({ label: t('Verminder beweging'), labelledBy, checked: store.get('reducedMotion'), onChange: setReducedMotion });
   store.on('reducedMotion', (v) => sw.setChecked(!!v));
   return sw;
 }
 export function transparencySwitch(labelledBy) {
-  const sw = switchControl({ label: 'Verminder transparantie', labelledBy, checked: store.get('reducedTransparency'), onChange: setReducedTransparency });
+  const sw = switchControl({ label: t('Verminder transparantie'), labelledBy, checked: store.get('reducedTransparency'), onChange: setReducedTransparency });
   store.on('reducedTransparency', (v) => sw.setChecked(!!v));
   return sw;
 }

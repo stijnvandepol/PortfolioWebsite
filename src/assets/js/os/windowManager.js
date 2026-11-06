@@ -11,6 +11,7 @@
 import { el, clamp, prefersReducedMotion, rafThrottle } from '../core/dom.js';
 import { store } from '../core/store.js';
 import { getDockTarget } from './dock.js';
+import { t } from '../core/i18n.js';
 
 const SNAP_EDGE = 14;       // px tot rand om snap te triggeren
 const MIN_VISIBLE = 80;     // px van een venster die altijd zichtbaar blijven bij slepen
@@ -103,10 +104,10 @@ class WindowInstance {
     };
 
     this.titlebarContent = el('div', { class: 'titlebar-content' });
-    const lights = el('div', { class: 'traffic-lights', role: 'group', 'aria-label': 'Vensterknoppen' }, [
-      this._light('close', 'Sluit venster', '<path d="M3.3 3.3l5.4 5.4M8.7 3.3 3.3 8.7" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" fill="none"/>'),
-      this._light('minimize', 'Minimaliseer venster', '<path d="M2.8 6h6.4" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" fill="none"/>'),
-      this._light('maximize', 'Zoom venster', '<path d="M3.1 8.9V5.1l3.8 3.8zM8.9 3.1v3.8L5.1 3.1z" fill="currentColor"/>', !this.zoomable),
+    const lights = el('div', { class: 'traffic-lights', role: 'group', 'aria-label': t('Vensterknoppen') }, [
+      this._light('close', t('Sluit venster'), '<path d="M3.3 3.3l5.4 5.4M8.7 3.3 3.3 8.7" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" fill="none"/>'),
+      this._light('minimize', t('Minimaliseer venster'), '<path d="M2.8 6h6.4" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" fill="none"/>'),
+      this._light('maximize', t('Zoom venster'), '<path d="M3.1 8.9V5.1l3.8 3.8zM8.9 3.1v3.8L5.1 3.1z" fill="currentColor"/>', !this.zoomable),
     ]);
     this.titlebar = el('div', { class: 'titlebar' }, [lights, this.titlebarContent]);
     this.body = el('div', { class: 'win-body' });

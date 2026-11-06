@@ -16,7 +16,7 @@ function buildFS() {
   return {
     Projecten: CONFIG.projects.map((p) => ({ type: 'image', name: `${p.title}.webp`, id: p.id, src: p.image, title: p.title, desc: p.subtitle, tags: p.tags.join(' ') })).sort(byName),
     Documenten: [
-      { type: 'pdf', name: 'CV — Stijn van de Pol.pdf', href: CONFIG.profile.cv },
+      { type: 'pdf', name: 'CV Stijn van de Pol.pdf', href: CONFIG.profile.cv },
       { type: 'text', name: 'over-mij.txt', body: `${CONFIG.profile.name}\n${CONFIG.profile.role}\n${CONFIG.profile.location}\n${CONFIG.profile.email}` },
     ].sort(byName),
     Websites: CONFIG.projects.filter((p) => p.url).map((p) => ({ type: 'link', name: `${p.title}.url`, href: p.url })).sort(byName),
@@ -102,7 +102,7 @@ export function createFinderApp({ initial = 'Projecten' } = {}) {
       function updateStatus() {
         const total = fs[loc].length;
         const q = search.value.trim();
-        status.textContent = (q ? `${visible.length} van ${total} onderdelen` : `${total} onderdelen`) + ' — dubbelklik of druk op Enter om te openen';
+        status.textContent = (q ? `${visible.length} van ${total} onderdelen` : `${total} onderdelen`) + ' · dubbelklik of druk op Enter om te openen';
       }
 
       function paint() {

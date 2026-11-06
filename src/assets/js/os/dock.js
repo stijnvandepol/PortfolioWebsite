@@ -157,7 +157,7 @@ function syncTiles(list) {
     if (tiles.has(w.id)) return;
     const reduced = prefersReducedMotion();
     const icon = el('div', { class: 'di-icon', html: iconFor(w.appId), style: { width: reduced ? `${BASE}px` : '0px', height: reduced ? `${BASE}px` : '0px' } });
-    const host = el('button', { class: 'di di-tile', type: 'button', dataset: { dockWin: w.id }, 'aria-label': `${w.title} — herstel venster` }, [
+    const host = el('button', { class: 'di di-tile', type: 'button', dataset: { dockWin: w.id }, 'aria-label': `${w.title}: herstel venster` }, [
       el('div', { class: 'di-tip', 'aria-hidden': 'true', text: w.title }), icon,
     ]);
     host.addEventListener('click', () => os.focusWindow(w.id));

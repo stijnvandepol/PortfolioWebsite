@@ -11,6 +11,7 @@ import { store } from '../core/store.js';
 import { CONFIG, projectById } from '../data/config.js';
 import { sym } from './icons.js';
 import { segmented } from '../ui/controls.js';
+import { mountContributions } from '../ui/contributions.js';
 import { contactView } from './contact.js';
 import { setView } from '../core/view.js';
 
@@ -70,7 +71,7 @@ function projectCard(pr) {
 
 function sectionHead(title, more) {
   return el('div', { class: 'sec-head' }, [
-    el('h2', { class: 'section-heading accent-bar', text: title }),
+    el('h2', { class: 'section-heading', text: title }),
     more ? routeLink(more.route, 'sec-more', [more.label, icon('chevron.right', 13)]) : null,
   ]);
 }
@@ -86,7 +87,7 @@ function timelineList(items, render) {
   return el('ol', { class: 'timeline' }, items.map((it) => el('li', { class: 'timeline-item' }, render(it))));
 }
 const expItem = (e) => [
-  el('h3', { class: 'tl-title' }, [e.role, el('span', { class: 'tl-org', text: ` – ${e.org}` })]),
+  el('h3', { class: 'tl-title' }, [e.role, el('span', { class: 'tl-org', text: ` · ${e.org}` })]),
   el('p', { class: 'tl-date', text: [e.period, e.duration, e.location].filter(Boolean).join(' · ') }),
   el('p', { class: 'tl-text', text: e.text }),
   e.tags?.length ? chips(e.tags, 'chips chips-sm') : null,
@@ -118,7 +119,7 @@ function pageHome() {
     ]),
     el('section', { class: 'about-text', 'aria-label': 'Over mij' }, CONFIG.about.map((t) => el('p', { text: t }))),
     el('section', { class: 'home-sec', 'aria-label': 'Wat ik doe' }, [
-      el('h2', { class: 'section-heading accent-bar', text: 'Wat ik doe' }),
+      el('h2', { class: 'section-heading', text: 'Wat ik doe' }),
       el('div', { class: 'bento-grid' }, CONFIG.focus.map((f) =>
         el('div', { class: 'bento-card' }, [
           el('div', { class: 'bento-icon', html: sym(f.icon, 20) }),
@@ -134,7 +135,7 @@ function pageHome() {
       sectionHead('Ervaring', { route: 'ervaring', label: 'Ervaring & opleiding' }),
       el('ul', { class: 'exp-glance' }, CONFIG.experience.slice(0, 3).map((e) =>
         el('li', {}, [
-          el('span', { class: 'eg-main' }, [el('strong', { text: e.role }), ` — ${e.org}`]),
+          el('span', { class: 'eg-main' }, [el('strong', { text: e.role }), ` · ${e.org}`]),
           el('span', { class: 'eg-date', text: e.period }),
         ]))),
     ]),
@@ -193,7 +194,7 @@ function pageProject(pr, onPreview) {
   ]);
 }
 
-const bigHead = (ic, text, id) => el('h2', { class: 'section-heading accent-bar big', id }, [el('span', { class: 'i head-ic', html: sym(ic, 20) }), text]);
+const bigHead = (ic, text, id) => el('h2', { class: 'section-heading big', id }, [el('span', { class: 'i head-ic', html: sym(ic, 20) }), text]);
 
 function pageErvaring() {
   return el('article', { class: 'page', dataset: { page: 'ervaring' } }, [
@@ -202,7 +203,7 @@ function pageErvaring() {
     el('div', { class: 'tl-section', dataset: { anchor: 'opleiding' } }, [
       bigHead('cap', 'Opleiding'),
       timelineList(CONFIG.education, (e) => [
-        el('h3', { class: 'tl-title' }, [e.title, el('span', { class: 'tl-org', text: ` – ${e.org}` })]),
+        el('h3', { class: 'tl-title' }, [e.title, el('span', { class: 'tl-org', text: ` · ${e.org}` })]),
         el('p', { class: 'tl-date', text: e.period }),
         el('p', { class: 'tl-text', text: e.text }),
       ]),
@@ -217,6 +218,7 @@ function pageSkills() {
     el('div', { class: 'skgrid' }, CONFIG.skills.map(skillGroup)),
     el('h3', { class: 'pd-h', text: 'Soft skills' }),
     chips(CONFIG.softskills, 'chips chips-pill'),
+    mountContributions(el('section', { class: 'gh' }, [el('h3', { class: 'pd-h', text: 'GitHub-activiteit' })])),
   ]);
 }
 
@@ -298,7 +300,7 @@ export function createPortfolioApp({ initialPage = 'home', onPreview } = {}) {
           if (on) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current');
         });
         subtitle.textContent = crumb;
-        win.setTitle(`Portfolio — ${crumb}`);
+        win.setTitle(`Portfolio · ${crumb}`);
         if (r.anchor) pages.querySelector(`[data-anchor="${r.anchor}"]`)?.scrollIntoView({ block: 'start' });
         else if (started) pages.scrollTop = 0; // geen layout-read bij de eerste render
         started = true;

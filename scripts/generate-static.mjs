@@ -44,7 +44,7 @@ const ld = {
       alumniOf: CONFIG.education.map((e) => ({ '@type': 'EducationalOrganization', name: e.org })),
       knowsAbout: CONFIG.skills.flatMap((s) => s.items),
     },
-    { '@type': 'WebSite', '@id': `${site.url}#website`, url: site.url, name: `${p.name} — Portfolio`, inLanguage: 'nl-NL', author: { '@id': `${site.url}#person` } },
+    { '@type': 'WebSite', '@id': `${site.url}#website`, url: site.url, name: `${p.name} | Portfolio`, inLanguage: 'nl-NL', author: { '@id': `${site.url}#person` } },
     {
       '@type': 'ItemList',
       name: 'Projecten',
@@ -96,7 +96,7 @@ const project = (pr) => `
 
 const experience = (e) => `
       <li class="m-tl-item">
-        <h3 class="m-tl-title">${esc(e.role)} <span class="m-tl-org">— ${esc(e.org)}</span></h3>
+        <h3 class="m-tl-title">${esc(e.role)} <span class="m-tl-org">· ${esc(e.org)}</span></h3>
         <p class="m-tl-date">${esc([e.period, e.duration, e.location].filter(Boolean).join(' · '))}</p>
         <p class="m-text">${esc(e.text)}</p>
         ${tags(e.tags)}
@@ -133,7 +133,7 @@ const body = `<!-- static:start (gegenereerd door scripts/generate-static.mjs �
         </ol>
         <h3 class="m-subtitle" id="opleiding">Opleiding</h3>
         <ol class="m-timeline">${CONFIG.education.map((e) => `
-          <li class="m-tl-item"><h3 class="m-tl-title">${esc(e.title)} <span class="m-tl-org">— ${esc(e.org)}</span></h3><p class="m-tl-date">${esc(e.period)}</p><p class="m-text">${esc(e.text)}</p></li>`).join('')}
+          <li class="m-tl-item"><h3 class="m-tl-title">${esc(e.title)} <span class="m-tl-org">· ${esc(e.org)}</span></h3><p class="m-tl-date">${esc(e.period)}</p><p class="m-text">${esc(e.text)}</p></li>`).join('')}
         </ol>
       </section>
 
@@ -144,6 +144,7 @@ const body = `<!-- static:start (gegenereerd door scripts/generate-static.mjs �
         </div>
         <h3 class="m-subtitle">Soft skills</h3>
         ${tags(CONFIG.softskills)}
+        <div class="gh" data-gh hidden><h3 class="m-subtitle">GitHub-activiteit</h3></div>
       </section>
 
       <section class="m-section" id="over" aria-labelledby="h-over">

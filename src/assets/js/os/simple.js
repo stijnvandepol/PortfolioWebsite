@@ -5,6 +5,7 @@
 //  - op brede schermen: knop om terug te gaan naar de macOS-desktop
 // ============================================================
 import { setView } from '../core/view.js';
+import { mountContributions } from '../ui/contributions.js';
 
 export function initSimple() {
   const tabs = [...document.querySelectorAll('.m-tab')];
@@ -30,6 +31,9 @@ export function initSimple() {
   window.addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(update); } }, { passive: true });
   window.addEventListener('resize', update);
   update();
+
+  const gh = document.querySelector('[data-gh]');
+  if (gh) mountContributions(gh);
 
   // Diepe link uit de desktop-weergave (#projecten/slug): scroll naar het project.
   if (location.hash.length > 1) requestAnimationFrame(() => document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView());

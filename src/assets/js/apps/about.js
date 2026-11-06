@@ -20,7 +20,7 @@ export function aboutContent() {
     el('p', { class: 'about-role', text: p.role }),
     el('dl', { class: 'about-specs' }, [
       ...spec('Systeem', 'Portfolio OS 5.0'),
-      ...spec('Techniek', 'HTML, CSS en JavaScript — geen framework'),
+      ...spec('Techniek', 'HTML, CSS en JavaScript, zonder framework'),
       ...spec('Ontwerp', 'Geïnspireerd op macOS'),
       ...spec('Locatie', p.location),
     ]),

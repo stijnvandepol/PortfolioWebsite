@@ -8,7 +8,7 @@ import { os } from '../os/bridge.js';
 const FS = {
   'about.txt': () => `${CONFIG.profile.name}\n${CONFIG.profile.role}\n${CONFIG.profile.location}`,
   'contact.txt': () => `email:    ${CONFIG.profile.email}\ngithub:   ${CONFIG.profile.github}\nlinkedin: ${CONFIG.profile.linkedin}`,
-  'cv.pdf': () => '(binair) — open de Finder om het cv te bekijken/downloaden.',
+  'cv.pdf': () => '(binair) Open de Finder om het cv te bekijken of te downloaden.',
 };
 
 export function createTerminalApp() {
@@ -19,10 +19,10 @@ export function createTerminalApp() {
     width: 680, height: 440, minWidth: 380, minHeight: 240,
     singleton: false,
     mount({ win, titlebar, body }) {
-      const titleEl = el('span', { class: 'win-title', text: 'stijn — -zsh' });
+      const titleEl = el('span', { class: 'win-title', text: 'stijn@portfolio ~' });
       titlebar.append(titleEl);
       win.bindTitle(titleEl);
-      win.setTitle('stijn — -zsh');
+      win.setTitle('stijn@portfolio ~');
       body.classList.add('term-body');
 
       const out = el('div', { class: 'term-out' });
@@ -50,16 +50,16 @@ export function createTerminalApp() {
         ].map(escapeHtml).join('<br>')),
         about: () => print(escapeHtml(FS['about.txt']()).replace(/\n/g, '<br>')),
         whoami: () => print('stijn'),
-        projects: () => print(CONFIG.projects.map((p) => `• <span class="t-accent">${escapeHtml(p.title)}</span> — ${escapeHtml(p.tags.join(' · '))}`).join('<br>')),
+        projects: () => print(CONFIG.projects.map((p) => `• <span class="t-accent">${escapeHtml(p.title)}</span>: ${escapeHtml(p.tags.join(' · '))}`).join('<br>')),
         skills: () => print([
           ...CONFIG.skills.map((g) => `<span class="t-accent">${escapeHtml(g.category)}</span><br>  ${escapeHtml(g.items.join(' · '))}`),
           '',
           `Soft skills: ${CONFIG.softskills.map(escapeHtml).join(', ')}`,
         ].join('<br>')),
-        experience: () => print(CONFIG.experience.map((e) => `<span class="t-accent">${escapeHtml(e.role)} — ${escapeHtml(e.org)}</span><br>  ${escapeHtml(e.period)}`).join('<br>')),
-        education: () => print(CONFIG.education.map((e) => `<span class="t-accent">${escapeHtml(e.title)} — ${escapeHtml(e.org)}</span><br>  ${escapeHtml(e.period)}`).join('<br>')),
+        experience: () => print(CONFIG.experience.map((e) => `<span class="t-accent">${escapeHtml(e.role)} · ${escapeHtml(e.org)}</span><br>  ${escapeHtml(e.period)}`).join('<br>')),
+        education: () => print(CONFIG.education.map((e) => `<span class="t-accent">${escapeHtml(e.title)} · ${escapeHtml(e.org)}</span><br>  ${escapeHtml(e.period)}`).join('<br>')),
         contact: () => print(escapeHtml(FS['contact.txt']()).replace(/\n/g, '<br>')),
-        social: () => { print('GitHub · LinkedIn — link geopend.'); os.openExternal(CONFIG.profile.github); },
+        social: () => { print('GitHub geopend in een nieuw tabblad.'); os.openExternal(CONFIG.profile.github); },
         ls: () => print(Object.keys(FS).map((f) => `<span class="t-file">${escapeHtml(f)}</span>`).join('&nbsp;&nbsp;')),
         cat: (arg) => { if (!arg) return print('cat: ontbrekend bestand', 'term-err'); const f = FS[arg]; if (!f) return print(`cat: ${escapeHtml(arg)}: bestaat niet`, 'term-err'); print(escapeHtml(f()).replace(/\n/g, '<br>')); },
         open: (arg) => { const apps = os.listApps().map((a) => a.id); if (!arg) return print('open: geef een app, bv. open finder', 'term-err'); if (!apps.includes(arg)) return print(`open: onbekende app '${escapeHtml(arg)}'`, 'term-err'); os.open(arg); print(`'${escapeHtml(arg)}' geopend.`); },
@@ -91,7 +91,7 @@ export function createTerminalApp() {
         const [name, ...args] = cmd.split(/\s+/);
         const fn = commands[name.toLowerCase()];
         if (fn) fn(...args);
-        else print(`zsh: command not found: ${escapeHtml(name)} — typ <span class="t-accent">help</span>`, 'term-err');
+        else print(`zsh: command not found: ${escapeHtml(name)}. Typ <span class="t-accent">help</span>`, 'term-err');
       }
 
       input.addEventListener('keydown', (e) => {
@@ -110,7 +110,7 @@ export function createTerminalApp() {
         }
       });
 
-      print('Welkom bij <span class="t-accent">portfolio-os</span> — typ <span class="t-accent">help</span> voor commando\'s.', 'term-welcome');
+      print('Welkom bij <span class="t-accent">portfolio-os</span>. Typ <span class="t-accent">help</span> voor commando\'s.', 'term-welcome');
       commands.neofetch();
       setTimeout(() => input.focus(), 50);
 

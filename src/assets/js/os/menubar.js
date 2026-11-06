@@ -276,7 +276,7 @@ export function initMenubar(root) {
       battery.innerHTML = batterySym(b.level, b.charging);
       const pct = Math.round(b.level * 100);
       battery.setAttribute('aria-label', `Batterij ${pct}%${b.charging ? ', laadt op' : ''}`);
-      battery.title = `${pct}%${b.charging ? ' — laadt op' : ''}`;
+      battery.title = `${pct}%${b.charging ? ', laadt op' : ''}`;
     };
     paint();
     ['levelchange', 'chargingchange'].forEach((t) => b.addEventListener(t, paint));

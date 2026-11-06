@@ -25,8 +25,8 @@ function buildIndex() {
     .forEach(([label, page, ic]) => items.push({ type: 'Pagina', label, sub: 'Portfolio', iconHtml: sym(ic, 17), run: () => os.open('portfolio', { initialPage: page }) }));
 
   CONFIG.projects.forEach((pr) => items.push({ type: 'Project', label: pr.title, sub: `${pr.subtitle} · ${pr.tags.join(', ')}`, iconHtml: sym(pr.kind === 'web' ? 'globe' : 'grid', 17), run: () => os.open('portfolio', { initialPage: `projecten/${pr.id}` }) }));
-  CONFIG.experience.forEach((e) => items.push({ type: 'Ervaring', label: `${e.role} — ${e.org}`, sub: `${e.period} · ${e.tags.join(', ')}`, iconHtml: sym('briefcase', 17), run: () => os.open('portfolio', { initialPage: 'ervaring' }) }));
-  CONFIG.education.forEach((e) => items.push({ type: 'Ervaring', label: `${e.title} — ${e.org}`, sub: e.period, iconHtml: sym('cap', 17), run: () => os.open('portfolio', { initialPage: 'opleiding' }) }));
+  CONFIG.experience.forEach((e) => items.push({ type: 'Ervaring', label: `${e.role} · ${e.org}`, sub: `${e.period} · ${e.tags.join(', ')}`, iconHtml: sym('briefcase', 17), run: () => os.open('portfolio', { initialPage: 'ervaring' }) }));
+  CONFIG.education.forEach((e) => items.push({ type: 'Ervaring', label: `${e.title} · ${e.org}`, sub: e.period, iconHtml: sym('cap', 17), run: () => os.open('portfolio', { initialPage: 'opleiding' }) }));
   CONFIG.skills.forEach((g) => items.push({ type: 'Vaardigheid', label: g.category, sub: g.items.join(', '), iconHtml: sym(g.icon, 17), run: () => os.open('portfolio', { initialPage: 'skills' }) }));
 
   // Instagram bewust níét: dat is de verstopte terminal-easter-egg.

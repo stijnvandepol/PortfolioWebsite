@@ -97,8 +97,8 @@ export function appearanceControl() {
   return seg;
 }
 
-/** Taal: automatisch (browser), Nederlands of English. Wisselen laadt de pagina opnieuw en opent Instellingen weer. */
-export function languageControl() {
+/** Taal: automatisch (browser), Nederlands of English. Wisselen laadt de pagina opnieuw; `reopen` = venster dat daarna weer open moet. */
+export function languageControl(reopen = { app: 'settings', page: 'appearance' }) {
   return segmented({
     label: t('Taal'),
     value: languagePref(),
@@ -109,7 +109,7 @@ export function languageControl() {
     ],
     // Wisselen herlaadt de pagina: pijltjes verplaatsen alleen de focus, Enter of klik kiest.
     arrowsSelect: false,
-    onChange: (v) => { if (v !== languagePref()) setLanguage(v, { app: 'settings', page: 'appearance' }); },
+    onChange: (v) => { if (v !== languagePref()) setLanguage(v, reopen); },
   });
 }
 

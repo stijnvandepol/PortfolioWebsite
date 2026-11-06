@@ -38,7 +38,9 @@ html.is-simple, html.is-simple body { background: var(--bg); }
 .m-cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 22px; }
 @media (min-width: 760px) {
   .m-hero { text-align: left; display: grid; grid-template-columns: 132px 1fr; column-gap: 28px; align-items: start; padding-top: 56px; }
-  .m-avatar { grid-row: 1 / span 5; width: 132px; height: 132px; margin: 0; }
+  /* Alles naast de foto in kolom 2, hoeveel alinea's de Over mij-tekst ook heeft (lege rijen zijn 0 hoog). */
+  .m-avatar { grid-row: 1 / span 10; width: 132px; height: 132px; margin: 0; }
+  .m-hero > :not(.m-avatar) { grid-column: 2; }
   .m-intro { margin-left: 0; }
   .m-chips, .m-cta { justify-content: flex-start; }
   .m-name { font-size: 40px; }

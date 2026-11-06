@@ -6,8 +6,18 @@
 // ============================================================
 import { setView } from '../core/view.js';
 import { mountContributions } from '../ui/contributions.js';
+import { lang, setLanguage } from '../core/i18n.js';
+import { CONFIG } from '../data/config.js';
 
 export function initSimple() {
+  // Engels: de Engelse versie uit <template id="static-en"> in de plaats van de Nederlandse zetten.
+  const nlRoot = document.getElementById('static-portfolio');
+  const enTpl = document.getElementById('static-en');
+  if (lang === 'en' && nlRoot && enTpl) nlRoot.replaceWith(enTpl.content.cloneNode(true));
+  document.title = CONFIG.site.title;
+  const langBtn = document.getElementById('view-lang');
+  if (langBtn) { langBtn.hidden = false; langBtn.addEventListener('click', () => setLanguage(langBtn.dataset.lang)); }
+
   const tabs = [...document.querySelectorAll('.m-tab')];
   const set = (id) => tabs.forEach((t) => {
     const on = t.dataset.target === id;

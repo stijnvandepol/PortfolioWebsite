@@ -6,6 +6,7 @@
 import { el, copyText } from '../core/dom.js';
 import { CONFIG } from '../data/config.js';
 import { sym } from './icons.js';
+import { t } from '../core/i18n.js';
 
 /**
  * Contactkaart (zoals Contacten op macOS). Geen formulier: dat kon alleen het
@@ -16,18 +17,18 @@ import { sym } from './icons.js';
 export function contactView() {
   const p = CONFIG.profile;
   const live = el('span', { class: 'sr-only', 'aria-live': 'polite' });
-  const copyLabel = el('span', { text: 'Kopieer e-mailadres' });
+  const copyLabel = el('span', { text: t('Kopieer e-mailadres') });
   const copyIc = el('span', { class: 'i', html: sym('copy', 15) });
   const copyBtn = el('button', { class: 'btn ct-copy-btn', type: 'button' }, [copyIc, copyLabel]);
   let resetT;
   async function copyMail() {
     const ok = await copyText(p.email);
     copyIc.innerHTML = sym(ok ? 'check' : 'xmark', 15);
-    copyLabel.textContent = ok ? 'Gekopieerd' : 'Kopiëren mislukt';
+    copyLabel.textContent = ok ? t('Gekopieerd') : t('Kopiëren mislukt');
     copyBtn.classList.toggle('done', ok);
-    live.textContent = ok ? 'E-mailadres gekopieerd' : 'Kopiëren mislukt';
+    live.textContent = ok ? t('E-mailadres gekopieerd') : t('Kopiëren mislukt');
     clearTimeout(resetT);
-    resetT = setTimeout(() => { copyIc.innerHTML = sym('copy', 15); copyLabel.textContent = 'Kopieer e-mailadres'; copyBtn.classList.remove('done'); live.textContent = ''; }, 1800);
+    resetT = setTimeout(() => { copyIc.innerHTML = sym('copy', 15); copyLabel.textContent = t('Kopieer e-mailadres'); copyBtn.classList.remove('done'); live.textContent = ''; }, 1800);
   }
   copyBtn.addEventListener('click', copyMail);
 
@@ -39,19 +40,19 @@ export function contactView() {
   const link = (href, text, extra = ext) => el('a', { class: 'ct-link', href, ...extra, text });
 
   const view = el('div', { class: 'contact-view' }, [
-    el('section', { class: 'ct-card', 'aria-label': 'Contactgegevens' }, [
+    el('section', { class: 'ct-card', 'aria-label': t('Contactgegevens') }, [
       el('figure', { class: 'ct-avatar' }, [el('img', { src: './assets/images/portret.webp', alt: '', width: 96, height: 96, decoding: 'async' })]),
       el('h2', { class: 'ct-name', text: p.name }),
       el('p', { class: 'ct-role', text: p.role }),
-      el('p', { class: 'ct-intro', text: 'Ik denk graag mee over stages, opdrachten en samenwerking. Stuur me gerust een bericht.' }),
+      el('p', { class: 'ct-intro', text: t('Ik denk graag mee over stages, opdrachten en samenwerking. Stuur me gerust een bericht.') }),
       el('div', { class: 'ct-actions' }, [
-        el('a', { class: 'btn btn-primary', href: `mailto:${p.email}` }, [el('span', { class: 'i', html: sym('envelope', 15) }), 'Stuur e-mail']),
+        el('a', { class: 'btn btn-primary', href: `mailto:${p.email}` }, [el('span', { class: 'i', html: sym('envelope', 15) }), t('Stuur e-mail')]),
         copyBtn,
         el('a', { class: 'btn', href: p.linkedin, ...ext }, ['LinkedIn', el('span', { class: 'i', html: sym('external', 13) })]),
       ]),
       el('div', { class: 'ct-rows' }, [
-        row('envelope', 'e-mail', el('span', { class: 'ct-val ct-selectable', text: p.email })),
-        row('mappin', 'locatie', el('span', { class: 'ct-val', text: p.location })),
+        row('envelope', t('e-mail'), el('span', { class: 'ct-val ct-selectable', text: p.email })),
+        row('mappin', t('locatie'), el('span', { class: 'ct-val', text: p.location })),
         row('external', 'LinkedIn', link(p.linkedin, 'linkedin.com/in/stijnvandepol')),
         row('external', 'GitHub', link(p.github, 'github.com/stijnvandepol')),
         row('doc', 'CV', link(p.cv, 'Download CV (PDF)', { download: p.cvName })),
@@ -75,7 +76,7 @@ export function createContactApp() {
       const { view, copyMail } = contactView();
       body.append(view);
       return {
-        getMenus: () => ({ file: [{ label: 'Kopieer e-mailadres', action: copyMail }] }),
+        getMenus: () => ({ file: [{ label: t('Kopieer e-mailadres'), action: copyMail }] }),
       };
     },
   };

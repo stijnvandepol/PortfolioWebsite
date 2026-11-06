@@ -5,6 +5,17 @@
 // Zonder JavaScript krijgt <html> geen klasse en blijft de statische pagina zichtbaar.
 (function () {
   var r = document.documentElement;
+  // Taal (zelfde regel als core/i18n.js): bewaarde keuze, anders de eerste nl- of en-taal van de browser.
+  try {
+    var lang = null;
+    try { lang = JSON.parse(localStorage.getItem('svdp.prefs') || '{}').lang; } catch (e) { /* opslag geblokkeerd */ }
+    if (lang !== 'nl' && lang !== 'en') {
+      lang = 'en';
+      var list = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language];
+      for (var i = 0; i < list.length; i++) { var base = String(list[i]).toLowerCase().split('-')[0]; if (base === 'nl' || base === 'en') { lang = base; break; } }
+    }
+    r.lang = lang;
+  } catch (e) { /* blijft nl */ }
   try {
     var narrow = window.matchMedia('(max-width: 768px)').matches;
     var chosen = null;

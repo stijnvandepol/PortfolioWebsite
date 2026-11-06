@@ -24,6 +24,7 @@ import { CONFIG } from './data/config.js';
 import { APP_ICONS, iconImg, calendarIcon } from './apps/icons.js';
 import { prefersReducedMotion } from './core/dom.js';
 import { setView } from './core/view.js';
+import { t } from './core/i18n.js';
 
 const BOOT_MS = 650; // moet gelijk zijn aan --boot-t in style.css
 const isApple = /Mac|iPhone|iPad/i.test(navigator.platform || navigator.userAgent);
@@ -55,6 +56,7 @@ function openFile(url) {
 }
 
 export function boot() {
+  document.title = CONFIG.site.title; // de <title> in index.html is Nederlands
   const desktop = document.getElementById('desktop');
   const noBoot = document.documentElement.classList.contains('no-boot');
 
@@ -89,11 +91,11 @@ export function boot() {
     app('finder'),
     { id: 'launchpad', label: 'Launchpad', icon: iconImg('launchpad', 'Launchpad'), action: () => os.toggleLaunchpad(), noMenu: true },
     app('portfolio'),
-    { id: 'photos', app: 'portfolio', label: 'Projecten', icon: iconImg('photos', 'Projecten'), action: page('projecten'), noMenu: true },
-    { id: 'calendar', app: 'portfolio', label: 'Ervaring', icon: calendarIcon(), action: page('ervaring'), noMenu: true },
+    { id: 'photos', app: 'portfolio', label: t('Projecten'), icon: iconImg('photos', t('Projecten')), action: page('projecten'), noMenu: true },
+    { id: 'calendar', app: 'portfolio', label: t('Ervaring'), icon: calendarIcon(), action: page('ervaring'), noMenu: true },
     app('contact'),
     app('terminal'),
-    { id: 'settings', label: 'Systeeminstellingen', icon: iconForApp('settings'), closable: true },
+    { id: 'settings', label: t('Systeeminstellingen'), icon: iconForApp('settings'), closable: true },
     { sep: true },
     { id: 'github', label: 'GitHub', icon: iconImg('github', 'GitHub'), href: CONFIG.profile.github },
     { id: 'linkedin', label: 'LinkedIn', icon: APP_ICONS.linkedin, href: CONFIG.profile.linkedin },
@@ -123,7 +125,7 @@ export function boot() {
 
   // Deelbare URL: #projecten/snackspot opent het portfolio direct op die pagina.
   const route = location.hash.length > 1 ? location.hash.slice(1) : 'home';
-  const open = () => { openById('portfolio', { initialPage: route }); welcome(); prefetchApps(); };
+  const open = () => { openById('portfolio', { initialPage: route }); reopen(); welcome(); prefetchApps(); };
   if (delay) {
     // Opstartscherm is nooit een wachtkamer: elke toets of klik slaat het over.
     let done = false;
@@ -133,6 +135,13 @@ export function boot() {
   } else open();
 }
 
+/** Na het wisselen van taal (reload) het venster terugzetten waar de keuze gemaakt werd. */
+function reopen() {
+  let r = null;
+  try { r = JSON.parse(sessionStorage.getItem('svdp.reopen')); sessionStorage.removeItem('svdp.reopen'); } catch { return; }
+  if (r?.app) openById(r.app, { initialPage: r.page });
+}
+
 /** Minimale onboarding: één keer een banner, geen tutorial. */
 function welcome() {
   try {
@@ -140,8 +149,8 @@ function welcome() {
     localStorage.setItem('svdp.welcomed', '1');
   } catch { return; }
   setTimeout(() => notify({
-    title: 'Welkom op mijn desktop',
-    body: `Zoek alles met ${isApple ? '⌘K' : 'Ctrl+K'}. Liever een gewone pagina? Kies “Eenvoudige weergave” in het S-menu.`,
+    title: t('Welkom op mijn desktop'),
+    body: t('Zoek alles met {key}. Liever een gewone pagina? Kies “Eenvoudige weergave” in het S-menu.', { key: isApple ? '⌘K' : 'Ctrl+K' }),
     icon: APP_ICONS.portfolio,
     timeout: 7000,
   }), 900);

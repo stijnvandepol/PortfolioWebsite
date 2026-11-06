@@ -12,6 +12,7 @@ import { el, prefersReducedMotion } from '../core/dom.js';
 import { store } from '../core/store.js';
 import { os } from './bridge.js';
 import { showContextMenu } from './contextmenu.js';
+import { t } from '../core/i18n.js';
 
 const BASE = 46;          // rustgrootte icoon (px)
 const PEAK = 76;          // grootte onder de cursor (groter laat iconen over venster-glas uitsteken: dat halveert de framerate)
@@ -136,10 +137,10 @@ function buildItem(entry) {
       const wins = store.get('windows').filter((w) => w.appId === entry.id);
       showContextMenu(r.left + r.width / 2, r.top - 6, [
         { label: entry.label, disabled: true },
-        ...(wins.length ? [{ divider: true }, ...wins.map((w) => ({ label: w.minimized ? `${w.title} (geminimaliseerd)` : w.title, action: () => os.focusWindow(w.id) }))] : []),
+        ...(wins.length ? [{ divider: true }, ...wins.map((w) => ({ label: w.minimized ? t('{title} (geminimaliseerd)', { title: w.title }) : w.title, action: () => os.focusWindow(w.id) }))] : []),
         { divider: true },
-        { label: running ? 'Toon' : 'Open', action: () => (entry.action ? entry.action() : os.activate(entry.id)) },
-        { label: 'Sluit', hidden: !running || !entry.closable, action: () => os.closeApp(entry.id) },
+        { label: running ? t('Toon') : 'Open', action: () => (entry.action ? entry.action() : os.activate(entry.id)) },
+        { label: t('Sluit'), hidden: !running || !entry.closable, action: () => os.closeApp(entry.id) },
       ], { placement: 'above' });
     });
   }
@@ -157,7 +158,7 @@ function syncTiles(list) {
     if (tiles.has(w.id)) return;
     const reduced = prefersReducedMotion();
     const icon = el('div', { class: 'di-icon', html: iconFor(w.appId), style: { width: reduced ? `${BASE}px` : '0px', height: reduced ? `${BASE}px` : '0px' } });
-    const host = el('button', { class: 'di di-tile', type: 'button', dataset: { dockWin: w.id }, 'aria-label': `${w.title}: herstel venster` }, [
+    const host = el('button', { class: 'di di-tile', type: 'button', dataset: { dockWin: w.id }, 'aria-label': t('{title}: herstel venster', { title: w.title }) }, [
       el('div', { class: 'di-tip', 'aria-hidden': 'true', text: w.title }), icon,
     ]);
     host.addEventListener('click', () => os.focusWindow(w.id));

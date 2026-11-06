@@ -59,8 +59,8 @@
     <div class="wallpaper" aria-hidden="true"></div>
   </main>
 
-  <!-- static:start (gegenereerd door scripts/generate-static.mjs — niet handmatig wijzigen) -->
-  <div class="m-root" id="static-portfolio">
+  <!-- static:start (gegenereerd door scripts/generate-static.mjs, niet handmatig wijzigen) -->
+  <div class="m-root" id="static-portfolio" data-lang="nl">
     <main class="m-portfolio" id="main">
       <header class="m-hero" id="home">
         <figure class="m-avatar"><img src="./assets/images/portret.webp" alt="Portret van Stijn van de Pol" width="120" height="120" fetchpriority="high" decoding="async"></figure>
@@ -327,7 +327,7 @@
           <a class="m-btn" href="./assets/files/cv.pdf" download="CV-Stijn-van-de-Pol.pdf">Download CV</a>
         </div>
         <p class="m-location"><svg class="sym" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s6.5-5.6 6.5-11a6.5 6.5 0 0 0-13 0c0 5.4 6.5 11 6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg> Landhorst, Noord-Brabant</p>
-        <p class="m-note"><button class="m-view-toggle" id="view-desktop" type="button" hidden>Bekijk als macOS-desktop</button></p>
+        <p class="m-note"><button class="m-view-toggle" id="view-lang" type="button" lang="en" data-lang="en" hidden>English</button> <button class="m-view-toggle" id="view-desktop" type="button" hidden>Bekijk als macOS-desktop</button></p>
         <p class="m-copyright">© Stijn van de Pol</p>
       </footer>
     </main>
@@ -339,6 +339,285 @@
       <a class="m-tab" href="#contact" data-target="contact"><span class="m-tab-ic"><svg class="sym" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="m3.8 7.5 8.2 6 8.2-6"/></svg></span><span class="m-tab-label">Contact</span></a>
     </nav>
   </div>
+  <template id="static-en"><div class="m-root" id="static-portfolio" data-lang="en">
+    <main class="m-portfolio" id="main">
+      <header class="m-hero" id="home">
+        <figure class="m-avatar"><img src="./assets/images/portret.webp" alt="Portrait of Stijn van de Pol" width="120" height="120" fetchpriority="high" decoding="async"></figure>
+        <h1 class="m-name">Stijn van de Pol</h1>
+        <p class="m-role">IT Infrastructure &amp; Cybersecurity student</p>
+        <p class="m-intro">ICT student at Fontys, specializing in Infrastructure &amp; Cybersecurity. I want to understand how systems work and how to improve and secure them. I build and test that in my own homelab.</p>
+        <ul class="m-chips" aria-label="Specializations"><li class="m-chip">Networking &amp; Infrastructure</li><li class="m-chip">Automation</li><li class="m-chip">Security</li><li class="m-chip">Cloud &amp; Development</li></ul>
+        <div class="m-cta">
+          <a class="m-btn m-btn-primary" href="#contact">Get in touch</a>
+          <a class="m-btn" href="./assets/files/cv.pdf" download="CV-Stijn-van-de-Pol.pdf">Download CV</a>
+          <a class="m-btn" href="#projecten">View projects</a>
+          <a class="m-btn" href="https://github.com/stijnvandepol" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </header>
+
+      <section class="m-section" id="projecten" aria-labelledby="h-projecten">
+        <h2 class="m-section-title" id="h-projecten">Projects</h2>
+        <div class="m-projects">
+      <article class="m-project" id="projecten/dashwise">
+        <figure class="m-project-img"><img src="./assets/images/blog-5-thumb.webp" alt="Screenshot of Dashwise" width="600" height="300" loading="lazy" decoding="async"></figure>
+        <div class="m-project-body">
+          <p class="m-kind">iOS app · <span class="m-status online">Online</span> · 2026</p>
+          <h3 class="m-project-title">Dashwise</h3>
+          <p class="m-project-sub">Live engine data from your car on your iPhone</p>
+          <ul class="m-tags"><li class="m-tag">Swift 6</li><li class="m-tag">SwiftUI</li><li class="m-tag">CoreBluetooth</li><li class="m-tag">OBD-II / ELM327</li></ul>
+          <p class="m-project-text">A native iPhone app that reads live engine data through an ELM327 OBD-II adapter over Bluetooth or Wi-Fi. With a live dashboard, fault codes, a trip log and lap times, fully private on the device.</p>
+          
+          
+          
+          <a class="m-link" href="https://getdashwise.nl" target="_blank" rel="noopener noreferrer">Visit Dashwise <span aria-hidden="true">↗</span></a>
+          
+        </div>
+      </article>
+      <article class="m-project" id="projecten/superscout">
+        <figure class="m-project-img"><img src="./assets/images/blog-4-thumb.webp" alt="Screenshot of SuperScout" width="600" height="300" loading="lazy" decoding="async"></figure>
+        <div class="m-project-body">
+          <p class="m-kind">Website · <span class="m-status online">Online</span> · 2026</p>
+          <h3 class="m-project-title">SuperScout</h3>
+          <p class="m-project-sub">Every supermarket deal in one place</p>
+          <ul class="m-tags"><li class="m-tag">Next.js</li><li class="m-tag">TypeScript</li><li class="m-tag">Web scraping</li><li class="m-tag">SQLite</li><li class="m-tag">Docker</li></ul>
+          <p class="m-project-text">A web app that puts the weekly deals of ten Dutch supermarkets in one searchable list. With search, filters per store and category and a shopping list, without an account or tracking.</p>
+          
+          
+          
+          <a class="m-link" href="https://superscout.nl" target="_blank" rel="noopener noreferrer">Visit SuperScout <span aria-hidden="true">↗</span></a>
+          
+        </div>
+      </article>
+      <article class="m-project" id="projecten/bunk-hosting">
+        <figure class="m-project-img"><img src="./assets/images/blog-3-thumb.webp" alt="Screenshot of Bunk Hosting" width="600" height="300" loading="lazy" decoding="async"></figure>
+        <div class="m-project-body">
+          <p class="m-kind">Website · <span class="m-status online">Online</span> · 2026</p>
+          <h3 class="m-project-title">Bunk Hosting</h3>
+          <p class="m-project-sub">Hosting platform for a Dutch VPS provider</p>
+          <ul class="m-tags"><li class="m-tag">Next.js</li><li class="m-tag">TypeScript</li><li class="m-tag">Tailwind CSS</li><li class="m-tag">Custom API</li><li class="m-tag">Cloudflare</li><li class="m-tag">Security</li></ul>
+          <p class="m-project-text">A full-stack platform for a Dutch VPS hosting provider: the customer portal, live server statistics and the backend automation that creates and manages servers. Security and hardening were part of it from the start. Built with Next.js, TypeScript and Tailwind CSS, with a custom API behind Cloudflare.</p>
+          
+          
+          
+          <a class="m-link" href="https://bunkhosting.nl" target="_blank" rel="noopener noreferrer">Visit Bunk Hosting <span aria-hidden="true">↗</span></a>
+          
+        </div>
+      </article>
+      <article class="m-project" id="projecten/snackspot">
+        <figure class="m-project-img"><img src="./assets/images/blog-1-thumb.webp" alt="Screenshot of SnackSpot" width="600" height="300" loading="lazy" decoding="async"></figure>
+        <div class="m-project-body">
+          <p class="m-kind">Website · <span class="m-status online">Online</span> · 2026</p>
+          <h3 class="m-project-title">SnackSpot</h3>
+          <p class="m-project-sub">Discover and review hidden food spots</p>
+          <ul class="m-tags"><li class="m-tag">Mobile-first webapp</li><li class="m-tag">Community feed</li><li class="m-tag">Photo uploads</li><li class="m-tag">Admin panel</li></ul>
+          <p class="m-project-text">A mobile-first web app for discovering and reviewing hidden food spots nearby. With a community feed, photo uploads, ratings per aspect, nearby spots and an admin panel for moderation.</p>
+          
+          
+          
+          <a class="m-link" href="https://snackspot.online" target="_blank" rel="noopener noreferrer">Visit SnackSpot <span aria-hidden="true">↗</span></a>
+          
+        </div>
+      </article>
+      <article class="m-project" id="projecten/tanknu">
+        <figure class="m-project-img"><img src="./assets/images/blog-2-thumb.webp" alt="Screenshot of TankNu" width="600" height="300" loading="lazy" decoding="async"></figure>
+        <div class="m-project-body">
+          <p class="m-kind">Website · <span class="m-status offline">Offline</span> · 2025</p>
+          <h3 class="m-project-title">TankNu</h3>
+          <p class="m-project-sub">The cheapest gas station nearby</p>
+          <ul class="m-tags"><li class="m-tag">Public API</li><li class="m-tag">Geolocation</li><li class="m-tag">Google Maps</li></ul>
+          <p class="m-project-text">A web app that fetches fuel prices around your location through the public API. No database of its own: the browser makes the request and shows the cheapest gas station in real time, with direct navigation through Google Maps.</p>
+          
+          
+          
+          
+          
+        </div>
+      </article>
+      <article class="m-project" id="projecten/otap-omgeving">
+        <figure class="m-project-img"><img src="./assets/images/project-1.webp" alt="Screenshot of DTAP Environment" width="600" height="450" loading="lazy" decoding="async"></figure>
+        <div class="m-project-body">
+          <p class="m-kind">Homelab &amp; assignment</p>
+          <h3 class="m-project-title">DTAP Environment</h3>
+          <p class="m-project-sub">Separate development, test, acceptance and production environments</p>
+          <ul class="m-tags"><li class="m-tag">GitHub Workflows</li><li class="m-tag">Cloudflared</li><li class="m-tag">Databases</li><li class="m-tag">Containerization</li></ul>
+          <p class="m-project-text">A complete DTAP pipeline for my own projects: separate development, test, acceptance and production environments with automated deployments through GitHub Workflows, exposed securely through Cloudflared.</p>
+          
+          
+          
+          
+          
+        </div>
+      </article>
+      <article class="m-project" id="projecten/hybride-it-infrastructuur">
+        <figure class="m-project-img"><img src="./assets/images/project-2.webp" alt="Screenshot of Hybrid IT Infrastructure" width="600" height="450" loading="lazy" decoding="async"></figure>
+        <div class="m-project-body">
+          <p class="m-kind">Homelab &amp; assignment</p>
+          <h3 class="m-project-title">Hybrid IT Infrastructure</h3>
+          <p class="m-project-sub">Azure and on-premises servers working together</p>
+          <ul class="m-tags"><li class="m-tag">Azure</li><li class="m-tag">Intune</li><li class="m-tag">On-Prem Services</li><li class="m-tag">Windows</li><li class="m-tag">Linux</li></ul>
+          <p class="m-project-text">A hybrid environment where Azure and on-premises servers work together: device management with Intune and cloud identity, combined with Windows and Linux services on my own hardware.</p>
+          
+          
+          
+          
+          
+        </div>
+      </article>
+      <article class="m-project" id="projecten/containerized-full-stack">
+        <figure class="m-project-img"><img src="./assets/images/project-3.webp" alt="Screenshot of Containerized Full-Stack Application" width="600" height="450" loading="lazy" decoding="async"></figure>
+        <div class="m-project-body">
+          <p class="m-kind">Homelab &amp; assignment</p>
+          <h3 class="m-project-title">Containerized Full-Stack Application</h3>
+          <p class="m-project-sub">Frontend, API and database in separate containers</p>
+          <ul class="m-tags"><li class="m-tag">Backend</li><li class="m-tag">Frontend</li><li class="m-tag">API</li><li class="m-tag">Database</li><li class="m-tag">Containerization</li></ul>
+          <p class="m-project-text">A full-stack web application I built myself. Frontend, API and database each run in their own container.</p>
+          
+          
+          
+          
+          
+        </div>
+      </article>
+      <article class="m-project" id="projecten/monitoring-inzicht">
+        <figure class="m-project-img"><img src="./assets/images/project-4.webp" alt="Screenshot of Monitoring &amp; Insight" width="600" height="450" loading="lazy" decoding="async"></figure>
+        <div class="m-project-body">
+          <p class="m-kind">Homelab &amp; assignment</p>
+          <h3 class="m-project-title">Monitoring &amp; Insight</h3>
+          <p class="m-project-sub">Real-time dashboards and alerts for the homelab</p>
+          <ul class="m-tags"><li class="m-tag">Beszel</li><li class="m-tag">Checkmk</li><li class="m-tag">Dashboards</li><li class="m-tag">Alerts</li></ul>
+          <p class="m-project-text">All systems in my homelab monitored in one place with Beszel and Checkmk: real-time dashboards and alerts, so I see problems before anything goes down.</p>
+          
+          
+          
+          
+          
+        </div>
+      </article>
+      <article class="m-project" id="projecten/virtualisatie-containerisatie">
+        <figure class="m-project-img"><img src="./assets/images/project-5.webp" alt="Screenshot of Virtualization &amp; Containerization" width="600" height="450" loading="lazy" decoding="async"></figure>
+        <div class="m-project-body">
+          <p class="m-kind">Homelab &amp; assignment</p>
+          <h3 class="m-project-title">Virtualization &amp; Containerization</h3>
+          <p class="m-project-sub">Proxmox as the base of the homelab</p>
+          <ul class="m-tags"><li class="m-tag">Proxmox</li><li class="m-tag">VMs</li><li class="m-tag">LXC Containers</li><li class="m-tag">Docker</li><li class="m-tag">Scripting</li><li class="m-tag">Backups</li></ul>
+          <p class="m-project-text">Proxmox is the base of my homelab: virtual machines and LXC containers, plus Docker, management scripts and automatic backups.</p>
+          
+          
+          
+          
+          
+        </div>
+      </article>
+      <article class="m-project" id="projecten/power-platform">
+        <figure class="m-project-img"><img src="./assets/images/project-7.webp" alt="Screenshot of Microsoft Power Platform" width="600" height="450" loading="lazy" decoding="async"></figure>
+        <div class="m-project-body">
+          <p class="m-kind">Homelab &amp; assignment</p>
+          <h3 class="m-project-title">Microsoft Power Platform</h3>
+          <p class="m-project-sub">Automations from my internship</p>
+          <ul class="m-tags"><li class="m-tag">Power Automate</li><li class="m-tag">Power Apps</li><li class="m-tag">Copilot Studio</li><li class="m-tag">AI agents</li></ul>
+          <p class="m-project-text">Automations I built during my internship: workflows with Power Automate, apps with Power Apps and AI agents with Copilot Studio.</p>
+          
+          
+          
+          
+          
+        </div>
+      </article>
+      <article class="m-project" id="projecten/procesautomatisering-ai">
+        <figure class="m-project-img"><img src="./assets/images/project-8.webp" alt="Screenshot of Process Automation &amp; AI" width="600" height="450" loading="lazy" decoding="async"></figure>
+        <div class="m-project-body">
+          <p class="m-kind">Homelab &amp; assignment</p>
+          <h3 class="m-project-title">Process Automation &amp; AI</h3>
+          <p class="m-project-sub">Workflows and AI agents with n8n</p>
+          <ul class="m-tags"><li class="m-tag">Low-code / No-code</li><li class="m-tag">n8n</li><li class="m-tag">AI agents</li><li class="m-tag">MCP</li><li class="m-tag">API integrations</li></ul>
+          <p class="m-project-text">Work processes automated with n8n and AI agents: from email handling to API integrations, linked together through MCP.</p>
+          
+          
+          
+          
+          
+        </div>
+      </article>
+        </div>
+      </section>
+
+      <section class="m-section" id="ervaring" aria-labelledby="h-ervaring">
+        <h2 class="m-section-title" id="h-ervaring">Experience</h2>
+        <ol class="m-timeline">
+      <li class="m-tl-item">
+        <h3 class="m-tl-title">Project internship <span class="m-tl-org">· Verweijen ICT</span></h3>
+        <p class="m-tl-date">Sep 2025 - Jan 2026 · 5 months · Mill</p>
+        <p class="m-text">Research into AI and low-code in the Microsoft Power Platform, ending in an advisory report for a new service that I presented. Rolled out automations with Power Automate, Power Apps and Copilot Studio.</p>
+        <ul class="m-tags"><li class="m-tag">Power Automate</li><li class="m-tag">Power Apps</li><li class="m-tag">Copilot Studio</li><li class="m-tag">AI</li></ul>
+      </li>
+      <li class="m-tl-item">
+        <h3 class="m-tl-title">Team leader <span class="m-tl-org">· Jumbo</span></h3>
+        <p class="m-tl-date">Feb 2025 - present · Mill</p>
+        <p class="m-text">Leading the stocking team and responsible for the store as a whole.</p>
+        <ul class="m-tags"><li class="m-tag">Leadership</li><li class="m-tag">Responsibility</li></ul>
+      </li>
+      <li class="m-tl-item">
+        <h3 class="m-tl-title">IT intern <span class="m-tl-org">· Vanboxtel</span></h3>
+        <p class="m-tl-date">Feb 2023 - Jun 2023 · 5 months · Boekel</p>
+        <p class="m-text">Configured and replaced firewalls and switches at customer sites. Drew up a network design and updated and secured existing customer environments.</p>
+        <ul class="m-tags"><li class="m-tag">Firewalls</li><li class="m-tag">Switches</li><li class="m-tag">Network design</li></ul>
+      </li>
+      <li class="m-tl-item">
+        <h3 class="m-tl-title">IT intern <span class="m-tl-org">· Verweijen ICT</span></h3>
+        <p class="m-tl-date">Sep 2021 - Jan 2022 · 5 months · Mill</p>
+        <p class="m-text">Configured workstations, access points and telephony and delivered them on site at customers.</p>
+        <ul class="m-tags"><li class="m-tag">Workstations</li><li class="m-tag">Access points</li><li class="m-tag">Telephony</li></ul>
+      </li>
+        </ol>
+        <h3 class="m-subtitle" id="opleiding">Education</h3>
+        <ol class="m-timeline">
+          <li class="m-tl-item"><h3 class="m-tl-title">Bachelor of ICT <span class="m-tl-org">· Fontys Hogeschool</span></h3><p class="m-tl-date">2023 - 2027</p><p class="m-text">Infrastructure profile → Cybersecurity specialization.</p></li>
+          <li class="m-tl-item"><h3 class="m-tl-title">IT Management (MBO level 4) <span class="m-tl-org">· Koning Willem I College</span></h3><p class="m-tl-date">2020 - 2023</p><p class="m-text">IT management, networking and support.</p></li>
+        </ol>
+      </section>
+
+      <section class="m-section" id="skills" aria-labelledby="h-skills">
+        <h2 class="m-section-title" id="h-skills">Skills</h2>
+        <div class="m-skill-groups">
+          <div class="m-skill-group"><h3 class="m-skill-title">Infrastructure &amp; networking</h3><ul class="m-tags"><li class="m-tag">Networking</li><li class="m-tag">Firewalls</li><li class="m-tag">Switches</li><li class="m-tag">Proxmox</li><li class="m-tag">Docker</li><li class="m-tag">Linux</li><li class="m-tag">Windows</li><li class="m-tag">Monitoring</li></ul></div>
+          <div class="m-skill-group"><h3 class="m-skill-title">Cloud</h3><ul class="m-tags"><li class="m-tag">Azure</li><li class="m-tag">Intune</li><li class="m-tag">Cloudflare</li></ul></div>
+          <div class="m-skill-group"><h3 class="m-skill-title">Development &amp; automation</h3><ul class="m-tags"><li class="m-tag">PowerShell</li><li class="m-tag">Python</li><li class="m-tag">Infrastructure as Code</li><li class="m-tag">CI/CD</li><li class="m-tag">Next.js</li><li class="m-tag">TypeScript</li><li class="m-tag">Tailwind CSS</li><li class="m-tag">AI-driven development</li><li class="m-tag">Reverse engineering</li></ul></div>
+          <div class="m-skill-group"><h3 class="m-skill-title">Low-code &amp; AI</h3><ul class="m-tags"><li class="m-tag">Power Automate</li><li class="m-tag">Power Apps</li><li class="m-tag">Copilot Studio</li><li class="m-tag">n8n</li><li class="m-tag">AI agents</li><li class="m-tag">MCP</li><li class="m-tag">Claude Code</li><li class="m-tag">AI integrations</li></ul></div>
+          <div class="m-skill-group"><h3 class="m-skill-title">Security</h3><ul class="m-tags"><li class="m-tag">Hardening</li><li class="m-tag">Pentesting &amp; vulnerability scanning</li><li class="m-tag">Log analysis</li></ul></div>
+        </div>
+        <h3 class="m-subtitle">Soft skills</h3>
+        <ul class="m-tags"><li class="m-tag">Communication</li><li class="m-tag">Team leadership</li><li class="m-tag">Collaboration</li><li class="m-tag">Independence</li><li class="m-tag">Planning</li></ul>
+        <div class="gh" data-gh hidden><h3 class="m-subtitle">GitHub activity</h3></div>
+      </section>
+
+      <section class="m-section" id="over" aria-labelledby="h-over">
+        <h2 class="m-section-title" id="h-over">About me</h2>
+        <p class="m-text">I'm Stijn van de Pol, an ICT student at Fontys specializing in Infrastructure &amp; Cybersecurity. I don't just want to know how to set something up, but also why it works and how it can be better or more secure.</p>
+        <p class="m-text">In my homelab I try out new tools and configurations. What motivates me is that IT is never finished: there is always something to improve, secure or make smarter.</p>
+      </section>
+
+      <footer class="m-footer" id="contact">
+        <h2 class="m-section-title" id="h-contact">Contact</h2>
+        <p class="m-text">I'm always happy to talk about internships, projects and working together. Feel free to send me a message.</p>
+        <div class="m-social">
+          <a class="m-btn m-btn-primary" href="mailto:Stijnvdpol@outlook.com"><svg class="sym" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="m3.8 7.5 8.2 6 8.2-6"/></svg> Stijnvdpol@outlook.com</a>
+          <a class="m-btn" href="https://www.linkedin.com/in/stijnvandepol/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a class="m-btn" href="https://github.com/stijnvandepol" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a class="m-btn" href="./assets/files/cv.pdf" download="CV-Stijn-van-de-Pol.pdf">Download CV</a>
+        </div>
+        <p class="m-location"><svg class="sym" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s6.5-5.6 6.5-11a6.5 6.5 0 0 0-13 0c0 5.4 6.5 11 6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg> Landhorst, Noord-Brabant</p>
+        <p class="m-note"><button class="m-view-toggle" id="view-lang" type="button" lang="nl" data-lang="nl" hidden>Nederlands</button> <button class="m-view-toggle" id="view-desktop" type="button" hidden>View as macOS desktop</button></p>
+        <p class="m-copyright">© Stijn van de Pol</p>
+      </footer>
+    </main>
+    <nav class="m-tabbar" aria-label="Sections">
+      <a class="m-tab" href="#home" data-target="home"><span class="m-tab-ic"><svg class="sym" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 20c.9-3.6 3.7-5.6 7.2-5.6s6.3 2 7.2 5.6"/></svg></span><span class="m-tab-label">Home</span></a>
+      <a class="m-tab" href="#projecten" data-target="projecten"><span class="m-tab-ic"><svg class="sym" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="4" width="7" height="7" rx="1.8"/><rect x="13" y="4" width="7" height="7" rx="1.8"/><rect x="4" y="13" width="7" height="7" rx="1.8"/><rect x="13" y="13" width="7" height="7" rx="1.8"/></svg></span><span class="m-tab-label">Projects</span></a>
+      <a class="m-tab" href="#ervaring" data-target="ervaring"><span class="m-tab-ic"><svg class="sym" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="7.5" width="18" height="12.5" rx="2.5"/><path d="M9 7.5V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.5M3 13h18"/></svg></span><span class="m-tab-label">Experience</span></a>
+      <a class="m-tab" href="#skills" data-target="skills"><span class="m-tab-ic"><svg class="sym" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 20v-9M12 20V4M19 20v-6"/></svg></span><span class="m-tab-label">Skills</span></a>
+      <a class="m-tab" href="#contact" data-target="contact"><span class="m-tab-ic"><svg class="sym" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="m3.8 7.5 8.2 6 8.2-6"/></svg></span><span class="m-tab-label">Contact</span></a>
+    </nav>
+  </div></template>
   <!-- static:end -->
 
   <script type="module" src="./assets/js/main.js?v=3"></script>

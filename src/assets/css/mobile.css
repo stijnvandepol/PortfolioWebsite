@@ -7,6 +7,10 @@
 
 .m-root { min-height: 100vh; background: var(--bg); }
 html.is-desktop .m-root { display: none; }
+/* Engels: de Nederlandse versie niet laten flitsen voordat simple.js de Engelse inwisselt.
+   Laadt de JavaScript niet, dan komt de Nederlandse versie na 2s alsnog in beeld. */
+html[lang="en"].is-simple .m-root[data-lang="nl"] { visibility: hidden; animation: m-reveal 0s 2s forwards; }
+@keyframes m-reveal { to { visibility: visible; } }
 html.is-simple, html.is-simple body { background: var(--bg); }
 :root:not(.is-desktop) { scroll-behavior: smooth; scroll-padding-top: 16px; }
 @media (prefers-reduced-motion: reduce) { :root:not(.is-desktop) { scroll-behavior: auto; } }
@@ -101,7 +105,7 @@ html.is-simple, html.is-simple body { background: var(--bg); }
 .m-footer { margin-top: 64px; padding-top: 8px; scroll-margin-top: 16px; }
 .m-social { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0; }
 .m-location { display: flex; align-items: center; gap: 6px; color: var(--text-secondary); font-size: 15px; }
-.m-note { margin-top: 24px; }
+.m-note { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 0 20px; }
 .m-view-toggle { min-height: 44px; padding: 0 4px; color: var(--accent-text); font-size: 15px; font-weight: 600; cursor: pointer; }
 .m-view-toggle:hover { text-decoration: underline; }
 .m-copyright { margin-top: 8px; color: var(--text-secondary); font-size: 14px; }

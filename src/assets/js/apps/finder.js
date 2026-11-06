@@ -8,16 +8,17 @@ import { CONFIG } from '../data/config.js';
 import { sym } from './icons.js';
 import { os } from '../os/bridge.js';
 import { segmented } from '../ui/controls.js';
+import { t, LOCALE } from '../core/i18n.js';
 
-const KIND = { image: 'Afbeelding', pdf: 'PDF-document', text: 'Tekstbestand', link: 'Internetlocatie' };
+const KIND = { image: t('Afbeelding'), pdf: t('PDF-document'), text: t('Tekstbestand'), link: t('Internetlocatie') };
 
 function buildFS() {
-  const byName = (a, b) => a.name.localeCompare(b.name, 'nl');
+  const byName = (a, b) => a.name.localeCompare(b.name, LOCALE);
   return {
     Projecten: CONFIG.projects.map((p) => ({ type: 'image', name: `${p.title}.webp`, id: p.id, src: p.image, title: p.title, desc: p.subtitle, tags: p.tags.join(' ') })).sort(byName),
     Documenten: [
       { type: 'pdf', name: 'CV Stijn van de Pol.pdf', href: CONFIG.profile.cv },
-      { type: 'text', name: 'over-mij.txt', body: `${CONFIG.profile.name}\n${CONFIG.profile.role}\n${CONFIG.profile.location}\n${CONFIG.profile.email}` },
+      { type: 'text', name: t('over-mij.txt'), body: `${CONFIG.profile.name}\n${CONFIG.profile.role}\n${CONFIG.profile.location}\n${CONFIG.profile.email}` },
     ].sort(byName),
     Websites: CONFIG.projects.filter((p) => p.url).map((p) => ({ type: 'link', name: `${p.title}.url`, href: p.url })).sort(byName),
   };
@@ -43,31 +44,31 @@ export function createFinderApp({ initial = 'Projecten' } = {}) {
       const past = [], future = [];
 
       // ---- Toolbar ----
-      const back = el('button', { class: 'tb-btn no-drag', type: 'button', 'aria-label': 'Terug', html: sym('chevron.left', 15) });
-      const fwd = el('button', { class: 'tb-btn no-drag', type: 'button', 'aria-label': 'Vooruit', html: sym('chevron.right', 15) });
-      const titleEl = el('span', { class: 'win-title', text: loc });
+      const back = el('button', { class: 'tb-btn no-drag', type: 'button', 'aria-label': t('Terug'), html: sym('chevron.left', 15) });
+      const fwd = el('button', { class: 'tb-btn no-drag', type: 'button', 'aria-label': t('Vooruit'), html: sym('chevron.right', 15) });
+      const titleEl = el('span', { class: 'win-title', text: t(loc) });
       win.bindTitle(titleEl);
       const viewSeg = segmented({
-        label: 'Weergave', variant: 'seg-icons no-drag', value: view,
-        options: [{ value: 'icons', label: 'Pictogrammen', icon: sym('grid', 15) }, { value: 'list', label: 'Lijst', icon: sym('list', 15) }],
+        label: t('Weergave'), variant: 'seg-icons no-drag', value: view,
+        options: [{ value: 'icons', label: t('Pictogrammen'), icon: sym('grid', 15) }, { value: 'list', label: t('Lijst'), icon: sym('list', 15) }],
         onChange: (v) => { view = v; paint(); },
       });
       const openBtn = el('button', { class: 'btn no-drag finder-open', type: 'button', text: 'Open', disabled: true });
       openBtn.addEventListener('click', () => { if (visible[selected]) openItem(visible[selected]); });
-      const search = el('input', { class: 'field field-search no-drag', type: 'search', placeholder: 'Zoek', 'aria-label': 'Zoek in map', autocomplete: 'off' });
+      const search = el('input', { class: 'field field-search no-drag', type: 'search', placeholder: t('Zoek'), 'aria-label': t('Zoek in map'), autocomplete: 'off' });
       titlebar.append(el('div', { class: 'tb-nav' }, [back, fwd]), titleEl, el('div', { class: 'tb-actions' }, [openBtn, viewSeg, search]));
 
       // ---- Zijbalk + hoofdvlak ----
       body.classList.add('finder-body');
-      const sidebar = el('nav', { class: 'finder-sidebar', 'aria-label': 'Locaties' }, [
-        el('div', { class: 'fsb-section', text: 'Favorieten' }),
+      const sidebar = el('nav', { class: 'finder-sidebar', 'aria-label': t('Locaties') }, [
+        el('div', { class: 'fsb-section', text: t('Favorieten') }),
         ...places.map((name) => {
-          const b = el('button', { class: 'fsb-item', type: 'button', dataset: { loc: name } }, [el('span', { class: 'fsb-ic', html: sym('folder', 16) }), el('span', { text: name })]);
+          const b = el('button', { class: 'fsb-item', type: 'button', dataset: { loc: name } }, [el('span', { class: 'fsb-ic', html: sym('folder', 16) }), el('span', { text: t(name) })]);
           b.addEventListener('click', () => go(name));
           return b;
         }),
       ]);
-      const grid = el('div', { class: 'finder-grid', role: 'listbox', 'aria-label': 'Onderdelen', 'aria-orientation': 'horizontal' });
+      const grid = el('div', { class: 'finder-grid', role: 'listbox', 'aria-label': t('Onderdelen'), 'aria-orientation': 'horizontal' });
       const status = el('div', { class: 'finder-status', 'aria-live': 'polite' });
       const main = el('div', { class: 'finder-main' }, [grid, status]);
       body.append(sidebar, main);
@@ -102,7 +103,9 @@ export function createFinderApp({ initial = 'Projecten' } = {}) {
       function updateStatus() {
         const total = fs[loc].length;
         const q = search.value.trim();
-        status.textContent = (q ? `${visible.length} van ${total} onderdelen` : `${total} onderdelen`) + ' · dubbelklik of druk op Enter om te openen';
+        status.textContent = q
+          ? t(total === 1 ? '{shown} van {total} onderdeel · dubbelklik of druk op Enter om te openen' : '{shown} van {total} onderdelen · dubbelklik of druk op Enter om te openen', { shown: visible.length, total })
+          : t(total === 1 ? '{n} onderdeel · dubbelklik of druk op Enter om te openen' : '{n} onderdelen · dubbelklik of druk op Enter om te openen', { n: total });
       }
 
       function paint() {
@@ -111,7 +114,7 @@ export function createFinderApp({ initial = 'Projecten' } = {}) {
         grid.className = `finder-grid${view === 'list' ? ' as-list' : ''}`;
         grid.replaceChildren();
         if (!visible.length) {
-          grid.append(el('div', { class: 'finder-empty', text: q ? `Geen resultaten voor “${search.value.trim()}”` : 'Lege map' }));
+          grid.append(el('div', { class: 'finder-empty', text: q ? t('Geen resultaten voor “{q}”', { q: search.value.trim() }) : t('Lege map') }));
           selected = -1; updateStatus(); return;
         }
         visible.forEach((item, idx) => {
@@ -157,7 +160,7 @@ export function createFinderApp({ initial = 'Projecten' } = {}) {
         if (name === loc && record) return;
         if (record) { past.push(loc); future.length = 0; }
         loc = name; search.value = '';
-        titleEl.textContent = loc; win.setTitle(loc);
+        titleEl.textContent = t(loc); win.setTitle(t(loc));
         qsa('.fsb-item', sidebar).forEach((b) => { const on = b.dataset.loc === loc; b.classList.toggle('active', on); if (on) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
         back.disabled = !past.length; fwd.disabled = !future.length;
         paint();
@@ -169,7 +172,7 @@ export function createFinderApp({ initial = 'Projecten' } = {}) {
       // Klik op lege ruimte deselecteert
       grid.addEventListener('pointerdown', (e) => { if (e.target === grid) select(-1, { focus: false }); });
 
-      win.setTitle(loc);
+      win.setTitle(t(loc));
       go(loc, { record: false });
 
       return {
@@ -177,11 +180,11 @@ export function createFinderApp({ initial = 'Projecten' } = {}) {
         getMenus: () => ({
           file: [
             { label: 'Open', action: () => visible[selected] && openItem(visible[selected]), disabled: selected < 0 },
-            { label: 'Nieuw Finder-venster', action: () => os.open('finder', { fresh: true }) },
+            { label: t('Nieuw Finder-venster'), action: () => os.open('finder', { fresh: true }) },
           ],
           view: [
-            { label: 'Als pictogrammen', checked: view === 'icons', action: () => { viewSeg.setValue('icons'); view = 'icons'; paint(); } },
-            { label: 'Als lijst', checked: view === 'list', action: () => { viewSeg.setValue('list'); view = 'list'; paint(); } },
+            { label: t('Als pictogrammen'), checked: view === 'icons', action: () => { viewSeg.setValue('icons'); view = 'icons'; paint(); } },
+            { label: t('Als lijst'), checked: view === 'list', action: () => { viewSeg.setValue('list'); view = 'list'; paint(); } },
           ],
           find: () => search.focus(),
         }),

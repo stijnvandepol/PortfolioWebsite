@@ -7,6 +7,7 @@
 //  2. APP_ICONS — eigen app-tegels (portfolio-apps, sociale links).
 //  3. iconImg   — Big Sur-systeemiconen (Finder, Terminal, …) als WebP.
 // ============================================================
+import { lang } from '../core/i18n.js';
 
 // ---- 1. Symbolen ------------------------------------------------------
 // Sommige paden bevatten gevulde onderdelen (fill="currentColor" stroke="none").
@@ -161,7 +162,9 @@ export const APP_ICON_IMG = {
   calculator: `${ICON_BASE}calculator.webp`,
 };
 
-const MONTHS_SHORT = ['JAN', 'FEB', 'MRT', 'APR', 'MEI', 'JUN', 'JUL', 'AUG', 'SEP', 'OKT', 'NOV', 'DEC'];
+const MONTHS_SHORT = lang === 'en'
+  ? ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
+  : ['JAN', 'FEB', 'MRT', 'APR', 'MEI', 'JUN', 'JUL', 'AUG', 'SEP', 'OKT', 'NOV', 'DEC'];
 /** Agenda-icoon in Big Sur-stijl met de datum van vandaag (zoals het echte Dock). */
 export function calendarIcon(date = new Date()) {
   const m = MONTHS_SHORT[date.getMonth()], d = date.getDate();

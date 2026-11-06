@@ -9,6 +9,7 @@ import { createPortfolioApp } from './portfolio.js';
 import { createContactApp } from './contact.js';
 import { createAboutApp } from './about.js';
 import { quickLook } from '../os/quicklook.js';
+import { t } from '../core/i18n.js';
 
 // Portfolio/Contact/Over zitten in de eerste lading; de overige apps worden pas
 // opgehaald bij de eerste keer openen (of stil in de achtergrond, zie prefetchApps).
@@ -24,12 +25,12 @@ export const APPS = [
   { id: 'contact',   title: 'Contact',              kind: 'portfolio', icon: iconImg('mail', 'Contact'),   create: (o) => createContactApp(o) },
   { id: 'finder',    title: 'Finder',               kind: 'system',    icon: iconImg('finder', 'Finder'),        create: lazy(loadFinder, 'createFinderApp') },
   { id: 'terminal',  title: 'Terminal',             kind: 'system',    icon: iconImg('terminal', 'Terminal'),   create: lazy(loadTerminal, 'createTerminalApp') },
-  { id: 'settings',  title: 'Systeeminstellingen',  kind: 'system',    icon: iconImg('settings', 'Instellingen'), create: lazy(loadSettings, 'createSettingsApp') },
+  { id: 'settings',  title: t('Systeeminstellingen'),  kind: 'system',    icon: iconImg('settings', t('Instellingen')), create: lazy(loadSettings, 'createSettingsApp') },
   // Geen eigen Dock-/Launchpad-icoon: bereikbaar via het Apple-menu.
   // Extra's: alleen via Launchpad (en Terminal), niet in het Dock of Spotlight.
-  { id: 'calculator', title: 'Rekenmachine', kind: 'extra', icon: iconImg('calculator', 'Rekenmachine'), create: lazy(loadCalculator, 'createCalculatorApp') },
+  { id: 'calculator', title: t('Rekenmachine'), kind: 'extra', icon: iconImg('calculator', t('Rekenmachine')), create: lazy(loadCalculator, 'createCalculatorApp') },
   { id: 'snake', title: 'Snake', kind: 'extra', icon: APP_ICONS.snake, create: lazy(loadSnake, 'createSnakeApp') },
-  { id: 'about',     title: 'Over dit portfolio',   kind: 'portfolio', icon: APP_ICONS.about, hidden: true, create: (o) => createAboutApp(o) },
+  { id: 'about',     title: t('Over dit portfolio'),   kind: 'portfolio', icon: APP_ICONS.about, hidden: true, create: (o) => createAboutApp(o) },
 ];
 
 const byId = new Map(APPS.map((a) => [a.id, a]));

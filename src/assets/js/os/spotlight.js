@@ -7,11 +7,12 @@ import { el, qsa, trapFocus } from '../core/dom.js';
 import { CONFIG } from '../data/config.js';
 import { os } from './bridge.js';
 import { sym } from '../apps/icons.js';
+import { t } from '../core/i18n.js';
 
 let overlay = null, input = null, results = null, release = null;
 let index = [], shown = [], sel = 0;
 const GROUP_ORDER = ['Pagina', 'Project', 'Ervaring', 'Vaardigheid', 'App', 'Actie'];
-const GROUP_LABEL = { App: 'Apps', Pagina: 'Pagina\'s', Project: 'Projecten', Ervaring: 'Ervaring & opleiding', Vaardigheid: 'Vaardigheden', Actie: 'Acties' };
+const GROUP_LABEL = { App: 'Apps', Pagina: t('Pagina\'s'), Project: t('Projecten'), Ervaring: t('Ervaring & opleiding'), Vaardigheid: t('Vaardigheden'), Actie: t('Acties') };
 
 const norm = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 
@@ -19,8 +20,8 @@ function buildIndex() {
   const p = CONFIG.profile;
   const items = [];
   // Portfolio en Contact staan al als pagina; alleen de overige apps apart tonen (geen dubbele resultaten).
-  os.listApps().filter((a) => a.kind === 'system').forEach((a) => items.push({ type: 'App', label: a.title, sub: a.kind === 'system' ? 'Systeem-app' : 'Portfolio-app', iconHtml: a.icon, tile: true, run: () => os.activate(a.id) }));
-  [['Home', 'home', 'person'], ['Projecten', 'projecten', 'grid'], ['Ervaring', 'ervaring', 'briefcase'], ['Skills', 'skills', 'chart'],
+  os.listApps().filter((a) => a.kind === 'system').forEach((a) => items.push({ type: 'App', label: a.title, sub: a.kind === 'system' ? t('Systeem-app') : t('Portfolio-app'), iconHtml: a.icon, tile: true, run: () => os.activate(a.id) }));
+  [['Home', 'home', 'person'], [t('Projecten'), 'projecten', 'grid'], [t('Ervaring'), 'ervaring', 'briefcase'], ['Skills', 'skills', 'chart'],
    ['Contact', 'contact', 'envelope'], ['CV', 'cv', 'doc']]
     .forEach(([label, page, ic]) => items.push({ type: 'Pagina', label, sub: 'Portfolio', iconHtml: sym(ic, 17), run: () => os.open('portfolio', { initialPage: page }) }));
 
@@ -30,15 +31,15 @@ function buildIndex() {
   CONFIG.skills.forEach((g) => items.push({ type: 'Vaardigheid', label: g.category, sub: g.items.join(', '), iconHtml: sym(g.icon, 17), run: () => os.open('portfolio', { initialPage: 'skills' }) }));
 
   // Instagram bewust níét: dat is de verstopte terminal-easter-egg.
-  items.push({ type: 'Actie', label: 'Stuur e-mail', sub: p.email, iconHtml: sym('envelope', 17), run: () => os.open('contact') });
+  items.push({ type: 'Actie', label: t('Stuur e-mail'), sub: p.email, iconHtml: sym('envelope', 17), run: () => os.open('contact') });
   items.push({ type: 'Actie', label: 'Download CV', sub: 'PDF', iconHtml: sym('download', 17), run: () => os.openFile(p.cv) });
   items.push({ type: 'Actie', label: 'GitHub', sub: 'github.com', iconHtml: sym('external', 17), run: () => os.openExternal(p.github) });
   items.push({ type: 'Actie', label: 'LinkedIn', sub: 'linkedin.com', iconHtml: sym('external', 17), run: () => os.openExternal(p.linkedin) });
-  items.push({ type: 'Actie', label: 'Weergave: licht', iconHtml: sym('sun', 17), run: () => os.setTheme('light') });
-  items.push({ type: 'Actie', label: 'Weergave: donker', iconHtml: sym('moon', 17), run: () => os.setTheme('dark') });
-  items.push({ type: 'Actie', label: 'Weergave: automatisch', iconHtml: sym('auto', 17), run: () => os.setTheme('auto') });
-  items.push({ type: 'Actie', label: 'Eenvoudige weergave (gewone pagina)', iconHtml: sym('list', 17), run: () => os.setView('simple') });
-  items.push({ type: 'Actie', label: 'Sneltoetsen tonen', iconHtml: sym('keyboard', 17), run: () => os.open('settings', { initialPage: 'keyboard' }) });
+  items.push({ type: 'Actie', label: t('Weergave: licht'), iconHtml: sym('sun', 17), run: () => os.setTheme('light') });
+  items.push({ type: 'Actie', label: t('Weergave: donker'), iconHtml: sym('moon', 17), run: () => os.setTheme('dark') });
+  items.push({ type: 'Actie', label: t('Weergave: automatisch'), iconHtml: sym('auto', 17), run: () => os.setTheme('auto') });
+  items.push({ type: 'Actie', label: t('Eenvoudige weergave (gewone pagina)'), iconHtml: sym('list', 17), run: () => os.setView('simple') });
+  items.push({ type: 'Actie', label: t('Sneltoetsen tonen'), iconHtml: sym('keyboard', 17), run: () => os.open('settings', { initialPage: 'keyboard' }) });
   items.forEach((i) => { i.hay = norm(`${i.label} ${i.sub || ''} ${GROUP_LABEL[i.type]}`); i.nl = norm(i.label); });
   return items;
 }
@@ -47,7 +48,7 @@ function search(q) {
   const terms = norm(q).split(/\s+/).filter(Boolean);
   if (!terms.length) {
     // Suggesties: alle apps + een paar handige acties
-    return index.filter((i) => i.type === 'Pagina' || ['Stuur e-mail', 'Download CV'].includes(i.label)).slice(0, 9);
+    return index.filter((i) => i.type === 'Pagina' || [t('Stuur e-mail'), 'Download CV'].includes(i.label)).slice(0, 9);
   }
   const scored = index
     .filter((i) => terms.every((t) => i.hay.includes(t)))
@@ -65,17 +66,17 @@ function search(q) {
 function ensure() {
   if (overlay) return;
   input = el('input', {
-    class: 'sl-input', type: 'text', placeholder: 'Zoek in mijn portfolio', autocomplete: 'off', spellcheck: false,
-    role: 'combobox', 'aria-label': 'Zoeken', 'aria-expanded': 'true', 'aria-controls': 'sl-results', 'aria-autocomplete': 'list',
+    class: 'sl-input', type: 'text', placeholder: t('Zoek in mijn portfolio'), autocomplete: 'off', spellcheck: false,
+    role: 'combobox', 'aria-label': t('Zoeken'), 'aria-expanded': 'true', 'aria-controls': 'sl-results', 'aria-autocomplete': 'list',
   });
-  results = el('div', { class: 'sl-results', id: 'sl-results', role: 'listbox', 'aria-label': 'Resultaten' });
-  overlay = el('div', { class: 'spotlight', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Zoeken' }, [
+  results = el('div', { class: 'sl-results', id: 'sl-results', role: 'listbox', 'aria-label': t('Resultaten') });
+  overlay = el('div', { class: 'spotlight', role: 'dialog', 'aria-modal': 'true', 'aria-label': t('Zoeken') }, [
     el('div', { class: 'sl-backdrop', dataset: { close: '1' } }),
     el('div', { class: 'sl-panel' }, [
       el('div', { class: 'sl-bar' }, [el('span', { class: 'sl-ic', html: sym('search', 20) }), input]),
       results,
       el('div', { class: 'sl-foot', 'aria-hidden': 'true' }, [
-        el('span', { html: '<kbd>↑</kbd><kbd>↓</kbd> navigeer' }), el('span', { html: '<kbd>↵</kbd> open' }), el('span', { html: '<kbd>esc</kbd> sluit' }),
+        el('span', { html: `<kbd>↑</kbd><kbd>↓</kbd> ${t('navigeer')}` }), el('span', { html: '<kbd>↵</kbd> open' }), el('span', { html: `<kbd>esc</kbd> ${t('sluit')}` }),
       ]),
     ]),
   ]);
@@ -90,7 +91,7 @@ function render() {
   sel = 0;
   results.replaceChildren();
   if (!shown.length) {
-    results.append(el('div', { class: 'sl-empty', text: `Geen resultaten voor “${input.value.trim()}”` }));
+    results.append(el('div', { class: 'sl-empty', text: t('Geen resultaten voor “{q}”', { q: input.value.trim() }) }));
     input.removeAttribute('aria-activedescendant');
     return;
   }

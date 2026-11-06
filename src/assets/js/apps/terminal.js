@@ -4,11 +4,12 @@
 import { el, escapeHtml } from '../core/dom.js';
 import { CONFIG } from '../data/config.js';
 import { os } from '../os/bridge.js';
+import { t } from '../core/i18n.js';
 
 const FS = {
   'about.txt': () => `${CONFIG.profile.name}\n${CONFIG.profile.role}\n${CONFIG.profile.location}`,
   'contact.txt': () => `email:    ${CONFIG.profile.email}\ngithub:   ${CONFIG.profile.github}\nlinkedin: ${CONFIG.profile.linkedin}`,
-  'cv.pdf': () => '(binair) Open de Finder om het cv te bekijken of te downloaden.',
+  'cv.pdf': () => t('(binair) Open de Finder om het cv te bekijken of te downloaden.'),
 };
 
 export function createTerminalApp() {
@@ -27,7 +28,7 @@ export function createTerminalApp() {
 
       const out = el('div', { class: 'term-out' });
       const prompt = () => el('span', { class: 'term-prompt', html: '<span class="tp-user">stijn@portfolio</span>:<span class="tp-path">~</span>$&nbsp;' });
-      const input = el('input', { class: 'term-input', type: 'text', autocomplete: 'off', autocapitalize: 'off', spellcheck: false, 'aria-label': 'Terminal invoer' });
+      const input = el('input', { class: 'term-input', type: 'text', autocomplete: 'off', autocapitalize: 'off', spellcheck: false, 'aria-label': t('Terminal invoer') });
       const line = el('div', { class: 'term-line' }, [prompt(), input]);
       body.append(out, line);
       body.addEventListener('click', () => input.focus());
@@ -40,13 +41,13 @@ export function createTerminalApp() {
 
       const commands = {
         help: () => print([
-          'Beschikbare commando\'s:',
-          '  about        korte bio', '  whoami       wie ben ik', '  projects     portfolio-projecten',
-          '  skills       vaardigheden', '  experience   werkervaring', '  education    opleiding',
-          '  contact      contactgegevens', '  social       sociale links', '  ls           bestanden',
-          '  cat <file>   toon bestand', '  open <app>   open een app (portfolio, finder, contact, settings)',
-          '  Alle informatie staat ook overzichtelijk in de Portfolio-app.',
-          '  theme <t>    light|dark|auto', '  neofetch     systeeminfo', '  clear        leeg scherm', '  help         deze lijst',
+          t('Beschikbare commando\'s:'),
+          `  about        ${t('korte bio')}`, `  whoami       ${t('wie ben ik')}`, `  projects     ${t('portfolio-projecten')}`,
+          `  skills       ${t('vaardigheden')}`, `  experience   ${t('werkervaring')}`, `  education    ${t('opleiding')}`,
+          `  contact      ${t('contactgegevens')}`, `  social       ${t('sociale links')}`, `  ls           ${t('bestanden')}`,
+          `  cat <file>   ${t('toon bestand')}`, `  open <app>   ${t('open een app (portfolio, finder, contact, settings)')}`,
+          `  ${t('Alle informatie staat ook overzichtelijk in de Portfolio-app.')}`,
+          '  theme <t>    light|dark|auto', `  neofetch     ${t('systeeminfo')}`, `  clear        ${t('leeg scherm')}`, `  help         ${t('deze lijst')}`,
         ].map(escapeHtml).join('<br>')),
         about: () => print(escapeHtml(FS['about.txt']()).replace(/\n/g, '<br>')),
         whoami: () => print('stijn'),
@@ -59,26 +60,26 @@ export function createTerminalApp() {
         experience: () => print(CONFIG.experience.map((e) => `<span class="t-accent">${escapeHtml(e.role)} · ${escapeHtml(e.org)}</span><br>  ${escapeHtml(e.period)}`).join('<br>')),
         education: () => print(CONFIG.education.map((e) => `<span class="t-accent">${escapeHtml(e.title)} · ${escapeHtml(e.org)}</span><br>  ${escapeHtml(e.period)}`).join('<br>')),
         contact: () => print(escapeHtml(FS['contact.txt']()).replace(/\n/g, '<br>')),
-        social: () => { print('GitHub geopend in een nieuw tabblad.'); os.openExternal(CONFIG.profile.github); },
+        social: () => { print(t('GitHub geopend in een nieuw tabblad.')); os.openExternal(CONFIG.profile.github); },
         ls: () => print(Object.keys(FS).map((f) => `<span class="t-file">${escapeHtml(f)}</span>`).join('&nbsp;&nbsp;')),
-        cat: (arg) => { if (!arg) return print('cat: ontbrekend bestand', 'term-err'); const f = FS[arg]; if (!f) return print(`cat: ${escapeHtml(arg)}: bestaat niet`, 'term-err'); print(escapeHtml(f()).replace(/\n/g, '<br>')); },
-        open: (arg) => { const apps = os.listApps().map((a) => a.id); if (!arg) return print('open: geef een app, bv. open finder', 'term-err'); if (!apps.includes(arg)) return print(`open: onbekende app '${escapeHtml(arg)}'`, 'term-err'); os.open(arg); print(`'${escapeHtml(arg)}' geopend.`); },
-        theme: (arg) => { if (!['light', 'dark', 'auto'].includes(arg)) return print('theme: gebruik light|dark|auto', 'term-err'); os.setTheme(arg); print(`thema → ${arg}`); },
+        cat: (arg) => { if (!arg) return print(t('cat: ontbrekend bestand'), 'term-err'); const f = FS[arg]; if (!f) return print(t('cat: {file}: bestaat niet', { file: escapeHtml(arg) }), 'term-err'); print(escapeHtml(f()).replace(/\n/g, '<br>')); },
+        open: (arg) => { const apps = os.listApps().map((a) => a.id); if (!arg) return print(t('open: geef een app, bv. open finder'), 'term-err'); if (!apps.includes(arg)) return print(t("open: onbekende app '{app}'", { app: escapeHtml(arg) }), 'term-err'); os.open(arg); print(t("'{app}' geopend.", { app: escapeHtml(arg) })); },
+        theme: (arg) => { if (!['light', 'dark', 'auto'].includes(arg)) return print(t('theme: gebruik light|dark|auto'), 'term-err'); os.setTheme(arg); print(t('thema → {theme}', { theme: arg })); },
         clear: () => { out.replaceChildren(); },
         echo: (...a) => print(escapeHtml(a.join(' '))),
         date: () => print(escapeHtml(new Date().toString())),
-        sudo: () => print('stijn is niet in het sudoers-bestand. Dit incident wordt gerapporteerd. 🙂', 'term-err'),
+        sudo: () => print(t('stijn is niet in het sudoers-bestand. Dit incident wordt gerapporteerd. 🙂'), 'term-err'),
         neofetch: () => print(neofetch(), 'term-fetch'),
         // Verstopt easter-egg: niet in `help`. Wie hier komt, verdient de link. 📸
         instagram: () => {
           const url = CONFIG.profile.instagram;
-          print(`📸 Easter egg gevonden! Instagram: <a class="t-accent" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(url)}</a>`);
+          print(t('📸 Easter egg gevonden! Instagram: {link}', { link: `<a class="t-accent" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(url)}</a>` }));
           os.openExternal(url);
         },
         // Ook verstopt: de extra's uit Launchpad.
-        games: () => print('Verstopt in Launchpad: <span class="t-accent">open snake</span> · <span class="t-accent">open calculator</span>'),
-        snake: () => { os.open('snake'); print('Veel plezier 🐍  (pijltjes/WASD, spatie = pauze)'); },
-        bc: () => { os.open('calculator'); print('Rekenmachine geopend.'); },
+        games: () => print(t('Verstopt in Launchpad: {snake} · {calc}', { snake: '<span class="t-accent">open snake</span>', calc: '<span class="t-accent">open calculator</span>' })),
+        snake: () => { os.open('snake'); print(t('Veel plezier 🐍  (pijltjes/WASD, spatie = pauze)')); },
+        bc: () => { os.open('calculator'); print(t('Rekenmachine geopend.')); },
       };
       commands['--help'] = commands.help;
       commands.insta = commands.instagram;
@@ -91,7 +92,7 @@ export function createTerminalApp() {
         const [name, ...args] = cmd.split(/\s+/);
         const fn = commands[name.toLowerCase()];
         if (fn) fn(...args);
-        else print(`zsh: command not found: ${escapeHtml(name)}. Typ <span class="t-accent">help</span>`, 'term-err');
+        else print(t('zsh: command not found: {cmd}. Typ {help}', { cmd: escapeHtml(name), help: '<span class="t-accent">help</span>' }), 'term-err');
       }
 
       input.addEventListener('keydown', (e) => {
@@ -110,7 +111,7 @@ export function createTerminalApp() {
         }
       });
 
-      print('Welkom bij <span class="t-accent">portfolio-os</span>. Typ <span class="t-accent">help</span> voor commando\'s.', 'term-welcome');
+      print(t('Welkom bij {os}. Typ {help} voor commando\'s.', { os: '<span class="t-accent">portfolio-os</span>', help: '<span class="t-accent">help</span>' }), 'term-welcome');
       commands.neofetch();
       setTimeout(() => input.focus(), 50);
 

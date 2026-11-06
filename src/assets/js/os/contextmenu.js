@@ -5,6 +5,7 @@
 // ============================================================
 import { clamp } from '../core/dom.js';
 import { buildMenu, moveFocus } from './menu.js';
+import { t } from '../core/i18n.js';
 
 let current = null;
 let returnTo = null;
@@ -37,7 +38,7 @@ export const hide = hideContextMenu;
 export function showContextMenu(x, y, items, { placement } = {}) {
   hideContextMenu({ restoreFocus: false });
   returnTo = document.activeElement;
-  const menu = buildMenu(items, { label: 'Contextmenu', className: 'ctx-menu', onClose: () => hideContextMenu() });
+  const menu = buildMenu(items, { label: t('Contextmenu'), className: 'ctx-menu', onClose: () => hideContextMenu() });
   menu.style.visibility = 'hidden';
   document.body.append(menu);
   const mw = menu.offsetWidth, mh = menu.offsetHeight;

@@ -6,14 +6,15 @@ import { os } from './bridge.js';
 import { APP_ICONS } from '../apps/icons.js';
 import { showContextMenu } from './contextmenu.js';
 import { CONFIG } from '../data/config.js';
+import { t } from '../core/i18n.js';
 
 const DESKTOP_ICONS = [
-  { id: 'projecten', label: 'Projecten', icon: APP_ICONS.folder, open: () => os.open('portfolio', { initialPage: 'projecten' }) },
+  { id: 'projecten', label: t('Projecten'), icon: APP_ICONS.folder, open: () => os.open('portfolio', { initialPage: 'projecten' }) },
   { id: 'cv', label: 'CV.pdf', icon: APP_ICONS.cv, open: () => os.openFile(CONFIG.profile.cv) },
 ];
 
 export function initDesktop(root) {
-  const layer = el('div', { class: 'desktop-icons', role: 'group', 'aria-label': 'Bureaublad' });
+  const layer = el('div', { class: 'desktop-icons', role: 'group', 'aria-label': t('Bureaublad') });
   DESKTOP_ICONS.forEach((item) => {
     const cell = el('button', { class: 'desk-icon', type: 'button', dataset: { id: item.id }, 'aria-label': item.label }, [
       el('div', { class: 'desk-icon-img', html: item.icon }),
@@ -47,11 +48,11 @@ export function initDesktop(root) {
   wallpaper.addEventListener('contextmenu', (e) => {
     e.preventDefault();
     showContextMenu(e.clientX, e.clientY, [
-      { label: 'Nieuw Finder-venster', action: () => os.open('finder', { fresh: true }) },
+      { label: t('Nieuw Finder-venster'), action: () => os.open('finder', { fresh: true }) },
       { label: 'Open Terminal', action: () => os.open('terminal', { fresh: true }) },
       { divider: true },
-      { label: 'Weergave aanpassen…', action: () => os.open('settings') },
-      { label: 'Over dit portfolio', action: () => os.open('about') },
+      { label: t('Weergave aanpassen…'), action: () => os.open('settings') },
+      { label: t('Over dit portfolio'), action: () => os.open('about') },
     ]);
   });
 

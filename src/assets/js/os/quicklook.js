@@ -7,6 +7,7 @@
 // ============================================================
 import { el, trapFocus } from '../core/dom.js';
 import { sym } from '../apps/icons.js';
+import { t } from '../core/i18n.js';
 
 let overlay = null, release = null;
 let items = [], index = 0;
@@ -14,14 +15,14 @@ let refs = {};
 
 function ensure() {
   if (overlay) return;
-  refs.close = el('button', { class: 'ql-btn ql-close', type: 'button', 'aria-label': 'Sluit voorvertoning', html: sym('xmark', 16), dataset: { close: '1' } });
-  refs.prev = el('button', { class: 'ql-btn ql-prev', type: 'button', 'aria-label': 'Vorige', html: sym('chevron.left', 20) });
-  refs.next = el('button', { class: 'ql-btn ql-next', type: 'button', 'aria-label': 'Volgende', html: sym('chevron.right', 20) });
+  refs.close = el('button', { class: 'ql-btn ql-close', type: 'button', 'aria-label': t('Sluit voorvertoning'), html: sym('xmark', 16), dataset: { close: '1' } });
+  refs.prev = el('button', { class: 'ql-btn ql-prev', type: 'button', 'aria-label': t('Vorige'), html: sym('chevron.left', 20) });
+  refs.next = el('button', { class: 'ql-btn ql-next', type: 'button', 'aria-label': t('Volgende'), html: sym('chevron.right', 20) });
   refs.content = el('div', { class: 'ql-content' });
   refs.title = el('p', { class: 'ql-title', 'aria-live': 'polite' });
   refs.desc = el('p', { class: 'ql-desc' });
   refs.count = el('p', { class: 'ql-count', 'aria-hidden': 'true' });
-  overlay = el('div', { class: 'ql', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Voorvertoning' }, [
+  overlay = el('div', { class: 'ql', role: 'dialog', 'aria-modal': 'true', 'aria-label': t('Voorvertoning') }, [
     el('div', { class: 'ql-backdrop', dataset: { close: '1' } }),
     el('div', { class: 'ql-panel' }, [refs.close, refs.prev, refs.content, refs.title, refs.desc, refs.count, refs.next]),
   ]);
@@ -49,7 +50,7 @@ function show() {
   refs.prev.hidden = refs.next.hidden = refs.count.hidden = !many;
   refs.prev.disabled = index === 0;
   refs.next.disabled = index === items.length - 1;
-  refs.count.textContent = many ? `${index + 1} van ${items.length}` : '';
+  refs.count.textContent = many ? t('{n} van {total}', { n: index + 1, total: items.length }) : '';
 }
 
 function go(d) {

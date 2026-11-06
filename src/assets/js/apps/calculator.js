@@ -7,8 +7,11 @@
 // ============================================================
 import { el, copyText } from '../core/dom.js';
 import { store } from '../core/store.js';
+import { t, lang } from '../core/i18n.js';
 
 const MAX_DIGITS = 9;
+const EN = lang === 'en';
+const DEC = EN ? '.' : ',', GROUP = EN ? ',' : '.';
 const OPS = { '+': (a, b) => a + b, '−': (a, b) => a - b, '×': (a, b) => a * b, '÷': (a, b) => a / b };
 
 /** Getal → weergavestring (punt als decimaalteken, max. 9 cijfers). */
@@ -23,18 +26,18 @@ function fmt(n) {
 
 /** Weergavestring → Nederlandse notatie met duizendtallen. */
 function pretty(s) {
-  if (s.includes('e')) return s.replace('.', ',');
+  if (s.includes('e')) return s.replace('.', DEC);
   const neg = s.startsWith('-');
   const [int, frac] = s.replace('-', '').split('.');
-  const grouped = int.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  return `${neg ? '-' : ''}${grouped}${frac !== undefined ? `,${frac}` : ''}`;
+  const grouped = int.replace(/\B(?=(\d{3})+(?!\d))/g, GROUP);
+  return `${neg ? '-' : ''}${grouped}${frac !== undefined ? `${DEC}${frac}` : ''}`;
 }
 
 export function createCalculatorApp() {
   return {
     id: 'calculator',
-    title: 'Rekenmachine',
-    menuName: 'Rekenmachine',
+    title: t('Rekenmachine'),
+    menuName: t('Rekenmachine'),
     width: 240, height: 382, minWidth: 240, minHeight: 382,
     resizable: false,
     chrome: 'plain',
@@ -54,16 +57,16 @@ export function createCalculatorApp() {
       let error = false;
 
       const screen = el('output', { class: 'calc-screen', 'aria-live': 'polite', 'aria-atomic': 'true', text: '0' });
-      const display = el('div', { class: 'calc-display', title: '⌘C kopieert het resultaat' }, [screen]);
-      const keys = el('div', { class: 'calc-keys', role: 'group', 'aria-label': 'Toetsen' });
+      const display = el('div', { class: 'calc-display', title: t('⌘C kopieert het resultaat') }, [screen]);
+      const keys = el('div', { class: 'calc-keys', role: 'group', 'aria-label': t('Toetsen') });
       body.append(display, keys);
 
       const KEYS = [
-        ['clear', 'AC', 'fn', 'Wis'], ['sign', '±', 'fn', 'Plus of min'], ['percent', '%', 'fn', 'Procent'], ['÷', '÷', 'op', 'Deel'],
-        ['7', '7'], ['8', '8'], ['9', '9'], ['×', '×', 'op', 'Vermenigvuldig'],
-        ['4', '4'], ['5', '5'], ['6', '6'], ['−', '−', 'op', 'Trek af'],
-        ['1', '1'], ['2', '2'], ['3', '3'], ['+', '+', 'op', 'Tel op'],
-        ['0', '0', 'wide'], ['.', ',', '', 'Komma'], ['=', '=', 'op eq', 'Is'],
+        ['clear', 'AC', 'fn', t('Wis')], ['sign', '±', 'fn', t('Plus of min')], ['percent', '%', 'fn', t('Procent')], ['÷', '÷', 'op', t('Deel')],
+        ['7', '7'], ['8', '8'], ['9', '9'], ['×', '×', 'op', t('Vermenigvuldig')],
+        ['4', '4'], ['5', '5'], ['6', '6'], ['−', '−', 'op', t('Trek af')],
+        ['1', '1'], ['2', '2'], ['3', '3'], ['+', '+', 'op', t('Tel op')],
+        ['0', '0', 'wide'], ['.', DEC, '', t('Komma')], ['=', '=', 'op eq', t('Is')],
       ];
       const btn = new Map();
       KEYS.forEach(([k, label, cls = '', aria]) => {
@@ -119,13 +122,13 @@ export function createCalculatorApp() {
       }
 
       function paint() {
-        const text = error ? 'Fout' : pretty(cur);
+        const text = error ? t('Fout') : pretty(cur);
         screen.textContent = text;
         // Krimpt mee zodat negen cijfers altijd passen (zoals het echte scherm).
         const len = text.replace(/[.,]/g, '').length + (text.match(/[.,]/g) || []).length * 0.4;
         screen.style.fontSize = `${Math.min(52, Math.floor(52 * 6.2 / Math.max(6.2, len)))}px`;
         btn.get('clear').textContent = !error && entered && cur !== '0' ? 'C' : 'AC';
-        btn.get('clear').setAttribute('aria-label', btn.get('clear').textContent === 'C' ? 'Wis invoer' : 'Wis alles');
+        btn.get('clear').setAttribute('aria-label', btn.get('clear').textContent === 'C' ? t('Wis invoer') : t('Wis alles'));
         Object.keys(OPS).forEach((o) => {
           const on = op === o && !entered;
           btn.get(o).classList.toggle('active', on);

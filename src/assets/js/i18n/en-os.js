@@ -1,0 +1,108 @@
+// Engelse vertalingen (os). Sleutel = de Nederlandse tekst zoals die in t('…') staat.
+export default {
+  // Menubalk: menutitels
+  'Menubalk': 'Menu bar',
+  'Portfolio-menu': 'Portfolio menu',
+  'App-menu': 'App menu',
+  'Bestand': 'File',
+  'Bewerken': 'Edit',
+  'Weergave': 'View',
+  'help|Zoek…': 'Search…',
+  'Ga': 'Go',
+  'Venster': 'Window',
+
+  // Menubalk: menu-items
+  'Over dit portfolio': 'About This Portfolio',
+  'Systeeminstellingen…': 'System Settings…',
+  'Eenvoudige weergave (gewone pagina)': 'Simple View (Plain Page)',
+  'Eenvoudige weergave': 'Simple View',
+  'Broncode op GitHub': 'Source Code on GitHub',
+  'Sluit alle vensters': 'Close All Windows',
+  'Over {name}': 'About {name}',
+  'Instellingen…': 'Settings…',
+  'Stop {name}': 'Quit {name}',
+  'Nieuw Finder-venster': 'New Finder Window',
+  'Sluit venster': 'Close Window',
+  'Kopieer': 'Copy',
+  'Selecteer alles': 'Select All',
+  'Zoek…': 'Find…',
+  'Herstel venstergrootte': 'Restore Window Size',
+  'Vul scherm': 'Fill',
+  'Projecten': 'Projects',
+  'Ervaring': 'Experience',
+  'Minimaliseer': 'Minimize',
+  'Links': 'Left',
+  'Rechts': 'Right',
+  'Herstel': 'Restore',
+  'Breng alles naar voren': 'Bring All to Front',
+  '{title} (geminimaliseerd)': '{title} (minimized)',
+  'Sneltoetsen': 'Keyboard Shortcuts',
+
+  // Menubalk: Wi-Fi
+  'Wi-Fi: verbonden': 'Wi-Fi: connected',
+  'Wi-Fi: geen verbinding': 'Wi-Fi: not connected',
+  'Snelheid': 'Speed',
+  'Vertraging': 'Latency',
+  'Kwaliteit': 'Quality',
+  'Lokaal netwerk': 'Local network',
+  'Verbonden': 'Connected',
+  'Geen verbinding': 'Not connected',
+  'Bekend netwerk': 'Known Network',
+  'Netwerk': 'Network',
+  'Niet verbonden': 'Not connected',
+
+  // Menubalk: batterij, bedieningspaneel, zoeken, kalender
+  'Batterij {pct}%': 'Battery {pct}%',
+  'Batterij {pct}%, laadt op': 'Battery {pct}%, charging',
+  '{pct}%, laadt op': '{pct}%, charging',
+  'Bedieningspaneel': 'Control Center',
+  'Accentkleur': 'Accent color',
+  'Verminder beweging': 'Reduce motion',
+  'Verminder transparantie': 'Reduce transparency',
+  'Zoeken (⌘K)': 'Search (⌘K)',
+  'Kalender': 'Calendar',
+  'Vorige maand': 'Previous month',
+  'Volgende maand': 'Next month',
+
+  // Dock
+  'Toon': 'Show',
+  'Sluit': 'Quit',
+  '{title}: herstel venster': '{title}: restore window',
+
+  // Bureaublad en contextmenu
+  'Bureaublad': 'Desktop',
+  'Weergave aanpassen…': 'Customize Appearance…',
+  'Contextmenu': 'Context menu',
+
+  // Meldingen en Quick Look
+  'Sluit melding': 'Close notification',
+  'Sluit voorvertoning': 'Close preview',
+  'Vorige': 'Previous',
+  'Volgende': 'Next',
+  'Voorvertoning': 'Quick Look',
+  '{n} van {total}': '{n} of {total}',
+
+  // Vensters
+  'Vensterknoppen': 'Window controls',
+  'Minimaliseer venster': 'Minimize Window',
+  'Zoom venster': 'Zoom window',
+
+  // Spotlight
+  "Pagina's": 'Pages',
+  'Ervaring & opleiding': 'Experience & education',
+  'Vaardigheden': 'Skills',
+  'Acties': 'Actions',
+  'Systeem-app': 'System app',
+  'Portfolio-app': 'Portfolio app',
+  'Stuur e-mail': 'Send email',
+  'Weergave: licht': 'Appearance: light',
+  'Weergave: donker': 'Appearance: dark',
+  'Weergave: automatisch': 'Appearance: automatic',
+  'Sneltoetsen tonen': 'Show keyboard shortcuts',
+  'Zoek in mijn portfolio': 'Search my portfolio',
+  'Zoeken': 'Search',
+  'Resultaten': 'Results',
+  'navigeer': 'navigate',
+  'sluit': 'close',
+  'Geen resultaten voor “{q}”': 'No results for “{q}”',
+};

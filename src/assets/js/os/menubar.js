@@ -17,7 +17,7 @@ import { os } from './bridge.js';
 import { sym, batterySym, S_MARK } from '../apps/icons.js';
 import { CONFIG } from '../data/config.js';
 import { setView } from '../core/view.js';
-import { appearanceControl, accentPicker, motionSwitch, transparencySwitch } from '../ui/controls.js';
+import { appearanceControl, accentPicker, languageControl, motionSwitch, transparencySwitch } from '../ui/controls.js';
 import { t, tc, lang, LOCALE } from '../core/i18n.js';
 
 const DAY = new Intl.DateTimeFormat(LOCALE, { weekday: 'short' });
@@ -299,6 +299,7 @@ export function initMenubar(root) {
       return el('div', { class: 'cc', role: 'dialog', 'aria-label': t('Bedieningspaneel') }, [
         el('div', { class: 'cc-title', text: tc('thema', 'Weergave') }), appearanceControl(),
         el('div', { class: 'cc-title', text: t('Accentkleur') }), accentPicker(),
+        el('div', { class: 'cc-title', text: t('Taal') }), languageControl(null),
         el('div', { class: 'cc-divider' }),
         row(t('Verminder beweging'), motionId, motionSwitch(motionId)),
         row(t('Verminder transparantie'), transId, transparencySwitch(transId)),

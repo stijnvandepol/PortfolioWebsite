@@ -132,14 +132,9 @@ function pageHome() {
       sectionHead(t('Uitgelichte projecten'), { route: 'projecten', label: t('Alle projecten') }),
       el('div', { class: 'pgrid' }, featured.map(projectCard)),
     ]),
-    el('section', { class: 'home-sec', 'aria-label': t('Ervaring in het kort') }, [
-      sectionHead(t('Ervaring'), { route: 'ervaring', label: t('Ervaring & opleiding') }),
-      el('ul', { class: 'exp-glance' }, CONFIG.experience.slice(0, 3).map((e) =>
-        el('li', {}, [
-          el('span', { class: 'eg-main' }, [el('strong', { text: e.role }), ` · ${e.org}`]),
-          el('span', { class: 'eg-date', text: e.period }),
-        ]))),
-    ]),
+    mountContributions(el('section', { class: 'home-sec gh', 'aria-label': t('GitHub-activiteit') }, [
+      el('h2', { class: 'section-heading', text: t('GitHub-activiteit') }),
+    ])),
   ]);
 }
 
@@ -219,7 +214,6 @@ function pageSkills() {
     el('div', { class: 'skgrid' }, CONFIG.skills.map(skillGroup)),
     el('h3', { class: 'pd-h', text: 'Soft skills' }),
     chips(CONFIG.softskills, 'chips chips-pill'),
-    mountContributions(el('section', { class: 'gh' }, [el('h3', { class: 'pd-h', text: t('GitHub-activiteit') })])),
   ]);
 }
 

@@ -20,7 +20,6 @@ export default {
   'Wat ik doe': 'What I do',
   'Uitgelichte projecten': 'Featured projects',
   'Alle projecten': 'All projects',
-  'Ervaring in het kort': 'Experience at a glance',
   'Ervaring & opleiding': 'Experience & education',
   'Filter projecten': 'Filter projects',
   'Live websites en projecten uit mijn homelab en stages. Klik op een project voor de details.': 'Live websites and projects from my homelab and internships. Click a project to see the details.',

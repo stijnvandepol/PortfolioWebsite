@@ -120,7 +120,7 @@ function staticPortfolio(L) {
         <figure class="m-avatar"><img src="./assets/images/portret.webp" alt="${esc(tr('Portret van {name}', { name: p.name }))}" width="120" height="120" fetchpriority="high" decoding="async"></figure>
         <h1 class="m-name">${esc(p.name)}</h1>
         <p class="m-role">${esc(p.role)}</p>
-        <p class="m-intro">${esc(p.intro)}</p>
+        ${C.about.map((t) => `<p class="m-intro">${esc(t)}</p>`).join('\n        ')}
         <ul class="m-chips" aria-label="${esc(tr('Specialisaties'))}">${C.focus.map((f) => `<li class="m-chip">${esc(f.title)}</li>`).join('')}</ul>
         <div class="m-cta">
           <a class="m-btn m-btn-primary" href="#contact">${esc(tr('Neem contact op'))}</a>
@@ -153,12 +153,10 @@ function staticPortfolio(L) {
         </div>
         <h3 class="m-subtitle">Soft skills</h3>
         ${tags(C.softskills)}
-        <div class="gh" data-gh hidden><h3 class="m-subtitle">${esc(tr('GitHub-activiteit'))}</h3></div>
       </section>
 
-      <section class="m-section" id="over" aria-labelledby="h-over">
-        <h2 class="m-section-title" id="h-over">${esc(tr('Over mij'))}</h2>
-        ${C.about.map((t) => `<p class="m-text">${esc(t)}</p>`).join('\n        ')}
+      <section class="m-section gh" id="github" aria-labelledby="h-github" data-gh hidden>
+        <h2 class="m-section-title" id="h-github">${esc(tr('GitHub-activiteit'))}</h2>
       </section>
 
       <footer class="m-footer" id="contact">

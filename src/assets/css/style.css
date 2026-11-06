@@ -284,13 +284,6 @@ textarea.field { height: auto; padding: 8px 10px; resize: none; line-height: 1.4
 .skill-title .i { color: var(--accent-text); }
 .pd-h { font-size: var(--text-md); font-weight: var(--fw-bold); margin: var(--sp-6) 0 var(--sp-3); }
 
-/* Ervaring in het kort */
-.exp-glance { list-style: none; }
-.exp-glance li { display: flex; justify-content: space-between; align-items: baseline; gap: var(--sp-3); padding: 9px 0; border-bottom: 0.5px solid var(--separator); font-size: 15px; }
-.exp-glance li:first-child { border-top: 0.5px solid var(--separator); }
-.eg-date { color: var(--text-secondary); font-size: var(--text-base); white-space: nowrap; }
-@container win (max-width: 560px) { .exp-glance li { flex-direction: column; gap: 0; } }
-
 /* Wat ik doe */
 .bento-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: var(--sp-3); }
 .bento-card { padding: var(--sp-5); border-radius: var(--r-md); background: var(--surface); border: 0.5px solid var(--hairline); }
